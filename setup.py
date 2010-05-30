@@ -5,11 +5,11 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name = "tracktor",
+    name = "django-tracktor",
     version = "0.1",
-    url = "http://github.com/bne/tracktor",
+    url = "http://github.com/bne/django-tracktor",
     license = "Apache2",
-    description = "Event driven timeline thing",
+    description = "Event driven django timeline thing",
     long_description = read('README'),
     author = "Ben Miller",
     author_email = "ben@hyl.co.uk",
