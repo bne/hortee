@@ -39,7 +39,7 @@ class TimelineTest(TestCase):
             date=datetime(2000, 3, 3, 3, 3, 3))
         
     def testCreate(self):
-        self.assertEquals(len(self.actor.events), 5)
+        self.assertEquals(len(self.actor.get_timeline()), 5)
         
     def testStart(self):
         self.assertEquals(self.actor.date_start, datetime(2000, 1, 1, 1, 1, 1))
@@ -47,19 +47,16 @@ class TimelineTest(TestCase):
     def testEnd(self):
         self.assertEquals(self.actor.date_end, datetime(2000, 5, 5, 5, 5, 5))
         
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    def testGetPeriod(self):
+        self.assertEquals(len(self.actor.get_timeline(
+            start=datetime(2000, 3, 3, 3, 3, 3),
+            end=datetime(2000, 5, 5, 5, 5, 5)
+        )), 3)        
+        self.assertEquals(len(self.actor.get_timeline(
+            start=datetime(2000, 2, 2, 2, 2, 2)
+        )), 4)        
+        self.assertEquals(len(self.actor.get_timeline(
+            end=datetime(2000, 4, 4, 4, 4, 4)
+        )), 4)
+        
+        
