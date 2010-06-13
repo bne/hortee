@@ -1,0 +1,28 @@
++++++++++++++++
+django-tracktor
++++++++++++++++
+
+Django application for tracking an item over time
+
+Build
+=====
+
+sudo aptitude install python-setuptools
+
+git clone git@github.com:bne/django-tracktor.git
+cd django-tracktor/
+python setup.py
+./bin/buildout
+
+Develop
+=======
+
+bin/django test
+
+
+
+
+
+
+
+
