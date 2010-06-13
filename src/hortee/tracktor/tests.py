@@ -2,7 +2,7 @@ import time
 from datetime import datetime
 
 from django.test import TestCase
-from hortee.tracktor.models import Actor, Event
+from tracktor.models import Actor, Event
 
 class EnvTest(TestCase):
     def testEnv(self):
