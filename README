@@ -1,16 +1,16 @@
 +++++++++++++++
-django-tracktor
+hortee
 +++++++++++++++
 
-Django application for tracking an item over time
+Django application for tracking plants over time
 
 Build
 =====
 
 sudo aptitude install python-setuptools
 
-git clone git://github.com/bne/django-tracktor.git
-cd django-tracktor/
+git clone git://github.com/bne/hortee.git
+cd hortee/
 python setup.py
 ./bin/buildout
 
