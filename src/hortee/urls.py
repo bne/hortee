@@ -8,14 +8,20 @@ urlpatterns = patterns('',
     url(r'^$', views.default, name='hortee-default'),
 )
 
-urlpatterns += patterns('',                       
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+urlpatterns += patterns('',
+    (r'^robots\.txt$', 'django.views.generic.simple.direct_to_template', {
+        'template': 'robots.txt', 'mimetype': 'text/plain' }),
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {
+        'url': '/static/img/favicon.ico' }),
+)
+
+urlpatterns += patterns('',
     (r'^admin/(.*)', admin.site.root),
 )
 	
 # Debug pattern for serving media
 if settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^static/(?P<path>.*)$', 'django.views.static.serve', 
-            {'document_root': settings.MEDIA_ROOT}),
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT }),
     )
