@@ -22,7 +22,7 @@ class Actor(models.Model):
         """Returns the events between 2 dates for this Actor
         If start is None, returns all Events up to end
         If end is None returns all Events after start
-        If start and end are None, returns all events for this Actor
+        If start and end are None, returns all events
         """
         if not start is None and not end is None:
             return Event.objects.filter(actor=self, 
