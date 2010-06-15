@@ -35,6 +35,9 @@ class Actor(models.Model):
     
 class Event(models.Model):
     """Base class for all events on the timeline
+    
+    Not set as abstract in the meta class, so we can do Event.objects.get() for
+    all models inheriting this one
     """
     actor = models.ForeignKey(Actor)
     name = models.CharField(max_length=100)
@@ -45,6 +48,11 @@ class Event(models.Model):
     
     class Meta:
         ordering = ["date"]
+        
+class TextContentEvent(Event):
+    """Event with a descriptive text field
+    """
+    text_content = models.TextField()
     
 
 

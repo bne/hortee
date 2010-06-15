@@ -2,7 +2,7 @@ import time
 from datetime import datetime
 
 from django.test import TestCase
-from models import Actor, Event
+from models import *
 
 class EnvTest(TestCase):
     def testEnv(self):
@@ -59,4 +59,17 @@ class TimelineTest(TestCase):
             end=datetime(2000, 4, 4, 4, 4, 4)
         )), 4)
         
+class TextContentEventTest(TestCase):
+    def setUp(self):
+        self.actor = Actor.objects.create(name="test_actor")
+        
+    def testCreate(self):
+        self.event = TextContentEvent.objects.create(
+            actor=self.actor, 
+            name="test_textevent",
+            text_content="some descriptive text")
+        self.assertEquals(self.event.name, 'test_textevent')
+        self.assertEquals(self.event.text_content, 'some descriptive text')
+        
+    
         
