@@ -89,3 +89,8 @@ INSTALLED_APPS = (
     'hortee.tracktor',
     'django.contrib.admin',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'hortee.context_processors.page',
+    'hortee.context_processors.debug',
+)
