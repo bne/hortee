@@ -4,6 +4,8 @@ from django.contrib import admin
 
 from hortee.main import views
 
+admin.autodiscover()
+
 urlpatterns = patterns('',
     url(r'^$', views.default, name='hortee-default'),
 )
