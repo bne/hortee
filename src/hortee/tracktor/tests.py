@@ -59,6 +59,36 @@ class TimelineTest(TestCase):
             end=datetime(2000, 4, 4, 4, 4, 4)
         )), 4)
         
+class EndEventTest(TestCase):
+    def setUp(self):
+        self.actor = Actor.objects.create(name="test_actor")
+        self.start_event = Event.objects.create(actor=self.actor, 
+            name="start_event",
+            date=datetime(2000, 1, 1, 1, 1, 1))
+            
+    def testCreate(self):
+        event = EndEvent.objects.create(
+            actor=self.actor, name='test_event',
+            start_event=self.start_event,
+            date=datetime(2000, 2, 2, 2, 2, 2))            
+        self.assertEquals(event.start_event, self.start_event)
+                   
+    def testDateValidation(self):
+        # Start event date should be before object date
+        self.assertRaises(ValidationError, EndEvent.objects.create,
+            actor=self.actor, name='test_event',
+            start_event=self.start_event,
+            date=datetime(1999, 1, 1, 1, 1, 1))
+            
+    def testActorValidation(self):
+        # Start date actor should be the same as object actor
+        actor2 = Actor.objects.create(name='test_actor2')
+        self.assertRaises(ValidationError, EndEvent.objects.create,
+            actor=actor2, name='test_event',
+            start_event=self.start_event,
+            date=datetime(2000, 1, 1, 1, 1, 1))
+              
+            
 class TextContentEventTest(TestCase):
     def setUp(self):
         self.actor = Actor.objects.create(name="test_actor")

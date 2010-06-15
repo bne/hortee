@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.core.exceptions import ValidationError
 
 class Actor(models.Model):
     """A thing unto which things happen
@@ -49,13 +50,21 @@ class Event(models.Model):
     class Meta:
         ordering = ["date"]
         
+class EndEvent(Event):
+    """Marks the end datetime of a sibling event
+    Throws an error if the date of the sibling is after the objects date.
+    Throws an error if the sibling's actor is not the same as the object's
+    """
+    start_event = models.ForeignKey(Event, related_name='start_event')
+    
+    def clean(self):
+        if self.start_event.date >= self.date:
+            raise ValidationError('Start event date is greater than date.')
+        if not self.start_event.actor is self.actor:
+            raise ValidationError('Start event actor is not actor.')            
+       
 class TextContentEvent(Event):
     """Event with a descriptive text field
     """
     text_content = models.TextField()
-    
-
-
-
-
 
