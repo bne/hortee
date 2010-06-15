@@ -7,6 +7,9 @@ class Actor(models.Model):
     """
     name = models.CharField(max_length=100)
     
+    def __unicode__(self):
+        return self.name    
+    
     @property
     def date_start(self):
         return Event.objects.order_by('date')[0].date
@@ -36,6 +39,9 @@ class Event(models.Model):
     actor = models.ForeignKey(Actor)
     name = models.CharField(max_length=100)
     date = models.DateTimeField(default=datetime.now)
+        
+    def __unicode__(self):
+        return self.name  
     
     class Meta:
         ordering = ["date"]
