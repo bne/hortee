@@ -1,5 +1,7 @@
 $(function(){
     var canvas = $('canvas').get(0);
+    
+    
     var p = Processing(canvas);
     p.size(300, 300);
     p.stroke(255);
