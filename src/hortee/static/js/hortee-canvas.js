@@ -1,9 +1,7 @@
 $(function(){
     var canvas = $('canvas').get(0);
-    
-    
     var p = Processing(canvas);
-    p.size(300, 300);
+    p.size($(document).width(), $(document).height());
     p.stroke(255);
     
     function draw(p) {
@@ -15,5 +13,7 @@ $(function(){
     var y = 100;
     var frameRate = 90;
     var interval = 1000.0 / frameRate;
-    setInterval(function () { draw(p); }, interval);
+    
+    draw(p);
+    //setInterval(function () { draw(p); }, interval);
 });
