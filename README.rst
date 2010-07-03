@@ -27,18 +27,21 @@ Django application for tracking plants over time
 Build
 =====
 
-sudo aptitude install python-setuptools
+::
 
-git clone git://github.com/bne/hortee.git
-cd hortee/
-python bootstrap.py
-./bin/buildout
+  sudo aptitude install python-setuptools
+  git clone git://github.com/bne/hortee.git
+  cd hortee/
+  python bootstrap.py
+  ./bin/buildout
 
 Develop
 =======
 
-bin/django test
-bin/django runserver
+::
+
+  bin/django test
+  bin/django runserver
 
 etc...
 
