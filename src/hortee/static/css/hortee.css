@@ -4,6 +4,12 @@ body {
     margin: 0;
 }
 
+#header {
+    position: absolute;
+    width: 100%;
+    background: #EEE;
+}
+
 canvas {
     padding: 0;
     margin: 0;
