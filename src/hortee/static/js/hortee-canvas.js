@@ -1,11 +1,14 @@
 $(function(){
     var canvas = $('canvas');
-    var ctx = canvas.get(0).getContext('2d');  
-
-    var bg_col = '#FFFF00';
-    var fg_col = '#00FF00';
-    var ac_col = '#FF0000';    
-     
+    var ctx = canvas.get(0).getContext('2d');
+    var cur_path = { 
+        'shape': 'rect', 'stroke': '#698B22', 'fill': '#FAFAD2',
+        'lineWidth': 5, 'lineJoin': 'round',    
+    };     
+    var guide_path = { 
+        'shape': cur_path.shape, 'stroke': '#999', 
+        'fill': 'transparent', 'lineWidth': 1
+    };
     var drag_start = false;
     var start_pos;
     var sprites = [];
@@ -13,48 +16,56 @@ $(function(){
     canvas.attr('height', $(document).height());
     canvas.attr('width', $(document).width());
     
-    $(document).mousedown(function(ev){
+    $(document).mousedown(function(ev) {
         drag_start = true;
         start_pos = { 'x': ev.pageX, 'y': ev.pageY };
     });
-    
-    $(document).mousemove(function(ev){
-        if(drag_start){
-            ctx.clearRect(0, 0, canvas.width(), canvas.height());
-            ctx.beginPath();
-            ctx.rect(start_pos.x, start_pos.y, 
-                ev.pageX - start_pos.x, ev.pageY - start_pos.y);
-            ctx.strokeStyle = ac_col;
-            ctx.stroke();
-            draw();
+
+    $(document).mousemove(function(ev) {
+        if(drag_start) {
+            guide_path.args = [
+                start_pos.x + (guide_path.lineWidth / 2), 
+                start_pos.y + (guide_path.lineWidth / 2), 
+                ev.pageX - start_pos.x, 
+                ev.pageY - start_pos.y
+            ];
+            draw_sprites();
+            draw_path(guide_path);
         }
-        
-        //console.log(ctx.isPointInPath(ev.pageX, ev.pageY));        
     });
     
-    $(document).mouseup(function(ev){
-        if(drag_start){
-            
-            sprites.push({
-                'path': [
-                    {'shape': 'rect', 'args': [start_pos.x, start_pos.y, ev.pageX - start_pos.x, ev.pageY - start_pos.y]}
-                ]
-            });
-            
+    $(document).mouseup(function(ev) {
+        if(drag_start) {            
+            cur_path.args = [
+                start_pos.x + (cur_path.lineWidth / 2), 
+                start_pos.y + (cur_path.lineWidth / 2), 
+                ev.pageX - start_pos.x, 
+                ev.pageY - start_pos.y
+            ];
+            sprites.push({'paths': [$.extend({}, cur_path)]});            
             drag_start = false;
-            draw();
-        }
+            draw_sprites();
+        }        
     });
     
-    function draw() {        
-        for(var i=0, sprite; sprite=sprites[i]; i++) {
-            ctx.beginPath();
-            ctx.strokeStyle = fg_col;
-            for(var j=0, shape; shape=sprite.path[j]; j++) {
-                ctx[shape.shape].apply(ctx, shape.args);
-            }
-            ctx.stroke();
-            ctx.closePath();
-        }        
+    function draw_sprites() {
+        ctx.clearRect(0, 0, canvas.width(), canvas.height());
+        $.each(sprites, function(i, sprite) {
+            $.each(sprite.paths, function(i, path) { 
+                draw_path(path); 
+            })
+        });
+    }
+    
+    function draw_path(_path) {
+        ctx.lineWidth = _path.lineWidth;
+        ctx.lineJoin = _path.lineJoin;
+        ctx.strokeStyle = _path.stroke;
+        ctx.fillStyle = _path.fill;
+          
+        ctx.beginPath();
+        ctx[_path.shape].apply(ctx, _path.args);
+        ctx.fill();
+        ctx.stroke();
     }
 });
