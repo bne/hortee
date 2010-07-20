@@ -10,7 +10,11 @@ body {
     background: #EEE;
 }
 
-canvas {
+canvas, map {
+    position: absolute;
+    top: 0;
+    left: 0;
     padding: 0;
     margin: 0;
 }
+

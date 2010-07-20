@@ -1,9 +1,10 @@
 $(function(){
     var canvas = $('canvas');
+    var map = $('map');
     var ctx = canvas.get(0).getContext('2d');
     var cur_path = { 
         'shape': 'rect', 'stroke': '#698B22', 'fill': '#FAFAD2',
-        'lineWidth': 5, 'lineJoin': 'round',    
+        'lineWidth': 4, 'lineJoin': 'round',    
     };     
     var guide_path = { 
         'shape': cur_path.shape, 'stroke': '#999', 
@@ -15,6 +16,8 @@ $(function(){
     
     canvas.attr('height', $(document).height());
     canvas.attr('width', $(document).width());
+    map.attr('height', $(document).height());
+    map.attr('width', $(document).width());
     
     $(document).mousedown(function(ev) {
         drag_start = true;
@@ -45,6 +48,8 @@ $(function(){
             sprites.push({'paths': [$.extend({}, cur_path)]});            
             drag_start = false;
             draw_sprites();
+            
+            map.append('<area shape="rect" coords="'+ cur_path.args.join(',') +'" onmouseover="alert(2);" />');
         }        
     });
     
