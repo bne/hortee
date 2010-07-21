@@ -1,32 +1,6 @@
 $(function(){
 
     var canvas = $('canvas');
-<<<<<<< HEAD
-    var p = Processing(canvas.get(0));
-    var cur_shape = 'rect';
-    var sprites = [];     
-    var bg_col = '#FFFFFF';
-    var fg_col = '#000000';
-    var ac_col = '#FF0000';     
-    var drag_start = false;
-    var start_pos = { x:0, y:0 };
-    var end_pos = { x:0, y:0 };
-
-    function resize_canvas(){    
-        canvas.attr('height', $(document).height());
-        canvas.attr('width', $(document).width());
-        p = Processing(canvas.get(0));
-        draw();
-    }
-    $(window).resize(resize_canvas);
-    resize_canvas();
-    
-    function serialise(){
-        return sprites.join(',');
-    }
-    
-    $(document).mousedown(function(ev){
-=======
     var map = $('map');    
     var mapimg = $('#mapimg');    
     var ctx = canvas.get(0).getContext('2d');
@@ -52,7 +26,6 @@ $(function(){
     mapimg.attr('width', $(document).width());
     
     $(document).mousedown(function(ev) {
->>>>>>> c6523517c4e611278547d985b2d98403188dd589
         drag_start = true;
         start_pos = { 'x': ev.pageX, 'y': ev.pageY };
         
@@ -66,43 +39,6 @@ $(function(){
             };
         }
     });
-<<<<<<< HEAD
-    
-    $(document).mousemove(function(ev){
-        if(drag_start){        
-            p.background(bg_col);
-            p.stroke(ac_col);
-            p.noFill();
-            end_pos.x = ev.pageX;
-            end_pos.y = ev.pageY;
-            p[cur_shape].apply(this, [start_pos.x, start_pos.y, 
-              end_pos.x - start_pos.x, end_pos.y - start_pos.y]);
-            draw();           
-        }
-    });
-    
-    $(document).mouseup(function(ev){
-        if(drag_start){
-            sprite = [cur_shape, [start_pos.x, start_pos.y, 
-              end_pos.x - start_pos.x, end_pos.y - start_pos.y]];
-                        
-            if(!sprites.length || 
-              (sprites.length && 
-              (sprite.join() != sprites[sprites.length-1].join()))){
-                sprites.push(sprite);
-            }
-            draw();
-            drag_start = false;
-        }
-        console.log(serialise());
-    });    
-    
-    function draw() {
-        p.stroke(fg_col);
-        for(var i=0;i<sprites.length;i++){
-            p.noFill();
-            p[sprites[i][0]].apply(this, sprites[i][1]);
-=======
 
     $(document).mousemove(function(ev) {
         if(drag_start) {
@@ -117,8 +53,10 @@ $(function(){
                 draw_path(guide_path);
             }
             else {
-                sprites[cur_sprite_id].paths[0].args[0] = ev.pageX - old_offset.x;
-                sprites[cur_sprite_id].paths[0].args[1] = ev.pageY - old_offset.y;                
+                sprites[cur_sprite_id].paths[0].args[0] = ev.pageX - 
+                                                          old_offset.x;
+                sprites[cur_sprite_id].paths[0].args[1] = ev.pageY - 
+                                                          old_offset.y;                
                 draw_sprites();
             }
         }
@@ -143,20 +81,20 @@ $(function(){
             map.prepend('<area shape="rect" coords="'+ [
                 start_pos.x,
                 start_pos.y,
-                ev.pageX,
-                ev.pageY
+                ev.pageX + cur_path.lineWidth,
+                ev.pageY + cur_path.lineWidth
             ].join(',') +'" id="area_'+ (sprites.length - 1) +'" />');
         }
         
         if(drag_start && cur_sprite_id) {
-            console.log('foo');
-            $('#area_'+ cur_sprite_id).attr('coords', [
+            $('#area_'+ cur_sprite_id).replaceWith(            
+                '<area shape="rect" coords="'+ [
                 sprites[cur_sprite_id].paths[0].args[0],
                 sprites[cur_sprite_id].paths[0].args[1],
                 sprites[cur_sprite_id].paths[0].args[0] + sprites[cur_sprite_id].paths[0].args[2],
                 sprites[cur_sprite_id].paths[0].args[1] + sprites[cur_sprite_id].paths[0].args[3]
-            ].join(','));
->>>>>>> c6523517c4e611278547d985b2d98403188dd589
+            ].join(',') +'" id="area_'+ cur_sprite_id +'" />');            
+            
         }
         
         draw_sprites();
