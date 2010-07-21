@@ -15,6 +15,7 @@ $(function(){
     var drag_start = false;
     var start_pos;
     var sprites = [];
+    var sprite_id;
     
     canvas.attr('height', $(document).height());
     canvas.attr('width', $(document).width());
@@ -59,21 +60,27 @@ $(function(){
             ];
             sprites.push({'paths': [$.extend({}, cur_path)]});
             
-            map.append('<area shape="rect" coords="'+ [
+            map.prepend('<area shape="rect" coords="'+ [
                 start_pos.x,
                 start_pos.y,
                 ev.pageX,
                 ev.pageY
-            ].join(',') +'" id="area_'+ (sprites.length - 1) +'" />');             
-            
+            ].join(',') +'" id="area_'+ (sprites.length - 1) +'" />');
         }   
         draw_sprites();
         drag_start = false;     
     });
     
-    map.delegate('area', 'mouseover', function(ev) {
-        
-        $('#header').html(this.id);
+    map.delegate('area', 'mouseover', function() {
+        sprite_id = this.id.substr(this.id.indexOf('_')+1);
+        sprites[sprite_id].paths[0].fill = '#F00';
+        draw_sprites();
+    });
+    
+    map.delegate('area', 'mouseout', function() {
+        sprites[sprite_id].paths[0].fill = cur_path.fill;
+        sprite_id = null;
+        draw_sprites();
     });
     
     function draw_sprites() {
