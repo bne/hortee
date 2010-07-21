@@ -47,7 +47,9 @@ $(function(){
         canvas.css('z-index', 1);
         mapimg.css('z-index', 1000);
         
-        if(drag_start) {
+        if(drag_start && 
+          Math.abs(start_pos.x - ev.pageX) > 10 && 
+          Math.abs(start_pos.y - ev.pageY) > 10) {
            
             cur_path.args = [
                 start_pos.x + (cur_path.lineWidth / 2), 
