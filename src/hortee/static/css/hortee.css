@@ -5,6 +5,7 @@ body {
 }
 
 #header {
+<<<<<<< HEAD
     background: #EEE;
     position: absolute;
     top: 0;
@@ -13,6 +14,19 @@ body {
 }
 
 canvas {
+=======
+    position: absolute;
+    width: 100%;
+    background: #EEE;
+    z-index: 5000;
+}
+
+canvas, #mapimg {
+    position: absolute;
+    top: 0;
+    left: 0;
+>>>>>>> c6523517c4e611278547d985b2d98403188dd589
     padding: 0;
     margin: 0;
 }
+

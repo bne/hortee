@@ -10,7 +10,7 @@ setup(
     url = "http://github.com/bne/hortee",
     license = "Apache2",
     description = "Event driven django plant tracking thing",
-    long_description = read('README'),
+    long_description = read('README.rst'),
     author = "Ben Miller",
     author_email = "ben@hyl.co.uk",
     packages = find_packages("src"),
