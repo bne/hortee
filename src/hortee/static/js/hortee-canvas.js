@@ -15,7 +15,9 @@ $(function(){
     var drag_start = false;
     var start_pos;
     var sprites = [];
-    var sprite_id;
+    var cur_sprite_id;
+    var old_sprite;
+    var old_offset;
     
     canvas.attr('height', $(document).height());
     canvas.attr('width', $(document).width());
@@ -29,19 +31,32 @@ $(function(){
         
         canvas.css('z-index', 1000);
         mapimg.css('z-index', 1);
+        
+        if(cur_sprite_id) {
+            old_offset = { 
+                'x': ev.pageX - old_sprite.paths[0].args[0],
+                'y': ev.pageY - old_sprite.paths[0].args[1]
+            };
+        }
     });
 
     $(document).mousemove(function(ev) {
-        $('#header').html(sprite_id);
         if(drag_start) {
-            guide_path.args = [
-                start_pos.x + (guide_path.lineWidth / 2), 
-                start_pos.y + (guide_path.lineWidth / 2), 
-                ev.pageX - start_pos.x, 
-                ev.pageY - start_pos.y
-            ];
-            draw_sprites();
-            draw_path(guide_path);
+            if(!cur_sprite_id) {
+                guide_path.args = [
+                    start_pos.x + (guide_path.lineWidth / 2), 
+                    start_pos.y + (guide_path.lineWidth / 2), 
+                    ev.pageX - start_pos.x, 
+                    ev.pageY - start_pos.y
+                ];
+                draw_sprites();
+                draw_path(guide_path);
+            }
+            else {
+                sprites[cur_sprite_id].paths[0].args[0] = ev.pageX - old_offset.x;
+                sprites[cur_sprite_id].paths[0].args[1] = ev.pageY - old_offset.y;                
+                draw_sprites();
+            }
         }
     });
     
@@ -49,7 +64,7 @@ $(function(){
         canvas.css('z-index', 1);
         mapimg.css('z-index', 1000);
                 
-        if(drag_start && 
+        if(drag_start && !cur_sprite_id && 
           Math.abs(start_pos.x - ev.pageX) > 10 && 
           Math.abs(start_pos.y - ev.pageY) > 10) {
            
@@ -67,24 +82,34 @@ $(function(){
                 ev.pageX,
                 ev.pageY
             ].join(',') +'" id="area_'+ (sprites.length - 1) +'" />');
-        }   
+        }
+        
+        if(drag_start && cur_sprite_id) {
+            console.log('foo');
+            $('#area_'+ cur_sprite_id).attr('coords', [
+                sprites[cur_sprite_id].paths[0].args[0],
+                sprites[cur_sprite_id].paths[0].args[1],
+                sprites[cur_sprite_id].paths[0].args[0] + sprites[cur_sprite_id].paths[0].args[2],
+                sprites[cur_sprite_id].paths[0].args[1] + sprites[cur_sprite_id].paths[0].args[3]
+            ].join(','));
+        }
+        
         draw_sprites();
         drag_start = false;
     });
     
     map.delegate('area', 'mouseover', function() {
-        sprite_id = this.id.substr(this.id.indexOf('_')+1);
-        sprites[sprite_id].paths[0].fill = '#F00';
+        cur_sprite_id = this.id.substr(this.id.indexOf('_')+1);
+        old_sprite = $.extend({}, sprites[cur_sprite_id]);
+        sprites[cur_sprite_id].paths[0].fill = '#F00';
         draw_sprites();
-        $('#header').html(sprite_id);
     });
     
     map.delegate('area', 'mouseout', function() {
-        if(!drag_start) {
-            sprites[sprite_id].paths[0].fill = cur_path.fill;
-            sprite_id = null;
-            draw_sprites();
-            $('#header').html(sprite_id);
+        if(!drag_start) {            
+            sprites[cur_sprite_id].paths[0].fill = cur_path.fill;
+            draw_sprites();                        
+            cur_sprite_id = old_sprite = null;
         }            
     });
     
