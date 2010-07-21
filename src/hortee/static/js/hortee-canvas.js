@@ -1,6 +1,8 @@
 $(function(){
+
     var canvas = $('canvas');
-    var map = $('map');
+    var map = $('map');    
+    var mapimg = $('#mapimg');    
     var ctx = canvas.get(0).getContext('2d');
     var cur_path = { 
         'shape': 'rect', 'stroke': '#698B22', 'fill': '#FAFAD2',
@@ -16,12 +18,16 @@ $(function(){
     
     canvas.attr('height', $(document).height());
     canvas.attr('width', $(document).width());
-    map.attr('height', $(document).height());
-    map.attr('width', $(document).width());
+    
+    mapimg.attr('height', $(document).height());
+    mapimg.attr('width', $(document).width());
     
     $(document).mousedown(function(ev) {
         drag_start = true;
         start_pos = { 'x': ev.pageX, 'y': ev.pageY };
+        
+        canvas.css('z-index', 1000);
+        mapimg.css('z-index', 1);
     });
 
     $(document).mousemove(function(ev) {
@@ -38,19 +44,34 @@ $(function(){
     });
     
     $(document).mouseup(function(ev) {
-        if(drag_start) {            
+        canvas.css('z-index', 1);
+        mapimg.css('z-index', 1000);
+        
+        if(drag_start) {
+           
             cur_path.args = [
                 start_pos.x + (cur_path.lineWidth / 2), 
                 start_pos.y + (cur_path.lineWidth / 2), 
                 ev.pageX - start_pos.x, 
                 ev.pageY - start_pos.y
             ];
-            sprites.push({'paths': [$.extend({}, cur_path)]});            
-            drag_start = false;
-            draw_sprites();
+            sprites.push({'paths': [$.extend({}, cur_path)]});
             
-            map.append('<area shape="rect" coords="'+ cur_path.args.join(',') +'" onmouseover="alert(2);" />');
-        }        
+            map.append('<area shape="rect" coords="'+ [
+                start_pos.x,
+                start_pos.y,
+                ev.pageX,
+                ev.pageY
+            ].join(',') +'" id="area_'+ (sprites.length - 1) +'" />');             
+            
+        }   
+        draw_sprites();
+        drag_start = false;     
+    });
+    
+    map.delegate('area', 'mouseover', function(ev) {
+        
+        $('#header').html(this.id);
     });
     
     function draw_sprites() {
