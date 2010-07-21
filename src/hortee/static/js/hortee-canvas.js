@@ -32,6 +32,7 @@ $(function(){
     });
 
     $(document).mousemove(function(ev) {
+        $('#header').html(sprite_id);
         if(drag_start) {
             guide_path.args = [
                 start_pos.x + (guide_path.lineWidth / 2), 
@@ -47,7 +48,7 @@ $(function(){
     $(document).mouseup(function(ev) {
         canvas.css('z-index', 1);
         mapimg.css('z-index', 1000);
-        
+                
         if(drag_start && 
           Math.abs(start_pos.x - ev.pageX) > 10 && 
           Math.abs(start_pos.y - ev.pageY) > 10) {
@@ -68,19 +69,23 @@ $(function(){
             ].join(',') +'" id="area_'+ (sprites.length - 1) +'" />');
         }   
         draw_sprites();
-        drag_start = false;     
+        drag_start = false;
     });
     
     map.delegate('area', 'mouseover', function() {
         sprite_id = this.id.substr(this.id.indexOf('_')+1);
         sprites[sprite_id].paths[0].fill = '#F00';
         draw_sprites();
+        $('#header').html(sprite_id);
     });
     
     map.delegate('area', 'mouseout', function() {
-        sprites[sprite_id].paths[0].fill = cur_path.fill;
-        sprite_id = null;
-        draw_sprites();
+        if(!drag_start) {
+            sprites[sprite_id].paths[0].fill = cur_path.fill;
+            sprite_id = null;
+            draw_sprites();
+            $('#header').html(sprite_id);
+        }            
     });
     
     function draw_sprites() {

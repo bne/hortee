@@ -8,6 +8,7 @@ body {
     position: absolute;
     width: 100%;
     background: #EEE;
+    z-index: 5000;
 }
 
 canvas, #mapimg {
