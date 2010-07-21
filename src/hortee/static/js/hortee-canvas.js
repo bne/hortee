@@ -87,12 +87,13 @@ $(function(){
         }
         
         if(drag_start && cur_sprite_id) {
+            var path = sprites[cur_sprite_id].paths[0];
             $('#area_'+ cur_sprite_id).replaceWith(            
                 '<area shape="rect" coords="'+ [
-                sprites[cur_sprite_id].paths[0].args[0],
-                sprites[cur_sprite_id].paths[0].args[1],
-                sprites[cur_sprite_id].paths[0].args[0] + sprites[cur_sprite_id].paths[0].args[2],
-                sprites[cur_sprite_id].paths[0].args[1] + sprites[cur_sprite_id].paths[0].args[3]
+                path.args[0],
+                path.args[1],
+                path.args[0] + path.args[2],
+                path.args[1] + path.args[3] 
             ].join(',') +'" id="area_'+ cur_sprite_id +'" />');            
             
         }
