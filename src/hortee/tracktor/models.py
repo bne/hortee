@@ -8,8 +8,11 @@ class Plot(models.Model):
     """A pot into which to put Actors
     """
     # TODO: Geo coords fields
-    # TODO: __unicode__ method returns User's names
+    #name = models.CharField(max_length=100)
     owners = models.ManyToManyField(User)
+    
+    #def __unicode__(self):
+    #    return self.name
 
 class Actor(models.Model):
     """A thing unto which things happen

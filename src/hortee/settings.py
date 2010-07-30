@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'hortee.tracktor',
     'django.contrib.admin',
+    'south',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
