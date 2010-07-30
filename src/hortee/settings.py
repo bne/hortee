@@ -11,10 +11,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'sqlite3',
         'NAME': path.join(SITE_ROOT, '../db/hortee.db'),
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'USER': '',
+        'PASSWORD': '', 
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -91,6 +91,7 @@ INSTALLED_APPS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
     'hortee.context_processors.page',
     'hortee.context_processors.debug',
 )
