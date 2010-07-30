@@ -2,13 +2,14 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
 
-from hortee.main import views
-
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    url(r'^$', views.default, name='hortee-default'),
-    url(r'^list/$', views.list_actors, name='hortee-list'),    
+urlpatterns = patterns('hortee.main.views',
+    url(r'^$', 'default', name='hortee-default'),
+)
+
+urlpatterns += patterns('hortee.tracktor.views',
+    url(r'^list/$', 'list_actors', name='tracktor-list'),    
 )
 
 urlpatterns += patterns('',
