@@ -87,7 +87,6 @@ class EndEventTest(TestCase):
             actor=actor2, name='test_event',
             start_event=self.start_event,
             date=datetime(2000, 1, 1, 1, 1, 1))
-              
             
 class TextContentEventTest(TestCase):
     def setUp(self):

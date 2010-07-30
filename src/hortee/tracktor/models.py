@@ -2,11 +2,19 @@ from datetime import datetime
 
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+
+class Plot(models.Model):
+    """A pot into which to put Actors
+    """
+    # TODO: Geo coords fields
+    owners = models.ManyToManyField(User)
 
 class Actor(models.Model):
     """A thing unto which things happen
     """
     name = models.CharField(max_length=100)
+    plot = models.ForeignKey(Plot)
     
     def __unicode__(self):
         return self.name    
@@ -52,7 +60,7 @@ class Event(models.Model):
         
 class EndEvent(Event):
     """Marks the end datetime of a sibling event
-    Throws an error if the date of the sibling is after the objects date.
+    Throws an error if the date of the sibling is after the object's date.
     Throws an error if the sibling's actor is not the same as the object's
     """
     start_event = models.ForeignKey(Event, related_name='start_event')
@@ -61,7 +69,7 @@ class EndEvent(Event):
         if self.start_event.date >= self.date:
             raise ValidationError('Start event date is greater than date.')
         if not self.start_event.actor is self.actor:
-            raise ValidationError('Start event actor is not actor.')            
+            raise ValidationError('Start event actor is not own actor.')            
        
 class TextContentEvent(Event):
     """Event with a descriptive text field

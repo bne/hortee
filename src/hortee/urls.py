@@ -8,6 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', views.default, name='hortee-default'),
+    url(r'^list/$', views.list_actors, name='hortee-list'),    
 )
 
 urlpatterns += patterns('',

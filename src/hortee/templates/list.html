@@ -1,0 +1,9 @@
+{% extends base_template %}
+{% block head %}{% endblock head %}
+{% block content %}
+<ul>
+{% for actor in actors %}
+    <li id="{{ actor.id }}">{{ actor.name }}</li>
+{% endfor %}
+</ul>
+{% endblock content %}
