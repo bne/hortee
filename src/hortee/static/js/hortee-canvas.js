@@ -117,6 +117,10 @@ $(function(){
         }            
     });
     
+    map.delegate('area', 'mousedown', function() {
+        console.log('helo');
+    });    
+    
     function draw_sprites() {
         ctx.clearRect(0, 0, canvas.width(), canvas.height());
         $.each(sprites, function(i, sprite) {
