@@ -1,7 +1,9 @@
 {% extends base_template %}
-{% block head %}{% endblock head %}
+{% block head %}
+<script type="text/javascript" src="/static/js/hortee-list.js"></script>
+{% endblock head %}
 {% block content %}
-<ul>
+<ul id="actors">
 {% for actor in actors %}
     <li id="{{ actor.id }}">{{ actor.name }}</li>
 {% endfor %}
