@@ -44,16 +44,14 @@ class Actor(models.Model):
             return Event.objects.filter(actor=self, date__lte=end)
         elif not start is None and end is None:
             return Event.objects.filter(actor=self, date__gte=start)
-        return  Event.objects.filter(actor=self)
+        return Event.objects.filter(actor=self)
     
 class Event(models.Model):
-    """Base class for all events on the timeline
-    
-    Not set as abstract in the meta class, so we can do Event.objects.get() for
-    all models inheriting this one
+    """An event on the actor's timeline
     """
     actor = models.ForeignKey(Actor)
     name = models.CharField(max_length=200)
+    text = models.TextField(null=True, blank=True)
     date = models.DateTimeField(default=datetime.now)
         
     def __unicode__(self):
@@ -61,22 +59,4 @@ class Event(models.Model):
     
     class Meta:
         ordering = ["date"]
-        
-class EndEvent(Event):
-    """Marks the end datetime of a sibling event
-    Throws an error if the date of the sibling is after the object's date.
-    Throws an error if the sibling's actor is not the same as the object's
-    """
-    start_event = models.ForeignKey(Event, related_name='start_event')
-    
-    def clean(self):
-        if self.start_event.date >= self.date:
-            raise ValidationError('Start event date is greater than date.')
-        if not self.start_event.actor is self.actor:
-            raise ValidationError('Start event actor is not own actor.')            
-       
-class TextContentEvent(Event):
-    """Event with a descriptive text field
-    """
-    text_content = models.TextField()
 
