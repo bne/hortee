@@ -12,6 +12,8 @@ def list_actors(request):
         }, context_instance=RequestContext(request))
 
 def list_events(request, id=None):
-    json = serializers.serialize('json', Event.objects.filter(actor=id))
-    return HttpResponse(json, mimetype='application/json')
+    events = Event.objects.filter(actor=id)
+    return render_to_response('list-events.html', {
+            'events': events,
+        }, context_instance=RequestContext(request))
     

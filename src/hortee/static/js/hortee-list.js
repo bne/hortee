@@ -1,5 +1,7 @@
 $(function(){
     $('#actors li').click(function(){
-        alert(this.id);
+        $.get('/list/'+this.id, function(data){
+            
+        });
     });
 });
