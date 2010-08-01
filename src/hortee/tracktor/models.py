@@ -53,7 +53,7 @@ class Event(models.Model):
     all models inheriting this one
     """
     actor = models.ForeignKey(Actor)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     date = models.DateTimeField(default=datetime.now)
         
     def __unicode__(self):

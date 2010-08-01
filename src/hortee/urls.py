@@ -9,7 +9,8 @@ urlpatterns = patterns('hortee.main.views',
 )
 
 urlpatterns += patterns('hortee.tracktor.views',
-    url(r'^list/$', 'list_actors', name='tracktor-list'),    
+    url(r'^list/$', 'list_actors', name='tracktor-actors'),  
+    url(r'^list/(?P<id>\d+)/$', 'list_events', name='tracktor-events'),  
 )
 
 urlpatterns += patterns('',
