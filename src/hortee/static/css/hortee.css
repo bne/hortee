@@ -20,5 +20,9 @@ canvas, #mapimg {
     cursor: default;
 }
 
+/* list */
+ul.events {
+    display: none;
+}
 
 

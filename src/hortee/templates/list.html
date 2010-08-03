@@ -5,7 +5,7 @@
 {% block content %}
 <ul id="actors">
 {% for actor in actors %}
-    <li id="{{ actor.id }}">{{ actor.name }}</li>
+    <li id="{{ actor.id }}">{{ actor.name }}<ul class="events"></ul></li>
 {% endfor %}
 </ul>
 {% endblock content %}
