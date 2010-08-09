@@ -3,9 +3,11 @@
 <script type="text/javascript" src="/static/js/hortee-list.js"></script>
 {% endblock head %}
 {% block content %}
+<form id="add_actor">
+    <input id="actor_name" />
+    <input type="button" value="add" />
+</form>
 <ul id="actors">
-{% for actor in actors %}
-    <li id="{{ actor.id }}">{{ actor.name }}<ul class="events"></ul></li>
-{% endfor %}
+{% include "list-actors.html" %}
 </ul>
 {% endblock content %}

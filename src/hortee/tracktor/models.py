@@ -30,22 +30,7 @@ class Actor(models.Model):
     @property
     def date_end(self):
         return Event.objects.order_by('-date')[0].date
-        
-    def get_timeline(self, start=None, end=None):
-        """Returns the events between 2 dates for this Actor
-        If start is None, returns all Events up to end
-        If end is None returns all Events after start
-        If start and end are None, returns all events
-        """
-        if not start is None and not end is None:
-            return Event.objects.filter(actor=self, 
-                date__gte=start, date__lte=end)
-        elif start is None and not end is None:
-            return Event.objects.filter(actor=self, date__lte=end)
-        elif not start is None and end is None:
-            return Event.objects.filter(actor=self, date__gte=start)
-        return Event.objects.filter(actor=self)
-    
+                
 class Event(models.Model):
     """An event on the actor's timeline
     """

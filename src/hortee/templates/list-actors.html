@@ -1,0 +1,7 @@
+{% for actor in actors %}
+    <li id="actor_{{ actor.id }}">
+        <span class="delete">[x]</span>
+        {{ actor.name }}
+        <ul class="events"></ul>
+    </li>
+{% endfor %}
