@@ -19,6 +19,17 @@ def add_actor(request):
             'actors': actors,
         }, context_instance=RequestContext(request))
 
+def delete_actor(request):
+    rtn = None
+    if request.method == 'POST':
+        try:
+            actor = Actor.objects.get(id=request.POST.get('id', None))
+            actor.delete()
+            rtn = 'true'
+        except Actor.DoesNotExist:
+            pass
+    return HttpResponse(rtn) 
+
 def list_actors(request):
     # TODO: multiple plots per user (select from list and ut in session)
     actors = Actor.objects.filter(plot__owners=request.user).order_by('-id')

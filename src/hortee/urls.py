@@ -5,13 +5,14 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('hortee.main.views',
-    url(r'^$', 'default', name='hortee-default'),
+    url(r'^$', 'default'),
 )
 
 urlpatterns += patterns('hortee.tracktor.views',
-    url(r'^list/$', 'list_actors', name='tracktor-actors'),  
-    url(r'^actor/add/$', 'add_actor', name='tracktor-add_actors'),  
-    url(r'^list/(?P<id>\d+)/$', 'list_events', name='tracktor-events'),  
+    url(r'^list/$', 'list_actors'),  
+    url(r'^list/(?P<id>\d+)/$', 'list_events'),
+    url(r'^actor/add/$', 'add_actor'),  
+    url(r'^actor/delete/$', 'delete_actor'),
 )
 
 urlpatterns += patterns('',

@@ -18,7 +18,14 @@ $(function(){
         }
     });
     
-    $('#actors li span.delete').click(function(){
-        
+    $('#actors li span.delete').click(function(ev){
+        ev.stopPropagation();
+        var parent = $(this).parent().get(0);
+        $.post('/actor/delete/', 
+          { id: parent.id.replace(/[^\d]+/,'') }, function(data){
+            if(data) {
+                $(parent).remove();
+            }
+        });
     });
 });
