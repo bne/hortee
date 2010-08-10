@@ -25,4 +25,7 @@ ul.events {
     display: none;
 }
 
+ul.events li span.date {
+    display: block;
+}
 
