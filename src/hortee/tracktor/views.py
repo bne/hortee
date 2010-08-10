@@ -10,7 +10,6 @@ def add_actor(request):
     if request.method == 'POST':
         name = request.POST.get('name', None)
         if name:
-            # TODO: multiple plots per user (select from list and ut in session)
             plot = Plot.objects.get(owners=request.user)
             actor = Actor(name=name, plot=plot)
             actor.save()
@@ -20,22 +19,30 @@ def add_actor(request):
         }, context_instance=RequestContext(request))
 
 def delete_actor(request):
-    rtn = None
+    id = None
     if request.method == 'POST':
         try:
-            actor = Actor.objects.get(id=request.POST.get('id', None))
-            actor.delete()
-            rtn = 'true'
+            id = request.POST.get('id', None)
+            Actor.objects.get(id=id).delete()
         except Actor.DoesNotExist:
             pass
-    return HttpResponse(rtn) 
+    return HttpResponse(id) 
 
 def list_actors(request):
-    # TODO: multiple plots per user (select from list and ut in session)
     actors = Actor.objects.filter(plot__owners=request.user).order_by('-id')
     return render_to_response('list.html', {
             'actors': actors,
         }, context_instance=RequestContext(request))
+
+def delete_event(request):
+    id = None
+    if request.method == 'POST':
+        try:
+            id = request.POST.get('id', None)
+            Event.objects.get(id=id).delete()
+        except Event.DoesNotExist:
+            pass
+    return HttpResponse(id) 
 
 def list_events(request, id=None):
     events = Event.objects.filter(actor=id)
