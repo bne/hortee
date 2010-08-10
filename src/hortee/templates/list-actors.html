@@ -1,7 +1,12 @@
 {% for actor in actors %}
     <li id="actor_{{ actor.id }}">
         <span class="delete">[x]</span>
-        {{ actor.name }}
+        <span class="name">{{ actor.name }}</span>
+        <form class="add_event">
+            <input type="text" />
+            <input type="hidden" name="actor_id" value="{{ actor.id }}" />
+            <input type="submit" value="add" />
+        </form>        
         <ul class="events"></ul>
     </li>
 {% endfor %}
