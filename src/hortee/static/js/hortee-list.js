@@ -1,7 +1,9 @@
 $(function(){
     $('#add_actor').submit(function(){
+        var name_fld = $(this).find('input[type="text"]');
         $.post('/actor/add/', 
-          { 'name': $(this).find('input[type="text"]').val() }, function(data){
+          { 'name': name_fld.val() }, function(data){
+            name_fld.val('');
             $('#actors').prepend(data);
         });
         return false;
@@ -21,7 +23,7 @@ $(function(){
         }        
     });
         
-    $('form.add_event').submit(function(){
+    $('form.add_event').live('submit', function(){
         var actor_id = $(this).find('input[type="hidden"]').val();
         var name_fld = $(this).find('input[type="text"]');
         $.post('/event/add/', { 
