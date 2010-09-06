@@ -13,12 +13,12 @@ $(function(){
           name: $(this).find('input[type="text"]').val(),
           actor_id: $(this).find('input[type="hidden"]').val()
         }, function(data){
-            events.prepend(data);
+            events.append(data);
         });
         return false;
     });
 
-    $('#actors li span.name').click(function(){
+    $('#actors li').delegate('span.name', 'click', function(){
         var parent = $(this).parent().get(0);
         var events = $(parent).find('ul.events');
         if(!events.html()) {
