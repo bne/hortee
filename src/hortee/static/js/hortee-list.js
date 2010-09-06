@@ -32,11 +32,10 @@ $(function(){
         }
     });
     
-    $('li span.delete').click(function(ev){
+    $('li').delegate('span.delete', 'click', function(ev){
         var parent = $(this).parent().get(0);
         var id = parent.id.split('_');
-        $.post('/'+ id[0] +'/delete/', 
-          { id: id[1] }, function(data){
+        $.post('/'+ id[0] +'/delete/', { id: id[1] }, function(data){
             if(data) {
                 $(parent).remove();
             }

@@ -10,10 +10,10 @@ urlpatterns = patterns('hortee.main.views',
 
 urlpatterns += patterns('hortee.tracktor.views',
     url(r'^list/$', 'list_actors'),  
-    url(r'^list/(?P<id>\d+)/$', 'list_events'),
     url(r'^actor/add/$', 'add_actor'),
+    url(r'^actor/delete/$', 'delete_actor'),    
+    url(r'^list/(?P<id>\d+)/$', 'list_events'),
     url(r'^event/add/$', 'add_event'),  
-    url(r'^actor/delete/$', 'delete_actor'),
     url(r'^event/delete/$', 'delete_event'),    
 )
 
