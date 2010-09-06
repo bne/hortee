@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -5,6 +6,7 @@ from django.template import RequestContext
 
 from models import Plot, Actor, Event
 
+@login_required
 def add_actor(request):
     actors = []
     if request.method == 'POST':
@@ -18,6 +20,7 @@ def add_actor(request):
             'actors': actors,
         }, context_instance=RequestContext(request))
 
+@login_required
 def delete_actor(request):
     id = None
     if request.method == 'POST':
@@ -28,12 +31,14 @@ def delete_actor(request):
             pass
     return HttpResponse(id) 
 
+@login_required
 def list_actors(request):
     actors = Actor.objects.filter(plot__owners=request.user).order_by('-id')
     return render_to_response('list.html', {
             'actors': actors,
         }, context_instance=RequestContext(request))
 
+@login_required
 def add_event(request):
     events = []
     if request.method == 'POST':
@@ -48,6 +53,7 @@ def add_event(request):
             'events': events,
         }, context_instance=RequestContext(request))
 
+@login_required
 def delete_event(request):
     id = None
     if request.method == 'POST':
@@ -58,6 +64,7 @@ def delete_event(request):
             pass
     return HttpResponse(id) 
 
+@login_required
 def list_events(request, id=None):
     events = Event.objects.filter(actor=id)
     return render_to_response('list-events.html', {
