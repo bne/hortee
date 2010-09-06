@@ -1,35 +1,48 @@
 $(function(){
     $('#add_actor').submit(function(){
         $.post('/actor/add/', 
-          { name: $(this).find('input[type="text"]').val() }, function(data){
+          { 'name': $(this).find('input[type="text"]').val() }, function(data){
             $('#actors').prepend(data);
-        });
-        return false;
-    });
-    
-    $('form.add_event').submit(function(){
-        var events = $(this).parent().find('ul.events');
-        $.post('/event/add/', { 
-          name: $(this).find('input[type="text"]').val(),
-          actor_id: $(this).find('input[type="hidden"]').val()
-        }, function(data){
-            events.append(data);
         });
         return false;
     });
 
     $('#actors li').delegate('span.name', 'click', function(){
-        var parent = $(this).parent().get(0);
-        var events = $(parent).find('ul.events');
-        if(!events.html()) {
-            $.get('/list/'+parent.id.replace(/[^\d]+/,'')+'/', function(data){
-                events.append(data);
-                events.slideDown();
+        var actor_id = $(this).parent().get(0).id;
+        var ul = $(this).parent().find('ul.events');
+        if(!ul.html()) {
+            $.get('/list/'+actor_id.replace(/[^\d]+/,'')+'/', function(data){
+                ul.append(data);
+                ul.slideDown();
             });
         }
         else {
-            events.slideToggle();
-        }
+            ul.slideToggle();
+        }        
+    });
+        
+    $('form.add_event').submit(function(){
+        var actor_id = $(this).find('input[type="hidden"]').val();
+        var name_fld = $(this).find('input[type="text"]');
+        $.post('/event/add/', { 
+          'name': name_fld.val(),
+          'actor_id': actor_id
+        }, function(new_event){
+            var ul = $('#actor_'+ actor_id + ' ul.events');
+            name_fld.val('');
+            if(!ul.html()) {
+                $.get('/list/'+ actor_id +'/', function(events_list){
+                    ul.append(events_list);
+                    ul.slideDown();
+                });            
+            }
+            else {                
+                ul.slideDown(400, function() {
+                    ul.append(new_event);
+                });                
+            }
+        });
+        return false;
     });
     
     $('li').delegate('span.delete', 'click', function(ev){
