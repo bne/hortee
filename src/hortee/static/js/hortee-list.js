@@ -8,18 +8,21 @@ $(function(){
         });
         return false;
     });
-
+    
     $('#actors li').delegate('span.name', 'click', function(){
         var actor_id = $(this).parent().get(0).id;
         var ul = $(this).parent().find('ul.events');
+        var fm = $(this).parent().find('form.add_event');
         if(!ul.html()) {
             $.get('/list/'+actor_id.replace(/[^\d]+/,'')+'/', function(data){
                 ul.append(data);
                 ul.slideDown();
+                fm.slideDown();
             });
         }
         else {
             ul.slideToggle();
+            fm.slideToggle();
         }        
     });
         
@@ -30,19 +33,8 @@ $(function(){
           'name': name_fld.val(),
           'actor_id': actor_id
         }, function(new_event){
-            var ul = $('#actor_'+ actor_id + ' ul.events');
             name_fld.val('');
-            if(!ul.html()) {
-                $.get('/list/'+ actor_id +'/', function(events_list){
-                    ul.append(events_list);
-                    ul.slideDown();
-                });            
-            }
-            else {                
-                ul.slideDown(400, function() {
-                    ul.append(new_event);
-                });                
-            }
+            $('#actor_'+ actor_id + ' ul.events').append(new_event);
         });
         return false;
     });

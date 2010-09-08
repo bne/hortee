@@ -21,6 +21,10 @@ canvas, #mapimg {
 }
 
 /* list */
+form.add_event {
+    display: none;
+}
+
 ul.events {
     display: none;
 }
