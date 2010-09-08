@@ -40,6 +40,9 @@ $(function(){
     });
     
     $('li').delegate('span.delete', 'click', function(ev){
+        if(!confirm('Are you sure you want to delete?')) {
+            return false;
+        }
         var parent = $(this).parent().get(0);
         var id = parent.id.split('_');
         $.post('/'+ id[0] +'/delete/', { id: id[1] }, function(data){
