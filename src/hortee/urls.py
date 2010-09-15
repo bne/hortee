@@ -9,7 +9,8 @@ urlpatterns = patterns('hortee.main.views',
 )
 
 urlpatterns += patterns('hortee.tracktor.views',
-    url(r'^list/$', 'list_actors'),  
+    url(r'^list/$', '_list', name="tracktor-list"),  
+    url(r'^map/$', '_map', name="tracktor-map"),      
     url(r'^actor/add/$', 'add_actor'),
     url(r'^actor/delete/$', 'delete_actor'),    
     url(r'^list/(?P<id>\d+)/$', 'list_events'),
@@ -20,6 +21,7 @@ urlpatterns += patterns('hortee.tracktor.views',
 urlpatterns += patterns('',
     (r'^login/$', 'django.contrib.auth.views.login', {
         'template_name': 'user/login.html'}),
+    (r'^logout/$', 'django.contrib.auth.views.logout_then_login'),
 )
 
 urlpatterns += patterns('',

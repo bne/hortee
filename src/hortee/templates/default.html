@@ -1,11 +1,11 @@
 {% extends base_template %}
-{% block head %}
-<!--[if IE]><script src="/static/js/excanvas.js"></script><![endif]-->    
-<script type="text/javascript" src="/static/js/hortee-canvas.js"></script>
-{% endblock head %}
 {% block content %}
-<div id="header"></div>
-<canvas></canvas>
-<img src="/static/img/shim.gif" id="mapimg" usemap="map" />
-<map name="map"></map>
+    {% if not user.is_authenticated %}
+        {% include "user/login-form.frag.html" %}
+    {% else %}
+        <ul>
+            <li><a href="{% url tracktor-map %}">Map</a></li>
+            <li><a href="{% url tracktor-list %}">List</a></li>
+        </ul>
+    {% endif %}
 {% endblock content %}

@@ -7,6 +7,18 @@ from django.template import RequestContext
 from models import Plot, Actor, Event
 
 @login_required
+def _map(request):
+    return render_to_response('map.html', {
+        }, context_instance=RequestContext(request))
+        
+@login_required
+def _list(request):
+    actors = Actor.objects.filter(plot__owners=request.user).order_by('-id')
+    return render_to_response('list.html', {
+            'actors': actors,
+        }, context_instance=RequestContext(request))        
+        
+@login_required
 def add_actor(request):
     actors = []
     if request.method == 'POST':
@@ -30,13 +42,6 @@ def delete_actor(request):
         except Actor.DoesNotExist:
             pass
     return HttpResponse(id) 
-
-@login_required
-def list_actors(request):
-    actors = Actor.objects.filter(plot__owners=request.user).order_by('-id')
-    return render_to_response('list.html', {
-            'actors': actors,
-        }, context_instance=RequestContext(request))
 
 @login_required
 def add_event(request):
