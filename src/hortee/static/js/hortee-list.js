@@ -28,18 +28,18 @@ $(function(){
         
     $('form.add_event').live('submit', function(){
         var actor_id = $(this).find('input[type="hidden"]').val();
-        var name_fld = $(this).find('input[type="text"]');
+        var text_fld = $(this).find('textarea');
         $.post('/event/add/', { 
-          'name': name_fld.val(),
+          'text': text_fld.val(),
           'actor_id': actor_id
         }, function(new_event){
-            name_fld.val('');
+            text_fld.val('');
             $('#actor_'+ actor_id + ' ul.events').append(new_event);
         });
         return false;
     });
     
-    $('li').delegate('span.delete', 'click', function(ev){
+    $('li span.delete').live('click', function(ev){
         if(!confirm('Are you sure you want to delete?')) {
             return false;
         }

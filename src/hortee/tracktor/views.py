@@ -48,10 +48,10 @@ def add_event(request):
     events = []
     if request.method == 'POST':
         actor_id = request.POST.get('actor_id', None)
-        name = request.POST.get('name', None)
-        if name and actor_id:
+        text = request.POST.get('text', None)
+        if text and actor_id:
             actor = Actor.objects.get(id=actor_id)
-            event = Event(actor=actor, name=name)
+            event = Event(actor=actor, text=text)
             event.save()
             events.append(event)
     return render_to_response('list-events.html', {

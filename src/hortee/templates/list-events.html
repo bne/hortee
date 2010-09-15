@@ -1,7 +1,7 @@
 {% for event in events %}
     <li id="event_{{ event.id }}">
         <span class="delete">[x]</span>        
-        {{ event.name }}
+        {{ event.text }}
         <span class="date">{{ event.date|date:"DATETIME_FORMAT" }}</span>
     </li>
 {% endfor %}
