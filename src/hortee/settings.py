@@ -73,4 +73,5 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'hortee.context_processors.page',
     'hortee.context_processors.debug',
+    'hortee.tracktor.context_processors.tracktor',    
 )
