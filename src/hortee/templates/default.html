@@ -2,10 +2,5 @@
 {% block content %}
     {% if not user.is_authenticated %}
         {% include "user/login-form.frag.html" %}
-    {% else %}
-        <ul>
-            <li><a href="{% url tracktor-map %}">Map</a></li>
-            <li><a href="{% url tracktor-list %}">List</a></li>
-        </ul>
     {% endif %}
 {% endblock content %}

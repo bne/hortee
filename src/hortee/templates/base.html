@@ -9,6 +9,16 @@
     {% block head %}{% endblock head %}
 </head>
 <body>
+    {% block header %}
+    {% if user.is_authenticated %}
+    <div id="header">
+        <ul id="main-nav">
+            <li><a href="{% url tracktor-map %}">Map</a></li>
+            <li><a href="{% url tracktor-list %}">List</a></li>
+        </ul>
+    </div>
+    {% endif %}
+    {% endblock header %}
     {% block content %}{% endblock content %}
 </body>
 </html>

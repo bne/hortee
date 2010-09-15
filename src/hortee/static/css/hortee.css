@@ -5,15 +5,27 @@ body {
 }
 
 #header {
-    position: absolute;
     width: 100%;
+    height: 25px;
     background: #EEE;
     z-index: 5000;
 }
 
+#main-nav {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#main-nav li {
+    display: inline;
+    margin-right: 10px;
+}
+
+/* map */
 canvas, #mapimg {
     position: absolute;
-    top: 0;
+    top: 25px;
     left: 0;
     padding: 0;
     margin: 0;
