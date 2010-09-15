@@ -18,10 +18,10 @@ urlpatterns += patterns('hortee.tracktor.views',
     url(r'^event/delete/$', 'delete_event'),    
 )
 
-urlpatterns += patterns('',
-    (r'^login/$', 'django.contrib.auth.views.login', {
-        'template_name': 'user/login.html'}),
-    (r'^logout/$', 'django.contrib.auth.views.logout_then_login'),
+urlpatterns += patterns('django.contrib.auth.views',
+    url(r'^login/$', 'login', {
+        'template_name': 'user/login.html'}, 'auth-login'),
+    url(r'^logout/$', 'logout_then_login', name='auth-logout'),
 )
 
 urlpatterns += patterns('',
