@@ -9,7 +9,7 @@ $(function(){
         return false;
     });
     
-    $('#actors li').delegate('span.name', 'click', function(){
+    $('#actors li span.name').live('click', function(){
         var actor_id = $(this).parent().get(0).id;
         var ul = $(this).parent().find('ul.events');
         var fm = $(this).parent().find('form.add_event');
