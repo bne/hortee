@@ -35,7 +35,6 @@ class Event(models.Model):
     """An event on the actor's timeline
     """
     actor = models.ForeignKey(Actor)
-    name = models.CharField(max_length=200)
     text = models.TextField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
         
