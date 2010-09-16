@@ -27,6 +27,7 @@ def login(request):
     """
     login_result = django_login(request, template_name='user/login.html')
     if request.user.is_authenticated():
-        print request.user.username
+        # do something with user profile
+        pass
         
     return login_result
