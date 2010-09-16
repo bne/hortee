@@ -9,9 +9,9 @@
     {% block head %}{% endblock head %}
 </head>
 <body>
+    <div id="header">
     {% block header %}
     {% if user.is_authenticated %}
-    <div id="header">
         <ul id="main-nav">
             <li>
                 <select id="plot">
@@ -24,8 +24,8 @@
             <li><a href="{% url tracktor-list %}">List</a></li>
             <li><a href="{% url auth-logout %}">Logout</a></li>
         </ul>
-    </div>
     {% endif %}
+    </div>
     {% endblock header %}
     {% block content %}{% endblock content %}
 </body>

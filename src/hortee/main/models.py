@@ -7,4 +7,3 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     
     
-    
