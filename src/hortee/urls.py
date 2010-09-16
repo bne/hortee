@@ -5,7 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('hortee.main.views',
-    url(r'^$', 'default'),
+    url(r'^$', 'default', name='hortee-default'),
+    url(r'^login/$', 'login', name='hortee-login'),
 )
 
 urlpatterns += patterns('hortee.tracktor.views',
@@ -15,12 +16,10 @@ urlpatterns += patterns('hortee.tracktor.views',
     url(r'^actor/delete/$', 'delete_actor'),    
     url(r'^list/(?P<id>\d+)/$', 'list_events'),
     url(r'^event/add/$', 'add_event'),  
-    url(r'^event/delete/$', 'delete_event'),    
+    url(r'^event/delete/$', 'delete_event'), 
 )
 
 urlpatterns += patterns('django.contrib.auth.views',
-    url(r'^login/$', 'login', {
-        'template_name': 'user/login.html'}, 'auth-login'),
     url(r'^logout/$', 'logout_then_login', name='auth-logout'),
 )
 
