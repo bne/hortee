@@ -27,8 +27,6 @@ Django application for tracking plants over time
 Build
 =====
 
-Checkout
-
 ::
 
   sudo aptitude install python-setuptools
@@ -38,6 +36,7 @@ Checkout
 On Lucid
 
 ::
+
   sudo aptitude install python zc.buildout
   buildout2.6
 
