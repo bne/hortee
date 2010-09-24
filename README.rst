@@ -32,9 +32,6 @@ Build
   sudo aptitude install python-setuptools
   git clone git://github.com/bne/hortee.git
   cd hortee/
-
-::
-
   python bootstrap.py -v 1.4.3 --distribute
   bin/buildout
 
