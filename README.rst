@@ -33,7 +33,7 @@ Build
   git clone git://github.com/bne/hortee.git
   cd hortee/
 
-On Lucid:
+On Lucid
 
 ::
   sudo aptitude install python zc.buildout
