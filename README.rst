@@ -27,6 +27,8 @@ Django application for tracking plants over time
 Build
 =====
 
+Checkout
+
 ::
 
   sudo aptitude install python-setuptools
