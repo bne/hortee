@@ -32,6 +32,17 @@ Build
   sudo aptitude install python-setuptools
   git clone git://github.com/bne/hortee.git
   cd hortee/
+
+On Lucid:
+
+::
+  sudo aptitude install python zc.buildout
+  buildout2.6
+
+For all other enquiries
+
+::
+
   python bootstrap.py
   ./bin/buildout
 
