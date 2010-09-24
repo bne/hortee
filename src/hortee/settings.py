@@ -9,10 +9,10 @@ DJANGO_ROOT = path.join(SITE_ROOT, '../parts/django')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'sqlite3',
-        'NAME': path.join(SITE_ROOT, '../db/hortee.db'),
-        'USER': '',
-        'PASSWORD': '', 
+        'ENGINE': 'postgresql_psycopg2',
+        'NAME': 'hortee',
+        'USER': 'hortee',
+        'PASSWORD': 'hortee', 
         'HOST': '',
         'PORT': '',
     }
