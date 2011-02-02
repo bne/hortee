@@ -16,7 +16,9 @@ urlpatterns += patterns('hortee.tracktor.views',
     url(r'^actor/delete/$', 'delete_actor'),    
     url(r'^list/(?P<id>\d+)/$', 'list_events'),
     url(r'^event/add/$', 'add_event'),  
-    url(r'^event/delete/$', 'delete_event'), 
+    url(r'^event/delete/$', 'delete_event'),
+    url(r'^plot/add/$', 'add_plot', name='tracktor-add_plot'),
+    url(r'^plot/delete/$', 'delete_plot', name='tracktor-delete_plot'),
 )
 
 urlpatterns += patterns('django.contrib.auth.views',

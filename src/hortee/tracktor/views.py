@@ -90,4 +90,33 @@ def delete_event(request):
             pass
     return HttpResponse(id) 
 
+@login_required
+def add_plot(request):
+    """View for adding a plot
+    """
+    plots = request.session.get('plots', [])
+    if request.method == 'POST':
+        name = request.POST.get('name', None)
+        if name:
+            plot = Plot(name=name)
+            plot.save()
+            plot.owners.add(request.user)
+            list(plots).append(plot)
+            request.session['plots'] = plots
+    return render_to_response('list-plots.html', {
+            'plots': plots,
+        }, context_instance=RequestContext(request))
+
+@login_required
+def delete_plot(request):
+    """View for deleting a plot
+    """
+    id = None
+    if request.method == 'POST':
+        try:
+            id = request.POST.get('id', None)
+            Plot.objects.get(id=id).delete()
+        except Plot.DoesNotExist:
+            pass
+    return HttpResponse(id) 
     

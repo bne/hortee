@@ -6,6 +6,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.views import login as django_login
 from django.views.decorators.cache import never_cache
 
+from tracktor.models import Plot
+
 def default(request):
     """View for default
     """
@@ -27,7 +29,6 @@ def login(request):
     """
     login_result = django_login(request, template_name='user/login.html')
     if request.user.is_authenticated():
-        # do something with user profile
-        pass
+        request.session['plots'] = Plot.objects.filter(owners=request.user)
         
     return login_result
