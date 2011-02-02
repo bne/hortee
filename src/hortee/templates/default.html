@@ -1,0 +1,6 @@
+{% extends base_template %}
+{% block content %}
+    {% if not user.is_authenticated %}
+        {% include "user/login-form.frag.html" %}
+    {% endif %}
+{% endblock content %}

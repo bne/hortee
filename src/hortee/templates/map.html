@@ -1,0 +1,10 @@
+{% extends base_template %}
+{% block head %}
+<!--[if IE]><script src="/static/js/excanvas.js"></script><![endif]-->    
+<script type="text/javascript" src="/static/js/hortee-canvas.js"></script>
+{% endblock head %}
+{% block content %}
+    <canvas></canvas>
+    <img src="/static/img/shim.gif" id="mapimg" usemap="map" />
+    <map name="map"></map>
+{% endblock content %}
