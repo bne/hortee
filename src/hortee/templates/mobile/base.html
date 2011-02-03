@@ -1,0 +1,27 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>hortee</title> 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
+</head> 
+<body>
+    {% block page %}
+    <div data-role="page">
+
+	    <div data-role="header">
+		    {% block header %}<h1>HAI!</h1>{% endblock %}
+	    </div>
+
+	    <div data-role="content">	
+            {% block content %}{% endblock %}
+	    </div>
+
+	    <div data-role="footer">
+		    {% block footer %}{% endblock %}
+	    </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

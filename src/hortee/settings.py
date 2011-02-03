@@ -48,12 +48,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'main.middleware.UserAgentMiddleware',
 )
 
 ROOT_URLCONF = 'hortee.urls'
 
 TEMPLATE_DIRS = (
-    path.join(SITE_ROOT, 'hortee/templates/m'),
+    path.join(SITE_ROOT, 'hortee/templates/mobile'),
     path.join(SITE_ROOT, 'hortee/templates'),
     path.join(DJANGO_ROOT, 'django/contrib/admindocs/templates'),
 )
@@ -64,15 +65,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'hortee.tracktor',
-    'hortee.main',
     'django.contrib.admin',
+    'tracktor',
+    'main',
     'south',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
-    'hortee.context_processors.page',
-    'hortee.context_processors.debug',
-    'hortee.tracktor.context_processors.tracktor',    
+    'main.context_processors.page',
+    'main.context_processors.debug',
+    'tracktor.context_processors.tracktor',    
 )

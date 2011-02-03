@@ -10,7 +10,7 @@ from models import Plot, Actor, Event
 def _map(request):
     """View for plot map
     """
-    return render_to_response('map.html', {
+    return render_to_response('tracktor/map.html', {
         }, context_instance=RequestContext(request))
         
 @login_required
@@ -18,7 +18,7 @@ def _list(request):
     """View for actor list
     """
     actors = Actor.objects.filter(plot__owners=request.user).order_by('-id')
-    return render_to_response('list.html', {
+    return render_to_response('tracktor/list.html', {
             'actors': actors,
         }, context_instance=RequestContext(request))        
         
@@ -34,7 +34,7 @@ def add_actor(request):
             actor = Actor(name=name, plot=plot)
             actor.save()
             actors.append(actor)
-    return render_to_response('list-actors.html', {
+    return render_to_response('tracktor/list-actors.html', {
             'actors': actors,
         }, context_instance=RequestContext(request))
 
@@ -56,7 +56,7 @@ def list_events(request, id=None):
     """View for listing events
     """
     events = Event.objects.filter(actor=id)
-    return render_to_response('list-events.html', {
+    return render_to_response('tracktor/list-events.html', {
             'events': events,
         }, context_instance=RequestContext(request))
         
@@ -73,7 +73,7 @@ def add_event(request):
             event = Event(actor=actor, text=text)
             event.save()
             events.append(event)
-    return render_to_response('list-events.html', {
+    return render_to_response('tracktor/list-events.html', {
             'events': events,
         }, context_instance=RequestContext(request))
 
@@ -103,7 +103,7 @@ def add_plot(request):
             plot.owners.add(request.user)
             list(plots).append(plot)
             request.session['plots'] = plots
-    return render_to_response('list-plots.html', {
+    return render_to_response('tracktor/list-plots.html', {
             'plots': plots,
         }, context_instance=RequestContext(request))
 
