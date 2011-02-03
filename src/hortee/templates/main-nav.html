@@ -1,0 +1,15 @@
+<ul id="main-nav">
+    <li>
+        <select id="plots">
+        {% include "list-plots.html" %}
+        </select>
+        <a href="{% url tracktor-add_plot %}" id="lnk_add_plot">add</a>
+    </li>
+    <li><a href="{% url tracktor-map %}">Map</a></li>
+    <li><a href="{% url tracktor-list %}">List</a></li>
+    <li><a href="{% url auth-logout %}">Logout</a></li>
+</ul>
+<form id="add_plot">
+    <input type="name" />
+    <input type="submit" value="add" />
+</form> 

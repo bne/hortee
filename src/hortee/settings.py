@@ -53,6 +53,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'hortee.urls'
 
 TEMPLATE_DIRS = (
+    path.join(SITE_ROOT, 'hortee/templates/m'),
     path.join(SITE_ROOT, 'hortee/templates'),
     path.join(DJANGO_ROOT, 'django/contrib/admindocs/templates'),
 )
