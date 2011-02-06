@@ -2,7 +2,9 @@
 {% block page_id %}plots-list{% endblock %}
 {% block title %}Plots{% endblock %}
 {% block content %}
-<a href="{% url tracktor-plot-add %}" data-role="button" data-icon="add">Add plot</a>
+<div style="margin:-15px 0 25px;">
+    <a href="{% url tracktor-plot-add %}" data-role="button" data-icon="add">Add plot</a>
+</div>
 
 <ul data-role="listview" data-split-icon="delete" data-split-theme="c">
 {% for plot in plots %}

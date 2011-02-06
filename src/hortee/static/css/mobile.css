@@ -14,4 +14,18 @@
     margin-right: .4em;
 }
 
+ul.messages, 
+ul.messages li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: bold;
+}
+
+ul.messages li {
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+
 
