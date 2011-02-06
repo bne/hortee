@@ -7,13 +7,13 @@ from django.contrib.auth.views import login as django_login
 from django.views.decorators.cache import never_cache
 
 from tracktor.models import Plot
-from tracktor.views import list_actors
+from tracktor.views import actor_list
 
 def default(request):
     """View for default
     """
     if request.user.is_authenticated():
-        return list_actors(request)
+        return actor_list(request)
         
     redirect_to = request.REQUEST.get(REDIRECT_FIELD_NAME, '')    
     form = AuthenticationForm(request)    

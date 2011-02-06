@@ -1,3 +1,0 @@
-{% for plot in plots %}
-    <option value="{{ plot.id }}"{% ifequal plot current_plot %}selected="selected"{% endifequal %}>{{ plot.name }}</option>
-{% endfor %}

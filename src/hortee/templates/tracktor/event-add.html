@@ -1,7 +1,7 @@
 {% extends base_template %}
 {% block page_id %}event-add{% endblock %}
 
-{% block header %}<h1>Add event</h1>{% endblock %}
+{% block title %}Add event{% endblock %}
 
 {% block content %}
 <form action="{% url tracktor-event-add actor_id %}" method="post" data-ajax="false">

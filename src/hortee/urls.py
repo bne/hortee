@@ -10,17 +10,20 @@ urlpatterns = patterns('hortee.main.views',
 )
 
 urlpatterns += patterns('hortee.tracktor.views',
-    url(r'^map/$', 'plot_map', name='tracktor-map'),      
+    url(r'^map/$', 'plot_map', name='tracktor-map'),
+    url(r'^plots/$', 'plot_list', name='tracktor-plots'),
+    url(r'^plots/add/$', 'plot_add', name='tracktor-plot-add'),
+    url(r'^plots/(?P<id>\d+)/edit/$', 'plot_edit', name='tracktor-plot-edit'),    
+    url(r'^plots/(?P<id>\d+)/delete/$', 'plot_delete', name='tracktor-plot-delete'),    
+        
+    url(r'^actors/$', 'actor_list', name='tracktor-actors'),
+    url(r'^actors/add/$', 'actor_add', name='tracktor-actor-add'),
+    url(r'^actors/(?P<id>\d+)/delete/$', 'actor_delete', name='tracktor-actor-delete'),
     
-    url(r'^list/$', 'list_actors', name='tracktor-actors'),
-    url(r'^actor/add/$', 'add_actor', name='tracktor-actor-add'),
-    url(r'^actor/delete/(?P<id>\d+)/$', 'delete_actor', name='tracktor-actor-delete'),
-    url(r'^list/(?P<id>\d+)/$', 'list_events', name='tracktor-events'),
-    url(r'^list/(?P<id>\d+)/event/add/$', 'add_event', name='tracktor-event-add'),  
-    url(r'^event/edit/(?P<id>\d+)/$', 'edit_event', name='tracktor-event-edit'),
-    url(r'^event/delete/(?P<id>\d+)/$', 'delete_event', name='tracktor-event-delete'),
-    url(r'^plots/$', 'plots', name='tracktor-plots'),
-    url(r'^plots/delete/$', 'delete_plot', name='tracktor-delete_plot'),
+    url(r'^actors/(?P<actor_id>\d+)/$', 'event_list', name='tracktor-events'),
+    url(r'^actors/(?P<actor_id>\d+)/event/add/$', 'event_add', name='tracktor-event-add'),  
+    url(r'^event/(?P<id>\d+)/edit/$', 'event_edit', name='tracktor-event-edit'),
+    url(r'^event/(?P<id>\d+)/delete/$', 'event_delete', name='tracktor-event-delete'),
 )
 
 urlpatterns += patterns('django.contrib.auth.views',

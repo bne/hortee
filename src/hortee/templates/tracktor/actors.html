@@ -1,12 +1,9 @@
 {% extends base_template %}
-{% block page_id %}list{% endblock %}
-
-{% block header %}
-<h1>{% block title %}hortee{% endblock %}</h1>            
-<a href="{% url tracktor-actor-add %}" data-iconpos="notext" data-icon="add" data-theme="b" data-rel="dialog" data-transition="slidedown" class="ui-btn-right jqm-home">Add</a>
-{% endblock %}
+{% block page_id %}actors-list{% endblock %}
 
 {% block content %}
+
+<a href="{% url tracktor-actor-add %}" data-role="button" data-icon="add">Add actor</a>
 
 <ul data-role="listview" data-split-icon="delete" data-split-theme="c">
 {% for actor in actors %}

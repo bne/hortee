@@ -1,16 +1,17 @@
 <!DOCTYPE html> 
 <html> 
 	<head> 
-	<title>hortee</title> 
+	<title>hortee</title>
+	
+	
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.js"></script>
 	
 	<link rel="stylesheet" href="/static/css/mobile.css" />
 	
-	{% block head %}
-	
-	{% endblock %}
+		
+	{% block head %}{% endblock %}
 </head> 
 <body>
     {% block page %}
@@ -23,7 +24,14 @@
     	    {% endblock %}
 	    </div>		    
 	    
-	    <div data-role="content">	
+	    <div data-role="content" id="content">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
             {% block content %}{% endblock %}
 	    </div>
 
