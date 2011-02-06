@@ -1,0 +1,17 @@
+{% extends base_template %}
+{% block page_id %}event-add{% endblock %}
+
+{% block header %}<h1>Add event</h1>{% endblock %}
+
+{% block content %}
+<form action="{% url tracktor-event-add actor_id %}" method="post" data-ajax="false">
+    {% csrf_token %}
+    <div data-role="fieldcontain">
+        <label id="event_text" for="event_text">Text</label>
+        <textarea name="event_text"></textarea>
+    </div>
+    <button type="submit">Add</button>
+</form>
+{% endblock content %}
+
+{% block footer %}{% endblock %}

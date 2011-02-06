@@ -1,24 +1,26 @@
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
 from models import Plot, Actor, Event
 
 @login_required
-def _map(request):
+def plot_map(request):
     """View for plot map
     """
     return render_to_response('tracktor/map.html', {
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
         
 @login_required
-def _list(request):
+def list_actors(request):
     """View for actor list
     """
-    actors = Actor.objects.filter(plot__owners=request.user).order_by('-id')
-    return render_to_response('tracktor/list.html', {
+    actors = Actor.objects.filter(
+        plot__owners=request.user,
+        plot=request.session.get('current_plot')).order_by('-id')
+    return render_to_response('tracktor/actors.html', {
             'actors': actors,
         }, context_instance=RequestContext(request))        
         
@@ -26,26 +28,23 @@ def _list(request):
 def add_actor(request):
     """View for adding an actor to a plot
     """
-    actors = []
     if request.method == 'POST':
-        name = request.POST.get('name', None)
+        name = request.POST.get('actor_name', None)
         if name:
-            plot = Plot.objects.get(owners=request.user)
+            plot = request.session.get('current_plot')
             actor = Actor(name=name, plot=plot)
-            actor.save()
-            actors.append(actor)
-    return render_to_response('tracktor/list-actors.html', {
-            'actors': actors,
-        }, context_instance=RequestContext(request))
+            actor.save()            
+        return redirect('main-default')
+            
+    return render_to_response('tracktor/actor-add.html', {}, 
+        context_instance=RequestContext(request))
 
 @login_required
-def delete_actor(request):
+def delete_actor(request, id=None):
     """View for deleting an actor from a plot
     """
-    id = None
     if request.method == 'POST':
         try:
-            id = request.POST.get('id', None)
             Actor.objects.get(id=id).delete()
         except Actor.DoesNotExist:
             pass
@@ -56,65 +55,78 @@ def list_events(request, id=None):
     """View for listing events
     """
     events = Event.objects.filter(actor=id)
-    return render_to_response('tracktor/list-events.html', {
-            'events': events,
-        }, context_instance=RequestContext(request))
-        
-@login_required
-def add_event(request):
-    """View for adding an event to an actor
-    """
-    events = []
-    if request.method == 'POST':
-        actor_id = request.POST.get('actor_id', None)
-        text = request.POST.get('text', None)
-        if text and actor_id:
-            actor = Actor.objects.get(id=actor_id)
-            event = Event(actor=actor, text=text)
-            event.save()
-            events.append(event)
-    return render_to_response('tracktor/list-events.html', {
-            'events': events,
-        }, context_instance=RequestContext(request))
+    return render_to_response('tracktor/events.html', {
+        'events': events,
+        'actor_id': id,
+    }, context_instance=RequestContext(request))
 
 @login_required
-def delete_event(request):
+def add_event(request, id=None):
+    """View for adding an event to an actor
+    """
+    if request.method == 'POST':
+        text = request.POST.get('event_text')
+        if text:
+            actor = Actor.objects.get(id=id)
+            event = Event(actor=actor, text=text)
+            event.save()
+            
+        return redirect('tracktor-events', id=id)
+        
+    return render_to_response('tracktor/event-add.html', {
+        'actor_id': id,
+    }, context_instance=RequestContext(request))
+
+@login_required
+def edit_event(request):
+    """View for editing an event
+    """
+    return render_to_response('tracktor/event-add.html', {
+    }, context_instance=RequestContext(request))
+    
+    
+@login_required
+def delete_event(request, id=None):
     """View for deleting an event
     """
-    id = None
     if request.method == 'POST':
         try:
-            id = request.POST.get('id', None)
             Event.objects.get(id=id).delete()
         except Event.DoesNotExist:
             pass
-    return HttpResponse(id) 
-
+    return HttpResponse(id)
+    
 @login_required
-def add_plot(request):
-    """View for adding a plot
+def plots(request):
+    """Manage plot settings
     """
-    plots = request.session.get('plots', [])
     if request.method == 'POST':
-        name = request.POST.get('name', None)
+        name = request.POST.get('plot_name')
+        plot = None
         if name:
             plot = Plot(name=name)
             plot.save()
             plot.owners.add(request.user)
-            list(plots).append(plot)
-            request.session['plots'] = plots
-    return render_to_response('tracktor/list-plots.html', {
-            'plots': plots,
-        }, context_instance=RequestContext(request))
+        else:
+            try:
+                plot = Plot.objects.get(id=request.POST.get('current_plot'))
+            except Plot.DoesNotExist:
+                pass
+                
+        request.session['current_plot'] = plot
+        return redirect('main-default')
+    
+    plots = Plot.objects.filter(owners=request.user)    
+    return render_to_response('tracktor/plots.html', {
+        'plots': plots,
+    }, context_instance=RequestContext(request))
 
 @login_required
-def delete_plot(request):
+def delete_plot(request, id=None):
     """View for deleting a plot
     """
-    id = None
     if request.method == 'POST':
         try:
-            id = request.POST.get('id', None)
             Plot.objects.get(id=id).delete()
         except Plot.DoesNotExist:
             pass

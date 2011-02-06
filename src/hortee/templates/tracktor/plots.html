@@ -1,0 +1,27 @@
+{% extends base_template %}
+{% block page_id %}plots{% endblock %}
+{% block title %}Plots{% endblock %}
+{% block content %}
+<script type="text/javascript">
+$(function(){ $("#current_plot").live("change", function(){ this.form.submit(); }); });
+</script>
+<form action="{% url tracktor-plots %}" method="post" data-ajax="false">
+    {% csrf_token %}
+    
+    <div data-role="fieldcontain">
+        <label for="current_plot">Current plot</label>
+        <select id="current_plot" name="current_plot">
+        {% for plot in plots %}
+            <option value="{{ plot.id }}"
+            {% ifequal plot current_plot %}selected="selected"{% endifequal %}>{{ plot.name }}</option>
+        {% endfor %}
+        </select>
+    </div>
+    
+    <div data-role="fieldcontain">
+        <label id="plot_name" for="plot_name">New plot</label>
+        <input type="text" name="plot_name" />        
+        <button type="submit">Add</button>
+    </div>
+</form>
+{% endblock content %}

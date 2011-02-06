@@ -32,7 +32,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 SECRET_KEY = '7z!33sc_z216mcp1*r)&$3rm3sr!x61fa84tg$1n68(cqe=e9w'
 
 LOGIN_URL = '/'
-LOGIN_REDIRECT_URL = '/list/'
+LOGIN_REDIRECT_URL = '/'
 
 AUTH_PROFILE_MODULE = 'main.UserProfile'
 

@@ -7,10 +7,14 @@ from django.contrib.auth.views import login as django_login
 from django.views.decorators.cache import never_cache
 
 from tracktor.models import Plot
+from tracktor.views import list_actors
 
 def default(request):
     """View for default
     """
+    if request.user.is_authenticated():
+        return list_actors(request)
+        
     redirect_to = request.REQUEST.get(REDIRECT_FIELD_NAME, '')    
     form = AuthenticationForm(request)    
     request.session.set_test_cookie()    
@@ -30,5 +34,7 @@ def login(request):
     login_result = django_login(request, template_name='user/login.html')
     if request.user.is_authenticated():
         request.session['plots'] = Plot.objects.filter(owners=request.user)
+        # TODO: make this a setting/add to profile model
+        request.session['current_plot'] = request.session['plots'][0]
         
     return login_result

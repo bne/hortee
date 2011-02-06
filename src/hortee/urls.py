@@ -5,24 +5,26 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('hortee.main.views',
-    url(r'^$', 'default', name='hortee-default'),
-    url(r'^login/$', 'login', name='hortee-login'),
+    url(r'^$', 'default', name='main-default'),
+    url(r'^login/$', 'login', name='main-login'),
 )
 
 urlpatterns += patterns('hortee.tracktor.views',
-    url(r'^list/$', '_list', name="tracktor-list"),  
-    url(r'^map/$', '_map', name="tracktor-map"),      
-    url(r'^actor/add/$', 'add_actor'),
-    url(r'^actor/delete/$', 'delete_actor'),    
-    url(r'^list/(?P<id>\d+)/$', 'list_events'),
-    url(r'^event/add/$', 'add_event'),  
-    url(r'^event/delete/$', 'delete_event'),
-    url(r'^plot/add/$', 'add_plot', name='tracktor-add_plot'),
-    url(r'^plot/delete/$', 'delete_plot', name='tracktor-delete_plot'),
+    url(r'^map/$', 'plot_map', name='tracktor-map'),      
+    
+    url(r'^list/$', 'list_actors', name='tracktor-actors'),
+    url(r'^actor/add/$', 'add_actor', name='tracktor-actor-add'),
+    url(r'^actor/delete/(?P<id>\d+)/$', 'delete_actor', name='tracktor-actor-delete'),
+    url(r'^list/(?P<id>\d+)/$', 'list_events', name='tracktor-events'),
+    url(r'^list/(?P<id>\d+)/event/add/$', 'add_event', name='tracktor-event-add'),  
+    url(r'^event/edit/(?P<id>\d+)/$', 'edit_event', name='tracktor-event-edit'),
+    url(r'^event/delete/(?P<id>\d+)/$', 'delete_event', name='tracktor-event-delete'),
+    url(r'^plots/$', 'plots', name='tracktor-plots'),
+    url(r'^plots/delete/$', 'delete_plot', name='tracktor-delete_plot'),
 )
 
 urlpatterns += patterns('django.contrib.auth.views',
-    url(r'^logout/$', 'logout_then_login', name='auth-logout'),
+    url(r'^logout/$', 'logout_then_login', name='main-logout'),
 )
 
 urlpatterns += patterns('',

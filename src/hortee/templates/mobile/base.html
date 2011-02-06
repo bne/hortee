@@ -2,25 +2,41 @@
 <html> 
 	<head> 
 	<title>hortee</title> 
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
-	<script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
+	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.js"></script>
+	
+	<link rel="stylesheet" href="/static/css/mobile.css" />
+	
+	{% block head %}
+	
+	{% endblock %}
 </head> 
 <body>
     {% block page %}
-    <div data-role="page">
+    <div data-role="page" id="{% block page_id %}{% endblock %}">
 
-	    <div data-role="header">
-		    {% block header %}<h1>HAI!</h1>{% endblock %}
-	    </div>
-
+	    <div data-role="header" id="header">
+    		{% block header %}
+	        <h1>{% block title %}hortee{% endblock %}</h1>
+            <a href="/" data-icon="home" data-iconpos="notext" class="ui-btn-right jqm-home">Home</a>
+    	    {% endblock %}
+	    </div>		    
+	    
 	    <div data-role="content">	
             {% block content %}{% endblock %}
 	    </div>
 
-	    <div data-role="footer">
-		    {% block footer %}{% endblock %}
+        {% block footer %}
+	    <div data-role="footer" data-position="fixed" id="footer">
+	        {% if user.is_authenticated %}
+    	        <a href="{% url tracktor-plots %}" data-role="button" data-icon="gear" data-transition="slideup">Plot: {{ current_plot }}</a>	
+
+                <a href="{% url main-logout %}" data-ajax="false" data-role="button" data-icon="delete">logout</a>
+            {% endif %}
 	    </div>
+        {% endblock %}
+	    	    
     </div>
     {% endblock %}
 </body>
