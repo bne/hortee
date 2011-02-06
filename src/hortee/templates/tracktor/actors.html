@@ -3,7 +3,9 @@
 
 {% block content %}
 
-<a href="{% url tracktor-actor-add %}" data-role="button" data-icon="add">Add actor</a>
+<div style="margin:-15px 0 25px;">
+    <a href="{% url tracktor-actor-add %}" data-role="button" data-icon="add">Add actor</a>
+</div>
 
 <ul data-role="listview" data-split-icon="delete" data-split-theme="c">
 {% for actor in actors %}

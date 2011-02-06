@@ -1,11 +1,11 @@
 {% extends base_template %}
 {% block page_id %}events-list{% endblock %}
-
+{% block backlink %}<a href="{% url tracktor-actors %}" data-icon="arrow-l">Back</a>{% endblock %}
 {% block content %}
 
-<h2>{{ actor.name }}</h2>
-
-<a href="{% url tracktor-event-add actor.id %}" data-role="button" data-icon="add">Add event</a>
+<div style="margin:-15px 0 25px;">
+    <a href="{% url tracktor-event-add actor.id %}" data-role="button" data-icon="add">Add event</a>
+</div>
 
 <ul data-role="listview" data-split-icon="delete" data-split-theme="c">
 {% for event in events %}
