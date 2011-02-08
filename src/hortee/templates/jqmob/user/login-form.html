@@ -1,15 +1,11 @@
-<form method="post" action="{% url main-login %}">
+<form method="post" action="{% url main-login %}" data-ajax="false">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}" />
-    <div class="fieldcontain">
+    <div data-role="fieldcontain">
         {{ form.username.label_tag }}
         {{ form.username }}
-    </div>
-    <div class="fieldcontain">
         {{ form.password.label_tag }}
         {{ form.password }}
     </div>
-    <div class="fieldcontain actions">
-        <input type="submit" value="Login" />
-    </div>
+    <button type="submit">Login</button>
 </form>

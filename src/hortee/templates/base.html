@@ -5,18 +5,42 @@
     <meta charset="utf-8" />
     <title>hortee</title>
     <link rel="stylesheet" type="text/css" media="all" href="/static/css/hortee.css" />
+    <!--
     <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="/static/js/hortee-base.js"></script>
+    //-->
     {% block head %}{% endblock head %}
 </head>
 <body>
     <div id="header">
     {% block header %}
     {% if user.is_authenticated %}
-        {% include "main-nav.html" %}       
+        <ul id="main-nav">
+            <li><a href="{% url tracktor-plots %}">Plots</a></li>
+            <li><a href="{% url tracktor-map %}">Map</a></li>
+            <li><a href="{% url tracktor-actors %}">List</a></li>
+            <li><a href="{% url main-logout %}">Logout</a></li>
+        </ul>      
     {% endif %}
-    </div>
     {% endblock header %}
-    {% block content %}{% endblock content %}
+    </div>
+
+    {% block subnav %}{% endblock %}
+    
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}    
+
+    <div id="content">
+        {% block content %}{% endblock content %}
+    </div>
+    
+    <div id="footer">
+        {% block footer %}{% endblock %}
+    </div>
 </body>
 </html>

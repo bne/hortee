@@ -1,0 +1,20 @@
+{% extends base_template %}
+{% block page_id %}events-list{% endblock %}
+{% block backlink %}<a href="{% url tracktor-actors %}" data-icon="arrow-l">Back</a>{% endblock %}
+{% block content %}
+
+<div style="margin:-15px 0 25px;">
+    <a href="{% url tracktor-event-add actor.id %}" data-role="button" data-icon="add">Add event</a>
+</div>
+
+<ul data-role="listview" data-split-icon="delete" data-split-theme="c">
+{% for event in events %}
+    <li>
+        <h3><a href="{% url tracktor-event-edit event.id %}">{{ event.text }}</a></h3>
+        <p>{{ event.date }}</p>
+    	<a href="{% url tracktor-event-delete event.id %}" data-rel="dialog" data-transition="pop">Delete</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock content %}

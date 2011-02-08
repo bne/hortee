@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpResponse
@@ -21,14 +22,7 @@ def plot_map(request):
        
 @login_required
 def plot_list(request):
-    """Manage plot settings
-    
-
-        else:
-            try:
-                plot = Plot.objects.get(id=request.POST.get('current_plot'))
-            except Plot.DoesNotExist:
-                pass    
+    """Manage plot settings   
     """    
     plots = Plot.objects.filter(owners=request.user)    
     return render_to_response('tracktor/plots.html', {
@@ -42,13 +36,11 @@ def plot_add(request):
     if request.method == 'POST':
         name = request.POST.get('plot_name')
         if name:
-            try:
-                plot = Plot(name=name)
-                plot.save()
-                plot.owners.add(request.user)
-                messages.success(request, 'Plot added')
-            except:
-                messages.error(request, 'Plot not added')
+            plot = Plot(name=name)
+            plot.save()
+            plot.owners.add(request.user)
+            messages.success(request, 'Plot added')
+
         return redirect('tracktor-plots')
         
     return render_to_response('tracktor/plot-add.html', {
@@ -71,11 +63,8 @@ def plot_delete(request, id=None):
         return redirect('tracktor-plots')
             
     if request.method == 'POST' and plot:
-        try:
-            plot.delete()
-            messages.success(request, 'Plot %s deleted' % (plot.name,))
-        except:
-            messages.error(request, 'Plot %s not deleted' % (plot.name,))
+        plot.delete()
+        messages.success(request, 'Plot %s deleted' % (plot.name,))
         return redirect('tracktor-plots')
         
     return render_to_response('tracktor/plot-delete.html', {
@@ -102,19 +91,18 @@ def actor_add(request):
     """View for adding an actor to a plot
     """
     if request.method == 'POST':
-        name = request.POST.get('actor_name', None)
+        name = request.POST.get('name')
         if name:
-            plot = request.session.get('current_plot')
-            try:
-                actor = Actor(name=name, plot=plot)
-                actor.save()
-                messages.success(request, 'Actor added')
-            except:
-                messages.error(request, 'Actor not added')            
+            plot = request.POST.get('plot')
+            actor = Actor(name=name, plot=plot)
+            actor.save()
+            messages.success(request, 'Actor added')
+            
         return redirect('tracktor-actors')
             
-    return render_to_response('tracktor/actor-add.html', {}, 
-        context_instance=RequestContext(request))
+    return render_to_response('tracktor/actor-add.html', {
+        'plots': Plot.objects.filter(owners=request.user),
+    }, context_instance=RequestContext(request))
 
 @login_required
 def actor_delete(request, id=None):
@@ -127,11 +115,8 @@ def actor_delete(request, id=None):
         return redirect('tracktor-actors')
             
     if request.method == 'POST' and actor:
-        try:
-            actor.delete()
-            messages.success(request, 'Actor deleted')
-        except:
-            messages.error(request, 'Actor not deleted')
+        actor.delete()
+        messages.success(request, 'Actor deleted')
         return redirect('tracktor-actors')
         
     return render_to_response('tracktor/actor-delete.html', {
@@ -162,11 +147,16 @@ def event_add(request, actor_id=None):
     """View for adding an event to an actor
     """
     if request.method == 'POST':
-        text = request.POST.get('event_text')
+        text = request.POST.get('text')
         if text:
+            try:
+                date = datetime.strptime(request.POST.get('date'), '%Y-%m-%d')
+            except:
+                date = datetime.utcnow()
             actor = Actor.objects.get(pk=actor_id)
-            event = Event(actor=actor, text=text)
+            event = Event(actor=actor, text=text, date=date)
             event.save()
+            messages.success(request, 'Event added')
             
         return redirect('tracktor-events', actor_id=actor_id)
         
@@ -194,11 +184,8 @@ def event_delete(request, id=None):
         return redirect('tracktor-actors')
             
     if request.method == 'POST' and event:
-        try:
-            event.delete()
-            messages.success(request, 'Event deleted')
-        except:
-            messages.error(request, 'Event not deleted')
+        event.delete()
+        messages.success(request, 'Event deleted')
         return redirect('tracktor-events', actor_id=actor_id)
         
     return render_to_response('tracktor/event-delete.html', {

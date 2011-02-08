@@ -33,7 +33,6 @@ def login(request):
     """
     login_result = django_login(request, template_name='user/login.html')
     if request.user.is_authenticated():
-        request.session['plots'] = Plot.objects.filter(owners=request.user)
         # TODO: make this a setting/add to profile model
         request.session['current_plot'] = request.session['plots'][0]
         

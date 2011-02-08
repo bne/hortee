@@ -1,0 +1,18 @@
+{% extends base_template %}
+{% block page_id %}plot-delete{% endblock %}
+
+{% block title %}Delete{% endblock %}
+
+{% block content %}
+<form action="{% url tracktor-plot-delete plot.id %}" method="post" data-ajax="false">
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{ plot.name }}?</p>
+    <div data-role="fieldcontain">        
+        <input type="submit" value="Delete">
+        <a href="{% url tracktor-plots %}" data-role="button">Cancel</a>
+    </div>
+</form>
+{% endblock content %}
+
+{% block footer %}{% endblock %}
+

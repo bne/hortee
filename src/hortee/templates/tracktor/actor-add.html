@@ -1,17 +1,29 @@
 {% extends base_template %}
 {% block page_id %}actor-add{% endblock %}
-
 {% block title %}Add actor{% endblock %}
-
+{% block subnav %}
+    <ul id="sub-nav">
+        <li><a href="{% url tracktor-actors %}">Back</a></li>
+    </ul>
+{% endblock %}
 {% block content %}
-<form action="{% url tracktor-actor-add %}" method="post" data-ajax="false">
-    {% csrf_token %}
-    <div data-role="fieldcontain">
-        <label id="actor_name" for="actor_name">Name</label>
-        <input type="text" name="actor_name" />        
-        <button type="submit">Add</button>
-    </div>
-</form>
+    <form action="{% url tracktor-actor-add %}" method="post">
+        {% csrf_token %}
+        <div class="fieldcontain">
+            <label for="name">Name</label>
+            <input type="text" name="name" />
+        </div>
+        <div class="fieldcontain">
+            <label for="plot">Plot</label>
+            <select name="plot">
+                {% for plot in plots %}
+                <option value="{{ plot.id }}"{% ifequal plot current_plot %} selected="selected"{% endifequal %}>{{ plot.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="fieldcontain actions">
+            <input type="submit" value="Add" />
+        </div>
+    </form>
 {% endblock content %}
 
-{% block footer %}{% endblock %}

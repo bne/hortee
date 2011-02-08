@@ -1,17 +1,19 @@
 {% extends base_template %}
 {% block page_id %}plots-list{% endblock %}
 {% block title %}Plots{% endblock %}
+{% block subnav %}
+    <ul id="sub-nav">
+        <li><a href="{% url tracktor-plot-add %}">Add plot</a></li>
+    </ul>
+{% endblock %}
 {% block content %}
-<div style="margin:-15px 0 25px;">
-    <a href="{% url tracktor-plot-add %}" data-role="button" data-icon="add">Add plot</a>
-</div>
-
-<ul data-role="listview" data-split-icon="delete" data-split-theme="c">
-{% for plot in plots %}
-    <li>
-        <h3><a href="{% url tracktor-plot-edit plot.id %}">{{ plot.name }}</a></h3>
-    	<a href="{% url tracktor-plot-delete plot.id %}" data-rel="dialog" data-transition="pop">Delete</a>
-    </li>
-{% endfor %}
-</ul>
+    <ul>
+    {% for plot in plots %}
+        <li>
+            <h3><a href="{% url tracktor-plot-edit plot.id %}">{{ plot.name }}</a></h3>
+        	<a href="{% url tracktor-plot-delete plot.id %}">Delete</a>
+        </li>
+    {% endfor %}
+    </ul>
 {% endblock content %}
+
