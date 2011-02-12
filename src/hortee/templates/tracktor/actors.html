@@ -6,11 +6,14 @@
     </ul>
 {% endblock %}
 {% block content %}
-    <ul data-role="listview">
+    <ul>
     {% for actor in actors %}
         <li>
             <h3><a href="{% url tracktor-events actor.id %}">{{ actor.name }}</a></h3>
-        	<a href="{% url tracktor-actor-delete actor.id %}">Delete</a>
+        	<ul>
+            	<li><a href="{% url tracktor-actor-delete actor.id %}">Delete</a></li>
+            	<li><a href="{% url tracktor-actor-edit actor.id %}">Edit</a></li>
+            </ul>
         </li>
     {% endfor %}
     </ul>

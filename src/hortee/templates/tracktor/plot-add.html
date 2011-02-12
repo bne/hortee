@@ -1,6 +1,6 @@
 {% extends base_template %}
-{% block page_id %}plots-list{% endblock %}
-{% block title %}Plots{% endblock %}
+{% block page_id %}plots-add{% endblock %}
+{% block title %}Add Plot{% endblock %}
 {% block subnav %}
     <ul id="sub-nav">
         <li><a href="{% url tracktor-plots %}">Back</a></li>
@@ -10,11 +10,13 @@
 <form action="{% url tracktor-plot-add %}" method="post">
     {% csrf_token %}
     <div class="fieldcontain">
-        <label id="plot_name" for="plot_name">Name</label>
-        <input type="text" name="plot_name" />        
+        {{ form.name.errors }}
+        {{ form.name.label_tag }}
+        {{ form.name }} 
     </div>
     <div class="fieldcontain actions">
         <input type="submit" value="Add" />
+        <a href="{% url tracktor-plots %}">Cancel</a>
     </div>
 </form>
 {% endblock content %}

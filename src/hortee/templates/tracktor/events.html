@@ -5,6 +5,8 @@
     <ul id="sub-nav">
         <li><a href="{% url tracktor-actors %}">Back</a></li>
         <li><a href="{% url tracktor-event-add actor.id %}">Add event</a></li>
+    	<li><a href="{% url tracktor-actor-delete actor.id %}">Delete</a></li>
+    	<li><a href="{% url tracktor-actor-edit actor.id %}">Edit</a></li>        
     </ul>
 {% endblock %}
 {% block content %}
@@ -12,7 +14,7 @@
     {% for event in events %}
         <li>
             <h3><a href="{% url tracktor-event-edit event.id %}">{{ event.text }}</a></h3>
-            <p>{{ event.date }}</p>
+            <p>{{ event.date|date:'SHORT_DATE_FORMAT' }}</p>
         	<a href="{% url tracktor-event-delete event.id %}">Delete</a>
         </li>
     {% endfor %}

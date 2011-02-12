@@ -3,11 +3,12 @@
 {% block title %}Add event{% endblock %}
 {% block subnav %}
     <ul id="sub-nav">
-        <li><a href="{% url tracktor-events actor.id %}">Back</a></li>
+        <li><a href="{% url tracktor-events event.actor.id %}">Back</a></li>
+        <li><a href="{% url tracktor-event-delete event.id %}">Delete</a></li>
     </ul>
 {% endblock %}
 {% block content %}
-<form action="{% url tracktor-event-add actor.id %}" method="post">
+<form action="{% url tracktor-event-edit event.id %}" method="post">
     {% csrf_token %}
     <div class="fieldcontain">
         {{ form.text.errors }}
@@ -20,8 +21,8 @@
         {{ form.date }}
     </div>
     <div class="fieldcontain actions">
-        <input type="submit" value="Add" />
-        <a href="{% url tracktor-events actor.id %}">Cancel</a>
+        <input type="submit" value="Update" />
+        <a href="{% url tracktor-events event.actor.id %}">Cancel</a>
     </div>
 </form>
 {% endblock content %}

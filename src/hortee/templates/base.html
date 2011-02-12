@@ -16,9 +16,9 @@
     {% block header %}
     {% if user.is_authenticated %}
         <ul id="main-nav">
-            <li><a href="{% url tracktor-plots %}">Plots</a></li>
+            <li><a href="{% url tracktor-plots %}">Plots</a> ({{ default_plot.name }})</li>
+            <li><a href="{% url tracktor-actors %}">Actors</a></li>
             <li><a href="{% url tracktor-map %}">Map</a></li>
-            <li><a href="{% url tracktor-actors %}">List</a></li>
             <li><a href="{% url main-logout %}">Logout</a></li>
         </ul>      
     {% endif %}

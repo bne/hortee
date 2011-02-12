@@ -1,13 +1,14 @@
 {% extends base_template %}
-{% block page_id %}actor-add{% endblock %}
-{% block title %}Add actor{% endblock %}
+{% block page_id %}actor-edit{% endblock %}
+{% block title %}Edit {{ actor.name }}{% endblock %}
 {% block subnav %}
     <ul id="sub-nav">
-        <li><a href="{% url tracktor-actors %}">Back</a></li>
+        <li><a href="{% url tracktor-events actor.id %}">Back</a></li>
+        <li><a href="{% url tracktor-actor-delete actor.id %}">Delete</a></li>        
     </ul>
 {% endblock %}
 {% block content %}
-    <form action="{% url tracktor-actor-add %}" method="post">
+    <form action="{% url tracktor-actor-edit actor.id %}" method="post">
         {% csrf_token %}
         <div class="fieldcontain">
             {{ form.name.errors }}
@@ -20,8 +21,8 @@
             {{ form.plot }}
         </div>
         <div class="fieldcontain actions">
-            <input type="submit" value="Add" />
-            <a href="{% url tracktor-actors %}">Cancel</a>
+            <input type="submit" value="Edit" />
+            <a href="{% url tracktor-actors %}">Cancel</a>            
         </div>
     </form>
 {% endblock content %}

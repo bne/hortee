@@ -13,13 +13,15 @@ urlpatterns += patterns('hortee.tracktor.views',
     url(r'^map/$', 'plot_map', name='tracktor-map'),
     url(r'^plots/$', 'plot_list', name='tracktor-plots'),
     url(r'^plots/add/$', 'plot_add', name='tracktor-plot-add'),
+    url(r'^plots/(?P<id>\d+)/$', 'plot_set', name='tracktor-plot-set'),    
     url(r'^plots/(?P<id>\d+)/edit/$', 'plot_edit', name='tracktor-plot-edit'),    
     url(r'^plots/(?P<id>\d+)/delete/$', 'plot_delete', name='tracktor-plot-delete'),    
         
     url(r'^actors/$', 'actor_list', name='tracktor-actors'),
     url(r'^actors/add/$', 'actor_add', name='tracktor-actor-add'),
+    url(r'^actors/(?P<id>\d+)/edit/$', 'actor_edit', name='tracktor-actor-edit'),
     url(r'^actors/(?P<id>\d+)/delete/$', 'actor_delete', name='tracktor-actor-delete'),
-    
+        
     url(r'^actors/(?P<actor_id>\d+)/$', 'event_list', name='tracktor-events'),
     url(r'^actors/(?P<actor_id>\d+)/event/add/$', 'event_add', name='tracktor-event-add'),  
     url(r'^event/(?P<id>\d+)/edit/$', 'event_edit', name='tracktor-event-edit'),

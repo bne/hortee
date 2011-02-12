@@ -10,7 +10,8 @@
     <ul>
     {% for plot in plots %}
         <li>
-            <h3><a href="{% url tracktor-plot-edit plot.id %}">{{ plot.name }}</a></h3>
+            <h3><a href="{% url tracktor-plot-set plot.id %}">{{ plot.name }}</a></h3>
+            <a href="{% url tracktor-plot-edit plot.id %}">Edit</a>
         	<a href="{% url tracktor-plot-delete plot.id %}">Delete</a>
         </li>
     {% endfor %}

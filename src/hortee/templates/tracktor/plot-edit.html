@@ -1,0 +1,22 @@
+{% extends base_template %}
+{% block page_id %}plots-edit{% endblock %}
+{% block title %}Edit {{ plot.name }}{% endblock %}
+{% block subnav %}
+    <ul id="sub-nav">
+        <li><a href="{% url tracktor-plots %}">Back</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+<form action="{% url tracktor-plot-edit plot.id %}" method="post">
+        {% csrf_token %}
+        <div class="fieldcontain">
+            {{ form.name.errors }}
+            {{ form.name.label_tag }}
+            {{ form.name }}         
+        </div>
+        <div class="fieldcontain actions">
+            <input type="submit" value="Update" />
+            <a href="{% url tracktor-plots %}">Cancel</a>        
+        </div>
+    </form>
+{% endblock content %}

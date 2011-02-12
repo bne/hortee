@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.views import login as django_login
 from django.views.decorators.cache import never_cache
+from django.conf import settings
 
 from tracktor.models import Plot
 from tracktor.views import actor_list
@@ -33,7 +34,8 @@ def login(request):
     """
     login_result = django_login(request, template_name='user/login.html')
     if request.user.is_authenticated():
-        # TODO: make this a setting/add to profile model
-        request.session['current_plot'] = request.session['plots'][0]
+        request.session[settings.SESSION_KEY_DEFAULT_PLOT] = \
+            Plot.get_default_plot(request.user)
         
     return login_result
+    

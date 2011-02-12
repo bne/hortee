@@ -20,8 +20,9 @@ DATABASES = {
 
 TIME_ZONE = 'Europe/London'
 LANGUAGE_CODE = 'en-gb'
-USE_I18N = True
-USE_L10N = True
+USE_I18N = False
+USE_L10N = False
+SHORT_DATE_FORMAT = 'Y-m-d'
 
 SITE_ID = 1
 
@@ -54,7 +55,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'hortee.urls'
 
 TEMPLATE_DIRS = (
-    path.join(SITE_ROOT, 'hortee/templates/mobile'),
     path.join(SITE_ROOT, 'hortee/templates'),
     path.join(DJANGO_ROOT, 'django/contrib/admindocs/templates'),
 )
@@ -77,3 +77,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'main.context_processors.debug',
     'tracktor.context_processors.tracktor',    
 )
+
+SESSION_KEY_DEFAULT_PLOT = 'default_plot'
+

@@ -11,6 +11,18 @@ class Plot(models.Model):
     name = models.CharField(max_length=100)
     owners = models.ManyToManyField(User)
     
+    @staticmethod
+    def get_default_plot(owner):
+        """Works out the default plot for the given owner
+        """
+        _plot = owner.get_profile().default_plot
+        if not _plot:
+            _plot = Plot.objects.filter(owners=owner)[:0]
+            if _plot:
+                return _plot[0]
+
+        return _plot
+    
     def __unicode__(self):
         return self.name
 
@@ -39,7 +51,7 @@ class Event(models.Model):
     date = models.DateTimeField()
         
     def __unicode__(self):
-        return self.name  
+        return self.text  
     
     class Meta:
         ordering = ["date"]
