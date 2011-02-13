@@ -3,6 +3,9 @@ from django import forms
 
 from models import *
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class PlotForm(forms.ModelForm):
 
     class Meta:
@@ -23,6 +26,8 @@ class ActorForm(forms.ModelForm):
         fields = ('name', 'plot',)
 
 class EventForm(forms.ModelForm):
+
+    date = forms.DateField(widget=DateInput)
 
     class Meta:
         model = Event
