@@ -242,7 +242,9 @@ def event_edit(request, id=None):
         return redirect('tracktor-actors')
         
     if request.method == 'POST':
-        form = EventForm(data=request.POST, instance=event)
+        data = request.POST.copy()
+        data['actor'] = event.actor.id
+        form = EventForm(data=data, instance=event)
         if form.is_valid():
             form.save()
             messages.success(request, 'Event updated')
