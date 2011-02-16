@@ -1,6 +1,9 @@
 {% extends base_template %}
 {% block page_id %}plots-add{% endblock %}
 {% block title %}Add Plot{% endblock %}
+{% block head %}
+<script type="text/javascript" src="/static/js/hortee-plot.js"></script>
+{% endblock %}
 {% block subnav %}
     <ul id="sub-nav">
         <li><a href="{% url tracktor-plots %}">Back</a></li>
@@ -14,6 +17,18 @@
         {{ form.name.label_tag }}
         {{ form.name }} 
     </div>
+    <fieldset id="coords">
+        <div class="fieldcontain">
+            {{ form.lng.errors }}
+            {{ form.lng.label_tag }}
+            {{ form.lng }} 
+        </div>
+        <div class="fieldcontain">
+            {{ form.lat.errors }}
+            {{ form.lat.label_tag }}
+            {{ form.lat }} 
+        </div>
+    </fieldset>
     <div class="fieldcontain actions">
         <input type="submit" value="Add" />
         <a href="{% url tracktor-plots %}">Cancel</a>

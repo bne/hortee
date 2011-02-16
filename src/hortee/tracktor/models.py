@@ -7,9 +7,14 @@ from django.contrib.auth.models import User
 class Plot(models.Model):
     """A pot into which to put Actors
     """
-    # TODO: Geo coords fields
     name = models.CharField(max_length=100)
     owners = models.ManyToManyField(User)
+    lng = models.DecimalField(
+        max_digits=12, decimal_places=9, blank=True, null=True,
+        verbose_name='Longitude')
+    lat = models.DecimalField(
+        max_digits=12, decimal_places=9, blank=True, null=True, 
+        verbose_name='Latitude')
     
     @staticmethod
     def get_default_plot(owner):

@@ -10,7 +10,7 @@ class PlotForm(forms.ModelForm):
 
     class Meta:
         model = Plot
-        fields = ('name',)
+        fields = ('name', 'lat', 'lng',)
 
 class ActorForm(forms.ModelForm):
     
