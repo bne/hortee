@@ -56,6 +56,7 @@ ROOT_URLCONF = 'hortee.urls'
 
 TEMPLATE_DIRS = (
     path.join(SITE_ROOT, 'hortee/templates'),
+    path.join(SITE_ROOT, 'hortee/templates/basic'),
     path.join(DJANGO_ROOT, 'django/contrib/admindocs/templates'),
 )
 

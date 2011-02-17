@@ -1,0 +1,20 @@
+{% extends base_template %}
+{% block page_id %}actor-delete{% endblock %}
+{% block title %}Delete {{ actor.name }}{% endblock %}
+{% block subnav %}
+    <ul id="sub-nav">
+        <li><a href="{% url tracktor-actors %}">Back</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <p>Are you sure you want to delete <strong>{{ actor.name }}</strong>?</p>
+
+    <form action="{% url tracktor-actor-delete actor.id %}" method="post">
+        {% csrf_token %}
+        <div class="fieldcontain actions">        
+            <input type="submit" value="Delete" />
+            <a href="{% url tracktor-actors %}">Cancel</a>
+        </div>
+    </form>
+{% endblock content %}
+

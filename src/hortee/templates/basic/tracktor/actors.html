@@ -1,0 +1,25 @@
+{% extends base_template %}
+{% block page_id %}actors-list{% endblock %}
+{% block subnav %}
+    <ul id="sub-nav">
+        {% if default_plot %}
+        <li><a href="{% url tracktor-actor-add %}">Add actor</a></li>
+        {% else %}        
+        <li><a href="{% url tracktor-plot-add %}">Add plot</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}
+{% block content %}
+    <ul>
+    {% for actor in actors %}
+        <li>
+            <h3><a href="{% url tracktor-events actor.id %}">{{ actor.name }}</a></h3>
+        	<ul>
+            	<li><a href="{% url tracktor-actor-delete actor.id %}">Delete</a></li>
+            	<li><a href="{% url tracktor-actor-edit actor.id %}">Edit</a></li>
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
+

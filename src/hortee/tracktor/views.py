@@ -11,17 +11,17 @@ from django.conf import settings
 from models import *
 from forms import *
 
+## ============================================================================
+## Plots
+## ============================================================================
+
 @login_required
 def plot_map(request):
     """View for plot map
     """
     return render_to_response('tracktor/map.html', {
     }, context_instance=RequestContext(request))
-
-## ============================================================================
-## Plots
-## ============================================================================
-       
+           
 @login_required
 def plot_list(request):
     """Manage plot settings   

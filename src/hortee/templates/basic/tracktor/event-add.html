@@ -1,0 +1,28 @@
+{% extends base_template %}
+{% block page_id %}event-add{% endblock %}
+{% block title %}Add event{% endblock %}
+{% block subnav %}
+    <ul id="sub-nav">
+        <li><a href="{% url tracktor-events actor.id %}">Back</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+<form action="{% url tracktor-event-add actor.id %}" method="post">
+    {% csrf_token %}
+    <div class="fieldcontain">
+        {{ form.text.errors }}
+        {{ form.text.label_tag }}
+        {{ form.text }}
+    </div>
+    <div class="fieldcontain">
+        {{ form.date.errors }}
+        {{ form.date.label_tag }}
+        {{ form.date }}
+    </div>
+    <div class="fieldcontain actions">
+        <input type="submit" value="Add" />
+        <a href="{% url tracktor-events actor.id %}">Cancel</a>
+    </div>
+</form>
+{% endblock content %}
+
