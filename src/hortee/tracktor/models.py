@@ -20,13 +20,10 @@ class Plot(models.Model):
     def get_default_plot(owner):
         """Works out the default plot for the given owner
         """
-        _plot = owner.get_profile().default_plot
-        if not _plot:
-            _plot = Plot.objects.filter(owners=owner)[:0]
-            if _plot:
-                return _plot[0]
-
-        return _plot
+        plots = Plot.objects.filter(owners=owner)
+        if plots:
+            return plots[0]
+        return None
     
     def __unicode__(self):
         return self.name

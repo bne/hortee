@@ -17,6 +17,7 @@ $(function(){
         }        
         $('#coords').append($('<a>', { 
             text: 'Update coords',
+            href: '#',
             click: set_lat_lng
         }));
     }

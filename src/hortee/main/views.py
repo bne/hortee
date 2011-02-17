@@ -34,8 +34,14 @@ def login(request):
     """
     login_result = django_login(request, template_name='user/login.html')
     if request.user.is_authenticated():
-        request.session[settings.SESSION_KEY_DEFAULT_PLOT] = \
-            Plot.get_default_plot(request.user)
+        try:
+            plot = request.user.get_profile().default_plot
+        except ValueError:
+            plot = Plot.get_default_plot(request.user)
+            request.user.get_profile().default_plot = plot
+            request.user.get_profile().save()
+            
+        request.session[settings.SESSION_KEY_DEFAULT_PLOT] = plot            
         
     return login_result
     

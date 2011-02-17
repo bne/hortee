@@ -56,6 +56,8 @@ def plot_set(request, id=None):
     """
     try:
         plot = Plot.objects.get(id=id)
+        request.user.get_profile().default_plot = plot
+        request.user.get_profile().save()
         request.session[settings.SESSION_KEY_DEFAULT_PLOT] = plot
         messages.success(request, 'Current plot set to %s' % (plot.name,))
     except Plot.DoesNotExist:
