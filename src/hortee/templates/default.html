@@ -1,6 +1,0 @@
-{% extends base_template %}
-{% block content %}
-    {% if not user.is_authenticated %}
-        {% include "user/login-form.html" %}
-    {% endif %}
-{% endblock content %}

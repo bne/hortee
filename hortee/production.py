@@ -1,0 +1,2 @@
+
+from hortee.settings import *
