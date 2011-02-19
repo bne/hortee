@@ -1,19 +1,27 @@
-
-from django.conf.urls.defaults import patterns, include, handler500
+from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 admin.autodiscover()
 
-handler500 # Pyflakes
-
-urlpatterns = patterns(
-    '',
-    (r'^admin/(.*)', admin.site.root),
-    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
+urlpatterns = patterns('hortee.main.views',
+    url(r'^$', 'default', name='main-default'),
 )
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT}),
-    )
+urlpatterns += patterns('',
+    (r'^robots\.txt$', 'django.views.generic.simple.direct_to_template', {
+        'template': 'robots.txt', 'mimetype': 'text/plain' }),
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {
+        'url': '/static/img/favicon.ico' }),
+)
+
+urlpatterns += patterns('django.contrib.auth.views',
+    url(r'^logout/$', 'logout_then_login', name='main-logout'),
+)
+
+urlpatterns += patterns('',
+    (r'^admin/(.*)', admin.site.urls),
+)
+
+urlpatterns += staticfiles_urlpatterns()

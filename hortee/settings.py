@@ -1,65 +1,84 @@
+from os import environ
+from os import path
 
-import os
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+SITE_ROOT = path.dirname(path.dirname(__file__))
+DJANGO_ROOT = path.join(SITE_ROOT, '../parts/django')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': path.join(SITE_ROOT, 'data/hortee.db'),
+        'USER': '',
+        'PASSWORD': '', 
+        'HOST': '',
+        'PORT': '',
+    }
+}
+
+TIME_ZONE = 'Europe/London'
+LANGUAGE_CODE = 'en-gb'
+USE_I18N = False
+USE_L10N = False
+SHORT_DATE_FORMAT = 'Y-m-d'
+
+SITE_ID = 1
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    path.join(SITE_ROOT, 'hortee/static/'),
 )
+MEDIA_URL = ''
+ADMIN_MEDIA_PREFIX = '/media/'
 
-MANAGERS = ADMINS
+SECRET_KEY = '7z!33sc_z216mcp1*r)&$3rm3sr!x61fa84tg$1n68(cqe=e9w'
 
-DATABASE_ENGINE = 'sqlite3'    # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'hortee.db'
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
-TIME_ZONE = 'America/Chicago'
+AUTH_PROFILE_MODULE = 'main.UserProfile'
 
-LANGUAGE_CODE = 'en-us'
-
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/media/'
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/admin_media/'
-
-# Don't share this with anybody.
-SECRET_KEY = 'koou%c$7zkl(06=7kfi(-6b7gslhdc%!0cm-e%rv4c_85zmfjw'
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.doc.XViewMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 ROOT_URLCONF = 'hortee.urls'
 
+TEMPLATE_DIRS = (
+    path.join(SITE_ROOT, 'hortee/templates'),
+    path.join(DJANGO_ROOT, 'django/contrib/admindocs/templates'),
+)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
     'django.contrib.admin',
+    'hortee.tracktor',
+    'hortee.main',
     'tastypie',
 )
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.static',
+    'hortee.main.context_processors.page',
+    'hortee.main.context_processors.debug',
 )
 
-TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), "templates"),
-)
-
+SESSION_KEY_DEFAULT_PLOT = 'default_plot'
 

@@ -1,0 +1,31 @@
+#footer {
+    padding: .4em 0;
+}
+
+#footer .ui-block-a .ui-corner-left {
+    margin-left: .4em
+}
+
+#footer .ui-block-b {
+    text-align: right;
+}
+
+#footer .ui-block-b a {
+    margin-right: .4em;
+}
+
+ul.messages, 
+ul.messages li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: bold;
+}
+
+ul.messages li {
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+
+

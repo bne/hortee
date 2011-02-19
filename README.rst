@@ -15,6 +15,8 @@ Build
   ./configure
   python bootstrap.py
   bin/buildout
+  touch data/hortee.db
+  bin/django syncdb
 
 Develop
 =======
