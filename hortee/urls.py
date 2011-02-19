@@ -3,10 +3,12 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from hortee.main.views import DefaultView
+
 admin.autodiscover()
 
-urlpatterns = patterns('hortee.main.views',
-    url(r'^$', 'default', name='main-default'),
+urlpatterns = patterns('',
+    url(r'^$', DefaultView.as_view(), name='main-default'),
 )
 
 urlpatterns += patterns('',

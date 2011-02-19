@@ -1,9 +1,5 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.views.generic import TemplateView
 
-def default(request):
-    """default
-    """
-    return render_to_response('default.html', {
-    }, context_instance=RequestContext(request))
-
+class DefaultView(TemplateView):
+    template_name = 'default.html'
+    
