@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('',
-    (r'^api/', include(tracktor_api.url_patterns())),
+    (r'^', include(tracktor_api.api.urls)),
 )
 
 urlpatterns += patterns('',
@@ -28,7 +28,7 @@ urlpatterns += patterns('django.contrib.auth.views',
 )
 
 urlpatterns += patterns('',
-    (r'^admin/(.*)', admin.site.urls),
+    (r'^admin/', include(admin.site.urls)),
 )
 
 # development ststic files
