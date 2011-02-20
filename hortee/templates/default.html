@@ -1,4 +1,23 @@
 {% extends base_template %}
+{% load verbatim %}
+{% block head %}
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/underscore.js"></script> 
+<script type="text/javascript" src="{{ STATIC_URL }}js/backbone.js"></script>
+<script type="text/javascript">
+    API_ENDPOINT = "{% url api_api_top_level 'api' %}";
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/hortee.js"></script>  
+{% endblock %}
+
 {% block content %}
-hello
+<div id="app">
+    <h2>Plots</h2>
+    <ul id="plots"></ul>
+</div>
+{% verbatim %}
+<script type="text/template" id="plot-template"> 
+    <%= name %>
+</script> 
+{% endverbatim %} 
 {% endblock content %}

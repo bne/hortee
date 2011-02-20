@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from hortee.main.views import DefaultView
-from hortee.tracktor.api import urlpatterns as api_urlpatterns
+from hortee.tracktor import api
 
 admin.autodiscover()
 
@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('',
-    ('', include(api_urlpatterns())),
+    ('', include(api.api.urls)),
 )
 
 urlpatterns += patterns('',
