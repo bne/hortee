@@ -4,11 +4,16 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from hortee.main.views import DefaultView
+from hortee.tracktor import api as tracktor_api
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', DefaultView.as_view(), name='main-default'),
+)
+
+urlpatterns += patterns('',
+    (r'^api/', include(tracktor_api.url_patterns())),
 )
 
 urlpatterns += patterns('',
@@ -26,4 +31,6 @@ urlpatterns += patterns('',
     (r'^admin/(.*)', admin.site.urls),
 )
 
+# development ststic files
 urlpatterns += staticfiles_urlpatterns()
+
