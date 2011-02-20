@@ -11,6 +11,17 @@ class UserProfile(models.Model):
     settings = models.TextField(null=True, blank=True)
     default_plot = models.ForeignKey(Plot, null=True)
     
+    def get_default_plot(self):
+        """Works out the default plot for this user
+        """
+        if not self.default_plot:
+            plots = Plot.objects.filter(owners=self.user)
+            if plots:
+                self.default_plot = plots[0]
+                self.save()
+            
+        return self.default_plot
+    
 def create_user_profile(sender, instance, signal, created, *args, **kwargs):
     if created:
         profile = UserProfile(user=instance)

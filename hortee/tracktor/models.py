@@ -15,16 +15,7 @@ class Plot(models.Model):
     lat = models.DecimalField(
         max_digits=12, decimal_places=9, blank=True, null=True, 
         verbose_name='Latitude')
-    
-    @staticmethod
-    def get_default_plot(owner):
-        """Works out the default plot for the given owner
-        """
-        plots = Plot.objects.filter(owners=owner)
-        if plots:
-            return plots[0]
-        return None
-    
+        
     def __unicode__(self):
         return self.name
 
