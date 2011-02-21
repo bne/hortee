@@ -4,9 +4,13 @@
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <meta charset="utf-8" />
         <title>{% block title %}hortee{% endblock %}</title>
+        
         <link rel="stylesheet" type="text/css" media="all" href="{{ STATIC_URL }}css/reset.css" />
         <link rel="stylesheet" type="text/css" media="all" href="{{ STATIC_URL }}css/hortee.css" />
-        <script type="text/javascript" src="{{ STATIC_URL }}js/zepto.js"></script>            
+        
+        <script type="text/javascript" src="{{ STATIC_URL }}js/zepto.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/underscore.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/hortee-global.js"></script>
         {% block head %}{% endblock head %}
     </head>
     <body>
@@ -19,9 +23,9 @@
             </ul>
         {% endif %}
         {% endblock header %}
-        <ul id="sub-nav">
-        {% block subnav %}{% endblock %}
-        </ul>
+            <ul id="sub-nav">
+            {% block subnav %}{% endblock %}
+            </ul>
         </header>    
         
         <ul class="messages">

@@ -31,26 +31,6 @@ class UserResource(ModelResource):
         allowed_methods = ['get']     
         authentication = DjangoAuthentication()  
 
-class UserProfileResource(ModelResource):
-    """Api resource for the model at AUTH_PROFILE_MODULE
-    """    
-    def get_object_list(self, request):
-        """Restrict to profile of user
-        """
-        object_list = self._meta.queryset
-        return object_list.filter(user=request.user)
-            
-    class Meta:
-        # 
-        pth = settings.AUTH_PROFILE_MODULE.rsplit('.', 1)
-        mod = __import__(pth[0], globals(), locals(), [pth[1]])
-        kls = getattr(mod, pth[1])
-        
-        queryset = kls.objects.all()
-        resource_name = 'user_profile'
-        allowed_methods = ['get', 'put']
-        authentication = DjangoAuthentication()    
-
 class PlotResource(ModelResource):
     """Api resource for tracktor.models.Plot
     """
@@ -109,7 +89,6 @@ class EventResource(ModelResource):
 
 api = Api(api_name='api')
 api.register(UserResource())
-api.register(UserProfileResource())    
 api.register(PlotResource())
 api.register(ActorResource())
 api.register(EventResource())
