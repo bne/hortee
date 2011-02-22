@@ -1,24 +1,21 @@
-var hortee = {
-    messages: {
-        hide_timeout: 5000,
-        add: function(msg, tag) {
-            var tag = tag || 'info';            
-            idx = $('ul.messages').append($('<li class="'+ tag +'">'+ msg +'</li>')).find('li').length-1;
-            hortee.messages.hide(idx);
-        },
-        hide: function(idx) {
-            window.setTimeout(function(){ 
-                $($('ul.messages li').get(idx)).hide();
-            }, hortee.messages.hide_timeout);
-        },
-        debug: function(msg)   { return hortee.messages.add(msg, 'debug'); },
-        info: function(msg)    { return hortee.messages.add(msg, 'info'); },
-        success: function(msg) { return hortee.messages.add(msg, 'success'); },
-        warning: function(msg) { return hortee.messages.add(msg, 'warning'); },
-        error: function(msg)   { return hortee.messages.add(msg, 'error'); }
-    }
-};
-
+function Messages() {
+    var add = function(msg, tag) {
+        var tag = tag || 'info';            
+        idx = $('ul.messages').append(
+            $('<li class="'+ tag +'">'+ msg +'</li>')).find('li').length-1;
+        hide(idx);
+    };
+    var hide = function(idx) {
+        _.delay(function(){
+            $('ul.messages li').get(idx).style.display = 'none'; 
+        }, 5000);
+    };        
+    var rtn = { add: add, hide: hide };  
+    _(['debug', 'info', 'success', 'warning', 'error']).each(function(tag) {
+        rtn[tag] = function(msg) { this.add(msg, tag); };
+    });    
+    return rtn;
+}
 
 $(function() {
     // Mustache style templates for underscore

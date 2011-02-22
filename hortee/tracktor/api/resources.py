@@ -2,24 +2,11 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from tastypie.resources import ModelResource
-from tastypie.api import Api
 from tastypie import fields
-from tastypie.authentication import Authentication
-from tastypie.authorization import Authorization
 
-from models import *
+from utils import DjangoAuthentication
 
-class DjangoAuthentication(Authentication):
-    """Checks is_authenticated on request.user as we're only going to be using 
-    this Api on this domain following a client login
-    """
-    def is_authenticated(self, request, **kwargs):
-        if hasattr(request, 'user') and request.user.is_authenticated():
-            return True
-        return False
-
-    def get_identifier(self, request):
-        return request.user.username
+from hortee.tracktor.models import *
 
 class UserResource(ModelResource):
     """Api resource for django.contrib.auth.models.User
@@ -86,10 +73,4 @@ class EventResource(ModelResource):
             'actor': ('exact'),
         }
 
-
-api = Api(api_name='api')
-api.register(UserResource())
-api.register(PlotResource())
-api.register(ActorResource())
-api.register(EventResource())
 

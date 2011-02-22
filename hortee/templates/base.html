@@ -8,9 +8,12 @@
         <link rel="stylesheet" type="text/css" media="all" href="{{ STATIC_URL }}css/reset.css" />
         <link rel="stylesheet" type="text/css" media="all" href="{{ STATIC_URL }}css/hortee.css" />
         
+        {% if user.is_authenticated %}
         <script type="text/javascript" src="{{ STATIC_URL }}js/zepto.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/underscore.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/hortee-global.js"></script>
+        {% endif %}
+        
         {% block head %}{% endblock head %}
     </head>
     <body>
