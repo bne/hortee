@@ -3,8 +3,93 @@ body {
 }
 
 header {
-
+    position: relative;
+    background: #35180B;
 }
 
+h1 {
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.5em;
+    top: 5px;
+    left: 5px;
+    color: #FFF;
+}
 
+#main-nav {
+    margin-left: 100px;
+    height: 30px;
+}
+
+#main-nav li {
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    background: #CAE1B9;
+    display: inline;
+    padding: 5px 18px;
+    text-align: center;
+    line-height: 25px;
+}
+
+#main-nav li a {
+    text-decoration: none;
+    color: #333;
+    text-shadow: #FFF 0 1px 0;
+}
+
+#sub-nav {
+    padding: 2px;
+    height: 30px;
+    position: relative;
+}
+
+#sub-nav a.back-link,
+#sub-nav a.actions-link {
+    position: absolute;
+    top: 0;
+    display: block;
+    padding: 7px;
+    text-decoration: none;
+    color: #333;
+    text-shadow: #FFF 0 1px 0;
+    background: #CAE1B9;
+    border-radius: 3px;
+}
+
+#sub-nav a.back-link {
+    left: 0;
+    margin-left: 3px;
+}
+
+#sub-nav a.back-link:before 
+{
+    content: '« ';
+}
+
+#sub-nav a.actions-link {
+    right: 0;
+    margin-right: 3px;
+}
+
+#content {
+    padding: 3px 2px;
+}
+
+footer {
+    border-top: 1px solid #666;
+    padding: 3px 2px;
+}
+
+footer nav {
+    text-align: center;
+}
+
+footer nav a {
+    color: #888;
+    text-decoration: none;
+}
+
+label {
+    display: block;
+}
 

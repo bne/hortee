@@ -1,6 +1,7 @@
 {% extends base_template %}
 {% load verbatim %}
 {% block title %}{{ block.super }} :: List{% endblock %}
+
 {% block head %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/backbone.js"></script>
     <script type="text/javascript">
@@ -9,23 +10,25 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/hortee-list.js"></script>  
 {% endblock %}
 
+{% block subnav %}
+    <a href="#" class="back-link">Plots</a>
+    <a href="#" class="actions-link">Actions</a>
+{% endblock %}
+
 {% block content %}
-    
     <div id="app">
         <ul id="actors" />
     </div>
-
-    {% verbatim %}
-    <script type="text/template" id="actor-template"> 
-        <h3>{{ name }}</h3>
-        <ul class="events" />
-    </script> 
-    {% endverbatim %}
-    
-    {% verbatim %}
-    <script type="text/template" id="event-template"> 
-        {{ text }}
-    </script> 
-    {% endverbatim %}
-        
 {% endblock content %}
+
+{% block templates %}
+    {% verbatim %}
+<script type="text/template" id="actor-template"> 
+<h3>{{ name }}</h3>
+<ul class="events" />
+</script> 
+<script type="text/template" id="event-template"> 
+{{ text }}
+</script> 
+    {% endverbatim %}
+{% endblock %}
