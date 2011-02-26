@@ -4,80 +4,78 @@ body {
 
 header {
     position: relative;
-    background: #35180B;
 }
 
 h1 {
-    position: absolute;
-    font-weight: bold;
+    background: url(../img/bg-header.gif) repeat-x;
     font-size: 1.5em;
-    top: 5px;
-    left: 5px;
-    color: #FFF;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 0 5px;
+    line-height: 40px;
+    -webkit-background-size: 100% 100%;
+    -webkit-box-shadow: 0 3px 7px #858B5F;
 }
 
-#main-nav {
-    margin-left: 100px;
-    height: 30px;
+h2 {
+    font-size: 1.5em;
+    padding: 13px 5px 10px;
 }
 
-#main-nav li {
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    background: #CAE1B9;
-    display: inline;
-    padding: 5px 18px;
-    text-align: center;
-    line-height: 25px;
-}
-
-#main-nav li a {
+h2 a {
+    color: #78802A;
     text-decoration: none;
-    color: #333;
-    text-shadow: #FFF 0 1px 0;
 }
 
-#sub-nav {
-    padding: 2px;
-    height: 30px;
-    position: relative;
-}
-
-#sub-nav a.back-link,
-#sub-nav a.actions-link {
+header nav div.actions {
     position: absolute;
     top: 0;
-    display: block;
-    padding: 7px;
-    text-decoration: none;
-    color: #333;
-    text-shadow: #FFF 0 1px 0;
-    background: #CAE1B9;
-    border-radius: 3px;
-}
-
-#sub-nav a.back-link {
-    left: 0;
-    margin-left: 3px;
-}
-
-#sub-nav a.back-link:before 
-{
-    content: '« ';
-}
-
-#sub-nav a.actions-link {
     right: 0;
-    margin-right: 3px;
+}
+
+header nav div.actions span {
+    display: block;
+    width: 42px;
+    height: 40px;
+    opacity: 0.85;
+}
+
+header nav div.actions #plot-actions {
+    background: #FFF url(../img/icons-36-black.png) no-repeat -429px 2px;
 }
 
 #content {
-    padding: 3px 2px;
+}
+
+#actors {
+}
+
+#actors li {
+    border-top: 1px solid #FFF;
+}
+
+#actors li h3 {
+    color: #333;
+    padding: 0 5px;
+    line-height: 40px;
+    background: #DEE2B6;
+    position: relative;
+}
+
+li.actor h3 span.event-add {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 42px;
+    height: 40px;
+    background: #6C7823 url(../img/icons-36-white.png) no-repeat 4px 3px;
 }
 
 footer {
-    border-top: 1px solid #666;
+    border-top: 1px solid #D2DC97;
     padding: 3px 2px;
+    margin-top: 40px;
 }
 
 footer nav {
@@ -85,11 +83,40 @@ footer nav {
 }
 
 footer nav a {
-    color: #888;
+    color: #858B5F;
     text-decoration: none;
 }
 
 label {
     display: block;
+    color: #6C7823;
 }
+
+form {
+    margin-top: 10px;
+}
+
+form div.fieldcontain {
+    padding: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    font-size: 1.2em;
+    border: 1px solid #6C7823;
+    width: 90%;
+    max-width: 250px;
+    
+}
+
+form div.actions input[type="submit"] {
+    font-weight: bold;
+    font-size: 1em;
+    background: #6C7823;
+    border: 0;
+    padding: 0 20px;
+    line-height: 40px;
+    color: #FFF;
+}
+
 

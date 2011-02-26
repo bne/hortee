@@ -19,18 +19,9 @@
     </head>
     <body>
         <header>
-            <h1>hortee</h1>
-            {% block header %}        
-            <nav id="main-nav">
-                {% if user.is_authenticated %}
-                <ul>
-                    <li><a href="#">List</a></li>
-                </ul>
-                {% endif %}
-            </nav>
-            <nav id="sub-nav">
-                {% block subnav %}{% endblock %}
-            </nav>
+            {% block header %}
+                <h1>hortee</h1>
+                <nav>{% block nav %}{% endblock %}</nav>
             {% endblock header %}
         </header>        
         <div id="content">
@@ -38,6 +29,7 @@
                 {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
+                {% block messages %}{% endblock %}
             </ul>
             {% block content %}{% endblock content %}
         </div>

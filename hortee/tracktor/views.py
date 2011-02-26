@@ -9,6 +9,7 @@ def actors(request):
     """    
     return render_to_response('tracktor/list.html', {
         'api_disco': api.serialized(request, desired_format='application/json'),
+        'default_plot': request.user.get_profile().get_default_plot(),
     }, context_instance=RequestContext(request))
 
 
