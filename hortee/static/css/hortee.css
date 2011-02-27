@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    position: relative;
+    position: static;
 }
 
 h1 {
@@ -48,14 +48,11 @@ header nav div.actions #plot-actions {
     background: #FFF url(../img/icons-36-black.png) no-repeat -429px 2px;
 }
 
-#content {
-}
-
-#actors {
-}
+/* Actors */
 
 #actors li.actor {
     border-top: 1px solid #FFF;
+    position: relative;
 }
 
 #actors li.actor h3 {
@@ -63,17 +60,6 @@ header nav div.actions #plot-actions {
     padding: 0 5px;
     line-height: 40px;
     background: #DEE2B6;
-    position: relative;
-}
-
-#actors li.actor h3 span.event-add {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 42px;
-    height: 40px;
-    background: #6C7823 url(../img/icons-36-white.png) no-repeat 4px 3px;
 }
 
 #actors li.actor form.event {
@@ -84,6 +70,13 @@ header nav div.actions #plot-actions {
 #actors li.actor form.event input[type=text] {
     width: 90%;
     border-color: #DEE2B6;
+}
+
+/* Actions */
+
+ul.events li.event {
+    padding: 10px 10px;
+    border-top: 1px solid #DEE2B6;
 }
 
 footer {

@@ -26,12 +26,19 @@
 {% block templates %}
     {% verbatim %}
 <script type="text/template" id="actor-template"> 
-<h3>{{ name }}<span class="event-add" /></h3>
-<form class="event" style="display:none;"><input type="text" /><input type="date" /></form>
-<ul class="events" />
+<h3>{{ name }}</h3>
+<ul class="events" style="display:none;">
+    <li class="formcontain">
+        <form class="event">
+            <input type="date" />
+            <input type="text" />
+            <input type="submit" value="add" />
+        </form>
+    </li>
+</ul>
 </script> 
 <script type="text/template" id="event-template"> 
-{{ text }}
+    <p>{{ text }}</p>
 </script> 
     {% endverbatim %}
 {% endblock %}
