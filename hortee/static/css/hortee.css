@@ -1,3 +1,7 @@
+/*
+http://colorschemedesigner.com/#2411TdknTw0w0
+*/
+
 body {
     font-family: sans-serif;
 }
@@ -10,7 +14,7 @@ h1 {
     background: url(../img/bg-header.gif) repeat-x;
     font-size: 1.5em;
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.5);
     padding: 0 5px;
     line-height: 40px;
     -webkit-background-size: 100% 100%;
@@ -50,11 +54,11 @@ header nav div.actions #plot-actions {
 #actors {
 }
 
-#actors li {
+#actors li.actor {
     border-top: 1px solid #FFF;
 }
 
-#actors li h3 {
+#actors li.actor h3 {
     color: #333;
     padding: 0 5px;
     line-height: 40px;
@@ -62,7 +66,7 @@ header nav div.actions #plot-actions {
     position: relative;
 }
 
-li.actor h3 span.event-add {
+#actors li.actor h3 span.event-add {
     display: block;
     position: absolute;
     top: 0;
@@ -70,6 +74,16 @@ li.actor h3 span.event-add {
     width: 42px;
     height: 40px;
     background: #6C7823 url(../img/icons-36-white.png) no-repeat 4px 3px;
+}
+
+#actors li.actor form.event {
+    margin: 0;
+    padding: 0 5px;    
+}
+
+#actors li.actor form.event input[type=text] {
+    width: 90%;
+    border-color: #DEE2B6;
 }
 
 footer {
@@ -101,12 +115,10 @@ form div.fieldcontain {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="date"] {
     font-size: 1.2em;
     border: 1px solid #6C7823;
-    width: 90%;
-    max-width: 250px;
-    
 }
 
 form div.actions input[type="submit"] {
