@@ -48,6 +48,16 @@ header nav div.actions #plot-actions {
     background: #FFF url(../img/icons-36-black.png) no-repeat -429px 2px;
 }
 
+footer {
+    border-top: 1px solid #D2DC97;
+    padding: 3px 2px;
+    margin-top: 40px;
+}
+
+footer nav {
+    text-align: center;
+}
+
 /* Actors */
 
 #actors li.actor {
@@ -62,32 +72,59 @@ header nav div.actions #plot-actions {
     background: #DEE2B6;
 }
 
-#actors li.actor form.event {
-    margin: 0;
-    padding: 0 5px;    
-}
-
-#actors li.actor form.event input[type=text] {
-    width: 90%;
-    border-color: #DEE2B6;
-}
-
-/* Actions */
+/* Events */
 
 ul.events li.event {
-    padding: 10px 10px;
-    border-top: 1px solid #DEE2B6;
+    padding: 10px 10px 10px 36px;
+    border-bottom: 1px solid #DEE2B6;
+    color: #858B5F;
 }
 
-footer {
-    border-top: 1px solid #D2DC97;
-    padding: 3px 2px;
-    margin-top: 40px;
+form.event {
+    margin: 0;
+    padding: 0;    
 }
 
-footer nav {
-    text-align: center;
+form.event table {
+    width: 100%;
+    height: 36px;
 }
+
+form.event td.btn-contain {
+    width: 36px;
+}
+
+form.event textarea {
+    width: 100%;
+    height: 34px;
+    border: 1px solid #AEB96C;
+    border-left: 0;
+    border-right: 0;
+    margin: 0;
+    padding: 0;
+}
+
+form.event input[type=date] {
+    display: none;
+}
+
+span.btn {
+    border: 0;
+    padding: 0;
+    display: block;
+    width: 36px;
+    height: 36px;
+}
+
+span.btn.date {
+    background: #AEB96C url(../img/icons-36-white.png) -865px 0 no-repeat;
+}
+
+span.btn.add {
+    background: #6C7823 url(../img/icons-36-white.png) 2px 0 no-repeat;
+}
+
+/* Form */
 
 footer nav a {
     color: #858B5F;
@@ -107,14 +144,14 @@ form div.fieldcontain {
     padding: 5px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="date"] {
+form.login input[type="text"],
+form.login input[type="password"],
+form.login input[type="date"] {
     font-size: 1.2em;
     border: 1px solid #6C7823;
 }
 
-form div.actions input[type="submit"] {
+form.login input[type="submit"] {
     font-weight: bold;
     font-size: 1em;
     background: #6C7823;

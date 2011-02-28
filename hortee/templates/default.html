@@ -5,7 +5,7 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-<form method="post" action=".">
+<form method="post" action="." class="login">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}" />
     <div class="fieldcontain">
