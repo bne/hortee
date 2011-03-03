@@ -1,4 +1,7 @@
-/*
+$(function(){
+    // Reimplements Backbone.sync to add the django xsrf token as a cookie
+    // Requires the rejiggled zepto.js that allows headers in the ajax options
+
     function trim(str) {
         str = str.replace(/^\s+/, '');
         for(var i=str.length-1; i>0; -i) {
@@ -82,9 +85,9 @@
             }
         }
         
-        console.log(params);
+        //console.log(params);
 
         // Make the request.
         $.ajax(params);
     };
-*/
+});

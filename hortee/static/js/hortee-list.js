@@ -2,7 +2,7 @@ $(function(){
 
     window.Action = Backbone.Model.extend({
         url: function() {
-            return API_DISCO['action'].list_endpoint || this.collection.url;
+            return this.attributes.resource_uri || this.collection.url;
         }        
     });
     
@@ -29,7 +29,6 @@ $(function(){
             return this;
         },
         remove: function() {
-            console.log(this.model);
             this.model.destroy();
         }
     });
@@ -47,10 +46,11 @@ $(function(){
             return this.get('resource_uri');
         },        
         addAll: function(){
-          this.actions.each(this.addOne);
+            this.actions.each(this.addOne);
         },
         addOne: function(action){
-          var view = new ActionView({ model: action });
+            
+            var view = new ActionView({ model: action });
           $(this.view.el).find('ul.actions').append(view.render().el);
         },
     });
