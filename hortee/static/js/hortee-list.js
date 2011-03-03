@@ -44,7 +44,6 @@ $(function(){
         initialize: function() {
             _.bindAll(this, 'render', 'remove');
             this.model.bind('change', this.render);
-            this.model.view = this;
         },
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
@@ -64,19 +63,22 @@ $(function(){
             'keypress input[type="text"]': 'createOnEnter'
         },
         initialize: function() {    
-            _.bindAll(this, 'addOne', 'addAll', 'render', 'add');
+            _.bindAll(this, 'addOne', 'addAll', 'render', 'add', 'create');
             this.actions = new Actions;
             this.actions.url += '?actor=' + this.model.id;
             this.actions.bind('add', this.addOne);
             this.actions.bind('refresh', this.addAll);
+            this.actions.bind('create', this.addOne);
         },
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
+            this.list = this.$('ul.actions');
+            this.list.hide();            
             return this;
         },
+        
         toggle: function() {
-            this.list = this.$('ul.actions');
-            var show = (this.list.css('display') == 'none');
+            var show = (this.list.css('display')=='none');
             $('ul.actions').hide();
             if(show) {
                 this.list.show();

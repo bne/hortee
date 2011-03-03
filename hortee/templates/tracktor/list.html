@@ -4,7 +4,7 @@
 
 {% block head %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/backbone.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/backbone-xsrf.js"></script>
+
     <script type="text/javascript">
         API_DISCO = {{ api_disco|safe }};
     </script>
@@ -28,7 +28,7 @@
     {% verbatim %}
 <script type="text/template" id="actor-template"> 
 <h3>{{ name }}</h3>
-<ul class="actions" style="display:none;">
+<ul class="actions">
     <li class="form">
         <table><tr>
         <td class="btn-contain"><span class="btn date" /></td>
