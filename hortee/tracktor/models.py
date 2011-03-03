@@ -41,8 +41,8 @@ class Event(models.Model):
     """
     actor = models.ForeignKey(Actor)
     text = models.TextField(null=True, blank=True)
-    date = models.DateTimeField()
-        
+    date = models.DateTimeField(default=datetime.now)
+            
     def __unicode__(self):
         return self.text  
     

@@ -2,12 +2,13 @@ $(function(){
 
     window.Event = Backbone.Model.extend({
         url: function() {
-            return this.get('resource_uri');
+            return API_DISCO['event'].list_endpoint || this.collection.url;
         }        
     });
     
     window.Events = Backbone.Collection.extend({
         model: Event,
+        url: API_DISCO['event'].list_endpoint,
         parse: function(data){
             return data.objects;
         }        
@@ -15,7 +16,10 @@ $(function(){
     
     window.EventView = Backbone.View.extend({
         tagName: 'li',
-        className: 'event',
+        className: 'event',        
+        events: {
+            'click p': 'remove'
+        },
         template: _.template($('#event-template').html()),
         initialize: function() {
             this.model.view = this;
@@ -23,6 +27,9 @@ $(function(){
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
             return this;
+        },
+        remove: function() {
+            this.model.destroy();
         }
     });
  
@@ -60,7 +67,10 @@ $(function(){
         className: 'actor',
         template: _.template($('#actor-template').html()),
         events: {
-            'click h3': 'toggleEvents'
+            'click h3': 'toggleEvents',
+            'click span.btn.date': 'toggleCalendar',
+            'click span.btn.add': 'addEvent',
+            'keypress input[type="text"]': 'addEventOnEnter'
         },
         initialize: function() {
             this.model.view = this;
@@ -69,7 +79,7 @@ $(function(){
             $(this.el).html(this.template(this.model.toJSON()));
             return this;
         },
-        toggleEvents: function(ev) {
+        toggleEvents: function() {
             var event_list = $(this.el).find('ul.events');
             var show = (event_list.css('display') == 'none');
             $('ul.events').hide();
@@ -80,6 +90,20 @@ $(function(){
                     this.model.events.loaded = true;
                 }
             }
+        },
+        toggleCalendar: function() {
+            
+        },
+        addEventOnEnter: function(evt) {
+            if (evt.keyCode != 13) return;
+            evt.stopPropagation();
+            this.addEvent();
+        },
+        addEvent: function() {    
+            this.model.events.create({
+                actor: this.model.attributes.resource_uri,
+                text: this.$('input[type="text"]').val()
+            });
         }
     });
     

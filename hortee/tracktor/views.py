@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from api import api
+from api.urls import api
 
 @login_required
 def actors(request):
