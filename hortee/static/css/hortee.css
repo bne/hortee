@@ -62,6 +62,7 @@ footer nav {
 #actors li.actor {
     border-top: 1px solid #FFF;
     position: relative;
+    cursor: pointer;
 }
 
 #actors li.actor h3 {
@@ -73,27 +74,28 @@ footer nav {
 
 /* Events */
 
-ul.events li.event {
+ul.actions li.action {
     padding: 10px 10px 10px 36px;
     border-bottom: 1px solid #DEE2B6;
     color: #858B5F;
+    cursor: pointer;
 }
 
-ul.events li.form {
+ul.actions li.form {
     margin: 0;
     padding: 0;    
 }
 
-ul.events li.form table {
+ul.actions li.form table {
     width: 100%;
     height: 36px;
 }
 
-ul.events li.form td.btn-contain {
+ul.actions li.form td.btn-contain {
     width: 36px;
 }
 
-ul.events li.form input[type="text"] {
+ul.actions li.form input[type="text"] {
     width: 100%;
     height: 34px;
     line-height: 34px;
@@ -106,7 +108,7 @@ ul.events li.form input[type="text"] {
     padding: 0;
 }
 
-ul.events li.form span.btn {
+ul.actions li.form span.btn {
     border: 0;
     padding: 0;
     display: block;
@@ -114,11 +116,11 @@ ul.events li.form span.btn {
     height: 36px;
 }
 
-ul.events li.form span.btn.date {
+ul.actions li.form span.btn.date {
     background: #AEB96C url(../img/icons-36-white.png) -865px 0 no-repeat;
 }
 
-ul.events li.form span.btn.add {
+ul.actions li.form span.btn.add {
     background: #6C7823 url(../img/icons-36-white.png) 2px 0 no-repeat;
 }
 

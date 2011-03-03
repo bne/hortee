@@ -60,8 +60,8 @@ class ActorResource(ModelResource):
             'plot': ('exact'),
         }
         
-class EventResource(ModelResource):
-    """Api resource for tracktor.models.Event
+class ActionResource(ModelResource):
+    """Api resource for tracktor.models.Action
     """
     actor = fields.ForeignKey(ActorResource, 'actor')
     
@@ -72,7 +72,7 @@ class EventResource(ModelResource):
         return object_list.filter(actor__plot__owners=request.user)
 
     class Meta:
-        queryset = Event.objects.all()
+        queryset = Action.objects.all()
         authorization = Authorization()
         authentication = DjangoAuthentication()
         filtering = {

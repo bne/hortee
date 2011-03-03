@@ -25,10 +25,10 @@ class ActorForm(forms.ModelForm):
         model = Actor
         fields = ('name', 'plot',)
 
-class EventForm(forms.ModelForm):
+class ActionForm(forms.ModelForm):
 
     date = forms.DateField(widget=DateInput)
 
     class Meta:
-        model = Event
+        model = Action
 

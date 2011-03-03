@@ -1,26 +1,26 @@
 $(function(){
 
-    window.Event = Backbone.Model.extend({
+    window.Action = Backbone.Model.extend({
         url: function() {
-            return API_DISCO['event'].list_endpoint || this.collection.url;
+            return API_DISCO['action'].list_endpoint || this.collection.url;
         }        
     });
     
-    window.Events = Backbone.Collection.extend({
-        model: Event,
-        url: API_DISCO['event'].list_endpoint,
+    window.Actions = Backbone.Collection.extend({
+        model: Action,
+        url: API_DISCO['action'].list_endpoint,
         parse: function(data){
             return data.objects;
         }        
     });
     
-    window.EventView = Backbone.View.extend({
+    window.ActionView = Backbone.View.extend({
         tagName: 'li',
-        className: 'event',        
+        className: 'action',        
         events: {
             'click p': 'remove'
         },
-        template: _.template($('#event-template').html()),
+        template: _.template($('#action-template').html()),
         initialize: function() {
             this.model.view = this;
         },
@@ -29,6 +29,7 @@ $(function(){
             return this;
         },
         remove: function() {
+            console.log(this.model);
             this.model.destroy();
         }
     });
@@ -36,21 +37,21 @@ $(function(){
     window.Actor = Backbone.Model.extend({
         initialize: function() {
             _.bindAll(this, 'addOne', 'addAll', 'render');
-            this.events = new window.Events;
-            this.events.url = API_DISCO['event'].list_endpoint + '?actor=' + this.id;
-            this.events.actor = this;
-            this.events.bind('add', this.addOne);
-            this.events.bind('refresh', this.addAll);
+            this.actions = new window.Actions;
+            this.actions.url = API_DISCO['action'].list_endpoint + '?actor=' + this.id;
+            this.actions.actor = this;
+            this.actions.bind('add', this.addOne);
+            this.actions.bind('refresh', this.addAll);
         },
         url: function() {
             return this.get('resource_uri');
         },        
         addAll: function(){
-          this.events.each(this.addOne);
+          this.actions.each(this.addOne);
         },
-        addOne: function(event){
-          var view = new EventView({ model: event });
-          $(this.view.el).find('ul.events').append(view.render().el);
+        addOne: function(action){
+          var view = new ActionView({ model: action });
+          $(this.view.el).find('ul.actions').append(view.render().el);
         },
     });
     
@@ -67,10 +68,10 @@ $(function(){
         className: 'actor',
         template: _.template($('#actor-template').html()),
         events: {
-            'click h3': 'toggleEvents',
+            'click h3': 'toggleActions',
             'click span.btn.date': 'toggleCalendar',
-            'click span.btn.add': 'addEvent',
-            'keypress input[type="text"]': 'addEventOnEnter'
+            'click span.btn.add': 'addAction',
+            'keypress input[type="text"]': 'addActionOnEnter'
         },
         initialize: function() {
             this.model.view = this;
@@ -79,30 +80,31 @@ $(function(){
             $(this.el).html(this.template(this.model.toJSON()));
             return this;
         },
-        toggleEvents: function() {
-            var event_list = $(this.el).find('ul.events');
-            var show = (event_list.css('display') == 'none');
-            $('ul.events').hide();
+        toggleActions: function() {
+            this.input = this.$('input[type="text"]');
+            this.list = this.$('ul.actions');
+            var show = (this.list.css('display') == 'none');
+            $('ul.actions').hide();
             if(show) {
-                event_list.show();
-                if(!this.model.events.loaded) {
-                    this.model.events.fetch();
-                    this.model.events.loaded = true;
+                this.list.show();
+                if(!this.model.actions.loaded) {
+                    this.model.actions.fetch();
+                    this.model.actions.loaded = true;
                 }
             }
         },
         toggleCalendar: function() {
             
         },
-        addEventOnEnter: function(evt) {
+        addActionOnEnter: function(evt) {
             if (evt.keyCode != 13) return;
             evt.stopPropagation();
-            this.addEvent();
+            this.addAction();
         },
-        addEvent: function() {    
-            this.model.events.create({
+        addAction: function() {    
+            this.model.actions.create({
                 actor: this.model.attributes.resource_uri,
-                text: this.$('input[type="text"]').val()
+                text: this.input.val()
             });
         }
     });

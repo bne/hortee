@@ -30,14 +30,14 @@ class Actor(models.Model):
     
     @property
     def date_start(self):
-        return Event.objects.order_by('date')[0].date
+        return Action.objects.order_by('date')[0].date
         
     @property
     def date_end(self):
-        return Event.objects.order_by('-date')[0].date
+        return Action.objects.order_by('-date')[0].date
                 
-class Event(models.Model):
-    """An event on the actor's timeline
+class Action(models.Model):
+    """An action on the actor's timeline
     """
     actor = models.ForeignKey(Actor)
     text = models.TextField(null=True, blank=True)
