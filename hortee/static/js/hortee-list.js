@@ -13,15 +13,37 @@ $(function(){
             return data.objects;
         }        
     });
+ 
+    window.Actor = Backbone.Model.extend({
+        url: function() {
+            return this.get('resource_uri');
+        }
+    });
+    
+    window.ActorList = Backbone.Collection.extend({
+        model: Actor,
+        url: API_DISCO['actor'].list_endpoint,
+        parse: function(data){
+            return data.objects;
+        }         
+    });
+      
+    window.Actors = new ActorList;
+    
+    /*
+        Views
+    */
     
     window.ActionView = Backbone.View.extend({
         tagName: 'li',
-        className: 'action',        
+        className: 'action',
+        template: _.template($('#action-template').html()),
         events: {
             'click p': 'remove'
         },
-        template: _.template($('#action-template').html()),
         initialize: function() {
+            _.bindAll(this, 'render', 'remove');
+            this.model.bind('change', this.render);
             this.model.view = this;
         },
         render: function() {
@@ -31,80 +53,56 @@ $(function(){
         remove: function() {
             this.model.destroy();
         }
-    });
- 
-    window.Actor = Backbone.Model.extend({
-        initialize: function() {
-            _.bindAll(this, 'addOne', 'addAll', 'render');
-            this.actions = new window.Actions;
-            this.actions.url = API_DISCO['action'].list_endpoint + '?actor=' + this.id;
-            this.actions.actor = this;
-            this.actions.bind('add', this.addOne);
-            this.actions.bind('refresh', this.addAll);
-        },
-        url: function() {
-            return this.get('resource_uri');
-        },        
-        addAll: function(){
-            this.actions.each(this.addOne);
-        },
-        addOne: function(action){
-            
-            var view = new ActionView({ model: action });
-          $(this.view.el).find('ul.actions').append(view.render().el);
-        },
-    });
-    
-    window.Actors = Backbone.Collection.extend({
-        model: Actor,
-        url: API_DISCO['actor'].list_endpoint,
-        parse: function(data){
-            return data.objects;
-        }         
-    });
+    });    
     
     window.ActorView = Backbone.View.extend({
         tagName: 'li',
         className: 'actor',
         template: _.template($('#actor-template').html()),
         events: {
-            'click h3': 'toggleActions',
-            'click span.btn.date': 'toggleCalendar',
-            'click span.btn.add': 'addAction',
-            'keypress input[type="text"]': 'addActionOnEnter'
+            'click h3': 'toggle',
+            'keypress input[type="text"]': 'createOnEnter'
         },
-        initialize: function() {
-            this.model.view = this;
+        initialize: function() {    
+            _.bindAll(this, 'addOne', 'addAll', 'render', 'add');
+            this.actions = new Actions;
+            this.actions.url += '?actor=' + this.model.id;
+            this.actions.bind('add', this.addOne);
+            this.actions.bind('refresh', this.addAll);
         },
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
             return this;
         },
-        toggleActions: function() {
-            this.input = this.$('input[type="text"]');
+        toggle: function() {
             this.list = this.$('ul.actions');
             var show = (this.list.css('display') == 'none');
             $('ul.actions').hide();
             if(show) {
                 this.list.show();
-                if(!this.model.actions.loaded) {
-                    this.model.actions.fetch();
-                    this.model.actions.loaded = true;
+                if(!this.actions.loaded) {
+                    this.actions.fetch();
+                    this.actions.loaded = true;
                 }
             }
+        },       
+        addAll: function(){
+            this.actions.each(this.addOne);
         },
-        toggleCalendar: function() {
-            
+        addOne: function(action){
+            var view = new ActionView({ model: action });
+            this.list.append(view.render().el);
         },
-        addActionOnEnter: function(evt) {
-            if (evt.keyCode != 13) return;
-            evt.stopPropagation();
-            this.addAction();
+        createOnEnter: function(evt) {
+            evt.stopPropagation();   
+            if (evt.keyCode == 13) {
+                this.create();
+            }
         },
-        addAction: function() {    
-            this.model.actions.create({
+        create: function() {
+            this.actions.create({
                 actor: this.model.attributes.resource_uri,
-                text: this.input.val()
+                text: this.$('input').val()
             });
         }
     });
@@ -112,18 +110,17 @@ $(function(){
     window.AppView = Backbone.View.extend({
         el: $('#app'),
         initialize: function() {
-            _.bindAll(this, 'addOne', 'addAll', 'render');
-            this.actors = new Actors();
-            this.actors.bind('add', this.addOne);
-            this.actors.bind('refresh', this.addAll);
-            this.actors.fetch();
+            _.bindAll(this, 'addOne', 'addAll');
+            Actors.bind('add', this.addOne);
+            Actors.bind('refresh', this.addAll);
+            Actors.fetch();
         },        
-        addAll: function(){
-          this.actors.each(this.addOne);
+        addAll: function() {
+            window.Actors.each(this.addOne);
         },
-        addOne: function(actor){
-          var view = new ActorView({ model: actor });
-          $('#actors').append(view.render().el);
+        addOne: function(actor) {
+            var view = new ActorView({ model: actor });
+            this.$('#actors').append(view.render().el);
         },
     });    
 
