@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.conf.urls.defaults import url
+from django.shortcuts import get_object_or_404
 
 from tastypie.resources import ModelResource
 from tastypie import fields
@@ -28,7 +30,9 @@ class PlotResource(ModelResource):
         """Restrict to Plots owned by user
         """
         object_list = self._meta.queryset
-        return object_list.filter(owners=request.user)
+        if request and hasattr(request, 'user'):
+            object_list = object_list.filter(owners=request.user)
+        return object_list
     
     class Meta:
         queryset = Plot.objects.all()
@@ -75,6 +79,7 @@ class ActionResource(ModelResource):
         queryset = Action.objects.all()
         authorization = Authorization()
         authentication = DjangoAuthentication()
+        
         filtering = {
             'actor': ('exact'),
         }

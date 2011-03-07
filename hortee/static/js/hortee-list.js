@@ -1,5 +1,21 @@
 $(function(){
 
+    var oldSync = Backbone.sync;
+
+    Backbone.sync = function(method, model, success, error){
+        var newSuccess = function(resp, status, xhr){
+            if(xhr.statusText === "CREATED"){
+                var location = xhr.getResponseHeader('Location');
+                return $.ajax({
+                           url: location,
+                           success: success
+                       });
+            }
+            return success(resp);
+        };
+        return oldSync(method, model, newSuccess, error);
+    };
+
     window.Action = Backbone.Model.extend({
         url: function() {
             return this.attributes.resource_uri || this.collection.url;
@@ -16,7 +32,7 @@ $(function(){
  
     window.Actor = Backbone.Model.extend({
         url: function() {
-            return this.get('resource_uri');
+            return this.attributes.resource_uri || this.collection.url;
         }
     });
     
@@ -43,7 +59,6 @@ $(function(){
         },
         initialize: function() {
             _.bindAll(this, 'render', 'remove');
-            this.model.bind('change', this.render);
         },
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
@@ -68,15 +83,13 @@ $(function(){
             this.actions.url += '?actor=' + this.model.id;
             this.actions.bind('add', this.addOne);
             this.actions.bind('refresh', this.addAll);
-            this.actions.bind('create', this.addOne);
         },
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
             this.list = this.$('ul.actions');
             this.list.hide();            
             return this;
-        },
-        
+        },        
         toggle: function() {
             var show = (this.list.css('display')=='none');
             $('ul.actions').hide();
@@ -106,15 +119,20 @@ $(function(){
                 actor: this.model.attributes.resource_uri,
                 text: this.$('input').val()
             });
+            this.$('input').val('');
         }
     });
     
     window.AppView = Backbone.View.extend({
         el: $('#app'),
+        events: {
+            'click #addActor': 'create'
+        },
         initialize: function() {
-            _.bindAll(this, 'addOne', 'addAll');
+            _.bindAll(this, 'addOne', 'addAll', 'render');
             Actors.bind('add', this.addOne);
             Actors.bind('refresh', this.addAll);
+            Actors.bind('all', this.render);
             Actors.fetch();
         },        
         addAll: function() {
@@ -124,7 +142,13 @@ $(function(){
             var view = new ActorView({ model: actor });
             this.$('#actors').append(view.render().el);
         },
+        create: function() {
+            Actors.create({
+                plot: '/api/v1/plot/2/',
+                name: 'Foo'
+            });
+        }
     });    
 
-    window.app = new AppView();  
+    window.app = new AppView();
 });

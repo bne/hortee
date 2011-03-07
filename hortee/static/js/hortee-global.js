@@ -23,5 +23,7 @@ $(function() {
         evaluate    : /{%([\s\S]+?)%}/g,
         interpolate : /{{([\s\S]+?)}}/g
     };
+    
+    window.messages = new Messages();
 });
 
