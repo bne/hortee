@@ -1,21 +1,5 @@
 $(function(){
 
-    var oldSync = Backbone.sync;
-
-    Backbone.sync = function(method, model, success, error){
-        var newSuccess = function(resp, status, xhr){
-            if(xhr.statusText === "CREATED"){
-                var location = xhr.getResponseHeader('Location');
-                return $.ajax({
-                           url: location,
-                           success: success
-                       });
-            }
-            return success(resp);
-        };
-        return oldSync(method, model, newSuccess, error);
-    };
-
     window.Action = Backbone.Model.extend({
         url: function() {
             return this.attributes.resource_uri || this.collection.url;
@@ -33,6 +17,20 @@ $(function(){
     window.Actor = Backbone.Model.extend({
         url: function() {
             return this.attributes.resource_uri || this.collection.url;
+        },
+        initialize: function(){
+            this.setupAssociations({
+                    'actions': Actions
+            });
+        },
+        setupAssociations:function(assoc){
+            for ( var key in assoc ) {
+                this[ key ] = new assoc[key]( this.get( key ),{ memberOf: this } );
+                this.bind( 'change:' + key , _.bind( this.setAssociated, this, key ) );
+            }
+        },
+        setAssociated: function(name, self, val){
+            this[name].refresh(val);
         }
     });
     
@@ -66,6 +64,8 @@ $(function(){
         },
         remove: function() {
             this.model.destroy();
+            console.log(this.model.collection);
+            $(this.el).remove();
         }
     });    
     
