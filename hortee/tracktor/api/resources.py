@@ -12,14 +12,32 @@ from hortee.tracktor.models import *
 
 class UserResource(ModelResource):
     """Api resource for django.contrib.auth.models.User
-    """
+    """    
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user'
         fields = ['username', 'first_name', 'last_name']
-        allowed_methods = ['get']     
+        allowed_methods = ['get', 'put']
         authorization = Authorization()
         authentication = DjangoAuthentication()  
+        filtering = {
+            'username': ('exact'),
+        }
+        
+    def dehydrate(self, bundle):    
+        plot_resource = PlotResource()
+        default_plot = bundle.obj.get_profile().get_default_plot()
+        plot = plot_resource.full_dehydrate(obj=default_plot)    
+        bundle.data['default_plot'] = plot
+        return bundle
+        
+    def override_urls(self):
+        return [
+            url(r"^(?P<resource_name>%s)/(?P<username>[\w\d_.-]+)/$" % \
+                self._meta.resource_name, 
+                self.wrap_view('dispatch_detail'), 
+                name="api_dispatch_detail"),
+        ]             
 
 class PlotResource(ModelResource):
     """Api resource for tracktor.models.Plot

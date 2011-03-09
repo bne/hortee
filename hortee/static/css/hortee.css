@@ -6,45 +6,32 @@ body {
 }
 
 header {
-    position: static;
+    position: relative;
 }
 
 h1 {
-    background: url(../img/bg-header.gif) repeat-x;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.5);
-    padding: 0 5px;
-    line-height: 40px;
-    -webkit-background-size: 100% 100%;
-    -webkit-box-shadow: 0 3px 7px #858B5F;
+    background: #AEB96C;
+    height: 45px;
+    text-indent: -2000px;
 }
 
 h2 {
     font-size: 1.5em;
-    padding: 13px 5px 10px;
-}
-
-h2 a {
-    color: #78802A;
-    text-decoration: none;
-}
-
-header nav div.actions {
+    line-height: 45px;
     position: absolute;
     top: 0;
     right: 0;
+    color: #FFF;
+    padding-right: 40px;
+    background: url(../img/ico-down.png) no-repeat right center;
+    opacity: 0.95;
+    cursor: pointer;
 }
 
-header nav div.actions span {
-    display: block;
-    width: 42px;
-    height: 40px;
-    opacity: 0.85;
-}
-
-header nav div.actions #plot-actions {
-    background: #FFF url(../img/icons-36-black.png) no-repeat -429px 2px;
+#plot-actions {
+    position: absolute;
+    top: 45px;
+    right: 0;
 }
 
 footer {

@@ -20,6 +20,7 @@ class SerializedApi(Api):
         """
         Nabbed from top_level of the parent class
         Would be nice if this was abstracted as it's good for auto discovery
+        to be rendered as json on initial page load
         """
         serializer = Serializer()
         available_resources = {}
@@ -32,7 +33,8 @@ class SerializedApi(Api):
         
         for name in sorted(self._registry.keys()):
             available_resources[name] = {
-                'list_endpoint': self._build_reverse_url("api_dispatch_list", kwargs={
+                'list_endpoint': self._build_reverse_url("api_dispatch_list", 
+                kwargs={
                     'api_name': api_name,
                     'resource_name': name,
                 }),

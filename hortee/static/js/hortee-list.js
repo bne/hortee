@@ -2,7 +2,7 @@ $(function(){
 
     window.Action = Backbone.Model.extend({
         url: function() {
-            return this.attributes.resource_uri || this.collection.url;
+            return this.get('resource_uri') || this.collection.url;
         }        
     });
     
@@ -16,21 +16,7 @@ $(function(){
  
     window.Actor = Backbone.Model.extend({
         url: function() {
-            return this.attributes.resource_uri || this.collection.url;
-        },
-        initialize: function(){
-            this.setupAssociations({
-                    'actions': Actions
-            });
-        },
-        setupAssociations:function(assoc){
-            for ( var key in assoc ) {
-                this[ key ] = new assoc[key]( this.get( key ),{ memberOf: this } );
-                this.bind( 'change:' + key , _.bind( this.setAssociated, this, key ) );
-            }
-        },
-        setAssociated: function(name, self, val){
-            this[name].refresh(val);
+            return this.get('resource_uri') || this.collection.url;
         }
     });
     
@@ -42,7 +28,35 @@ $(function(){
         }         
     });
       
-    window.Actors = new ActorList;
+    window.Actors = new ActorList;    
+
+    window.Plot = Backbone.Model.extend({
+        url: function() {
+            return this.get('resource_uri') || this.collection.url;
+        }    
+    });
+    
+    window.PlotList = Backbone.Collection.extend({
+        model: Plot,
+        url: API_DISCO['plot'].list_endpoint,
+        parse: function(data){
+            return data.objects;
+        }         
+    });
+    
+    window.Plots = new PlotList;
+    
+    window.UserModel = Backbone.Model.extend({
+        url: function() {
+            return API_DISCO['user'].list_endpoint + 'ben';
+        },
+        initialize: function() {
+        
+            console.log(this.get('default_plot'));
+            this.default_plot = new Plot();
+            
+        }
+    });
     
     /*
         Views
@@ -64,7 +78,6 @@ $(function(){
         },
         remove: function() {
             this.model.destroy();
-            console.log(this.model.collection);
             $(this.el).remove();
         }
     });    
@@ -126,7 +139,6 @@ $(function(){
     window.AppView = Backbone.View.extend({
         el: $('#app'),
         events: {
-            'click #addActor': 'create'
         },
         initialize: function() {
             _.bindAll(this, 'addOne', 'addAll', 'render');
@@ -134,19 +146,15 @@ $(function(){
             Actors.bind('refresh', this.addAll);
             Actors.bind('all', this.render);
             Actors.fetch();
+            
+            Plots.fetch();
         },        
         addAll: function() {
-            window.Actors.each(this.addOne);
+            Actors.each(this.addOne);
         },
         addOne: function(actor) {
             var view = new ActorView({ model: actor });
             this.$('#actors').append(view.render().el);
-        },
-        create: function() {
-            Actors.create({
-                plot: '/api/v1/plot/2/',
-                name: 'Foo'
-            });
         }
     });    
 
