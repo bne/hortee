@@ -1,5 +1,16 @@
 /*
 http://colorschemedesigner.com/#2411TdknTw0w0
+
+#BBDC29 - light green
+#5EB21E - med green
+#3F9017 - dark green
+#8C543D - light brown
+#592B1B - med brown
+#421615 - dark brown
+#6DCFC2 - light blue
+#00A5AE - med blue
+#006F92 - dark blue
+
 */
 body {
     font-family: sans-serif;
@@ -10,7 +21,7 @@ header {
 }
 
 h1 {
-    background: #AEB96C;
+    background: #AEB96C url(../img/flower.png) no-repeat -25px -30px;
     height: 45px;
     text-indent: -2000px;
 }
