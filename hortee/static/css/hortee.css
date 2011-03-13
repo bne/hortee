@@ -39,12 +39,6 @@ h2 {
     cursor: pointer;
 }
 
-#plot-actions {
-    position: absolute;
-    top: 45px;
-    right: 0;
-}
-
 footer {
     border-top: 1px solid #D2DC97;
     padding: 3px 2px;
@@ -53,6 +47,29 @@ footer {
 
 footer nav {
     text-align: center;
+}
+
+/* Plots */
+
+#plots {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background-color: #FFF;
+    border: 1px solid #AEB96C;
+    border-top: 0;
+    border-right: 0;
+    padding: 0 10px 0 20px;
+    z-index: 100;
+    display: none;
+}
+
+#plots ul li {
+    text-align: right;
+    font-size: 1.3em;
+    line-height: 45px;
+    color: #666;
+    cursor: pointer;
 }
 
 /* Actors */

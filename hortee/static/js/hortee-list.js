@@ -20,41 +20,31 @@ $(function(){
         }
     });
     
-    window.ActorList = Backbone.Collection.extend({
+    window.Actors = Backbone.Collection.extend({
         model: Actor,
         url: API_DISCO['actor'].list_endpoint,
         parse: function(data){
             return data.objects;
         }         
     });
-      
-    window.Actors = new ActorList;    
-
+    
     window.Plot = Backbone.Model.extend({
         url: function() {
             return this.get('resource_uri') || this.collection.url;
         }    
     });
     
-    window.PlotList = Backbone.Collection.extend({
+    window.Plots = Backbone.Collection.extend({
         model: Plot,
         url: API_DISCO['plot'].list_endpoint,
         parse: function(data){
             return data.objects;
         }         
     });
-    
-    window.Plots = new PlotList;
-    
-    window.UserModel = Backbone.Model.extend({
-        url: function() {
-            return API_DISCO['user'].list_endpoint + 'ben';
-        },
-        initialize: function() {
         
-            console.log(this.get('default_plot'));
-            this.default_plot = new Plot();
-            
+    window.User = Backbone.Model.extend({
+        initialize: function(o) {
+            this.url = API_DISCO['user'].list_endpoint + o.username;
         }
     });
     
@@ -88,7 +78,7 @@ $(function(){
         template: _.template($('#actor-template').html()),
         events: {
             'click h3': 'toggle',
-            'keypress input[type="text"]': 'createOnEnter'
+            'keypress input': 'createOnEnter'
         },
         initialize: function() {    
             _.bindAll(this, 'addOne', 'addAll', 'render', 'add', 'create');
@@ -119,7 +109,7 @@ $(function(){
         },
         addOne: function(action){
             var view = new ActionView({ model: action });
-            this.list.append(view.render().el);
+            $(view.render().el).insertAfter($('li:first', this.list));
         },
         createOnEnter: function(evt) {
             evt.stopPropagation();   
@@ -135,22 +125,67 @@ $(function(){
             this.$('input').val('');
         }
     });
+
+    window.PlotView = Backbone.View.extend({
+        tagName: 'li',
+        className: 'plot',
+        template: _.template($('#plot-template').html()),
+        events: {
+            'click': 'change'
+        },
+        initialize: function() {
+        },
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+            return this;
+        },
+        change: function() {
+            console.log('foo');
+        }
+    });
+    
+    window.PlotContainerView = Backbone.View.extend({
+        el: $('#plots'),
+        initialize: function() {
+            _.bindAll(this, 'addOne', 'addAll', 'toggle');
+            
+            window.plots = new Plots()
+            plots.bind('add', this.addOne);
+            plots.bind('refresh', this.addAll);
+            plots.fetch();
+            
+            $('h2').click(this.toggle);
+        },
+        toggle: function() {
+            this.el.toggle();
+        },
+        addAll: function() {
+            plots.each(this.addOne);
+        },
+        addOne: function(plot) {
+            var view = new PlotView({ model: plot });
+            this.$('ul').append(view.render().el);
+        }
+    });
     
     window.AppView = Backbone.View.extend({
         el: $('#app'),
-        events: {
-        },
         initialize: function() {
-            _.bindAll(this, 'addOne', 'addAll', 'render');
-            Actors.bind('add', this.addOne);
-            Actors.bind('refresh', this.addAll);
-            Actors.bind('all', this.render);
-            Actors.fetch();
+            _.bindAll(this, 'addOne', 'addAll');
             
-            Plots.fetch();
-        },        
+            window.user = new User({
+                'username': USER_NAME
+            }).fetch();
+            
+            this.plotContainerView = new PlotContainerView();
+            
+            window.actors = new Actors();
+            actors.bind('add', this.addOne);
+            actors.bind('refresh', this.addAll);
+            actors.fetch();
+        },
         addAll: function() {
-            Actors.each(this.addOne);
+            actors.each(this.addOne);
         },
         addOne: function(actor) {
             var view = new ActorView({ model: actor });

@@ -6,20 +6,20 @@ from django.shortcuts import get_object_or_404
 from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.authorization import Authorization
-from utils import DjangoAuthentication
+from utils import DjangoAuthentication as Authentication
 
 from hortee.tracktor.models import *
 
 class UserResource(ModelResource):
     """Api resource for django.contrib.auth.models.User
-    """    
+    """      
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user'
         fields = ['username', 'first_name', 'last_name']
         allowed_methods = ['get', 'put']
         authorization = Authorization()
-        authentication = DjangoAuthentication()  
+        authentication = Authentication()  
         filtering = {
             'username': ('exact'),
         }
@@ -27,8 +27,8 @@ class UserResource(ModelResource):
     def dehydrate(self, bundle):    
         plot_resource = PlotResource()
         default_plot = bundle.obj.get_profile().get_default_plot()
-        plot = plot_resource.full_dehydrate(obj=default_plot)    
-        bundle.data['default_plot'] = plot
+        plot_uri = plot_resource.get_resource_uri(default_plot)    
+        bundle.data['default_plot_uri'] = plot_uri
         return bundle
         
     def override_urls(self):
@@ -55,7 +55,7 @@ class PlotResource(ModelResource):
     class Meta:
         queryset = Plot.objects.all()
         authorization = Authorization()
-        authentication = DjangoAuthentication()
+        authentication = Authentication()
         
 class ActorResource(ModelResource):
     """Api resource for tracktor.models.Actor
@@ -77,7 +77,7 @@ class ActorResource(ModelResource):
     class Meta:
         queryset = Actor.objects.all()
         authorization = Authorization()
-        authentication = DjangoAuthentication()
+        authentication = Authentication()
         filtering = {
             'plot': ('exact'),
         }
@@ -96,7 +96,7 @@ class ActionResource(ModelResource):
     class Meta:
         queryset = Action.objects.all()
         authorization = Authorization()
-        authentication = DjangoAuthentication()
+        authentication = Authentication()
         
         filtering = {
             'actor': ('exact'),

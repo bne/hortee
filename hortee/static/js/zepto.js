@@ -475,7 +475,7 @@ var Zepto = (function() {
   };
 
   $.ajax = function(options){
-    // { type, url, data, success, dataType, contentType, headers }
+    // { type, url, data, success, dataType, contentType }
     options = options || {};
 
     if (options.url && /=\?/.test(options.url))
@@ -487,7 +487,6 @@ var Zepto = (function() {
         mime = mimeTypes[options.dataType],
         type = options.type || "GET",
         content = options.contentType || (type === "POST" ? "application/x-www-form-urlencoded" : ""),
-        headers = options.headers || [];        
         xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function(){
@@ -514,9 +513,6 @@ var Zepto = (function() {
     if (data instanceof Object) data = $.param(data);
     if (content) xhr.setRequestHeader('Content-Type', content);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    for(header in headers) {
-      xhr.setRequestHeader(header[0], header[1]);
-    }
     xhr.send(data);
   };
 

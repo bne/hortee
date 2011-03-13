@@ -7,22 +7,26 @@
 
     <script type="text/javascript">
         API_DISCO = {{ api_disco|safe }};
+        USER_NAME = '{{ user }}';
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/hortee-list.js"></script>  
 {% endblock %}
 
 {% block content %}
-    <h2>{{ default_plot }}</h2>
-    <ul id="plot-actions">
-        
-    </ul>
     <div id="app">
-        <ul id="actors" />
+        <h2>{{ default_plot }}</h2>
+        <div id="plots">            
+            <ul></ul>    
+        </div>
+        <ul id="actors"></ul>
     </div>
 {% endblock content %}
 
 {% block templates %}
 {% verbatim %}
+<script type="text/template" id="plot-template">
+{{ name }}
+</script>
 <script type="text/template" id="actor-template"> 
 <h3>{{ name }}</h3>
 <ul class="actions">
@@ -39,15 +43,4 @@
     <p>{{ text }}</p>
 </script> 
 {% endverbatim %}
-<script type="text/javascript">
-$(function() {
-    window.User = new UserModel({
-        'username': '{{ request.user }}'
-    });
-    
-    window.User.fetch();
-    
-    console.log(window.User);
-});
-</script>
 {% endblock %}
