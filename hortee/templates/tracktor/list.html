@@ -4,7 +4,7 @@
 
 {% block head %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/backbone.js"></script>
-
+    <script type="text/javascript" src="{{ STATIC_URL }}js/backbone-sync.js"></script>
     <script type="text/javascript">
         API_DISCO = {{ api_disco|safe }};
         USER_NAME = '{{ user }}';
@@ -14,7 +14,7 @@
 
 {% block content %}
     <div id="app">
-        <h2>{{ default_plot }}</h2>
+        <h2></h2>
         <div id="plots">            
             <ul></ul>    
         </div>

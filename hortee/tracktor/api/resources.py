@@ -24,13 +24,6 @@ class UserResource(ModelResource):
             'username': ('exact'),
         }
         
-    def dehydrate(self, bundle):    
-        plot_resource = PlotResource()
-        default_plot = bundle.obj.get_profile().get_default_plot()
-        plot_uri = plot_resource.get_resource_uri(default_plot)    
-        bundle.data['default_plot_uri'] = plot_uri
-        return bundle
-        
     def override_urls(self):
         return [
             url(r"^(?P<resource_name>%s)/(?P<username>[\w\d_.-]+)/$" % \
@@ -61,19 +54,29 @@ class ActorResource(ModelResource):
     """Api resource for tracktor.models.Actor
     """
     plot = fields.ForeignKey(PlotResource, 'plot')
-    
+            
+    def obj_create(self, *args, **kwargs):
+        """Add logged in user as author
+        """
+        if kwargs.has_key('request'):
+            kwargs['author'] = kwargs['request'].user
+            return super(ActorResource, self).obj_create(*args, **kwargs)
+
+    def obj_update(self, *args, **kwargs):
+        """Add logged in user as author
+        """
+        if kwargs.has_key('request'):
+            kwargs['author'] = kwargs['request'].user
+            return super(ActorResource, self).obj_update(*args, **kwargs)
+
     def get_object_list(self, request):
         """Restrict to Plots owned by user
         """
         object_list = self._meta.queryset
         if request and hasattr(request, 'user'):
             object_list = object_list.filter(plot__owners=request.user)
-            if not request.GET.get('plot'):
-                plot = request.user.get_profile().get_default_plot()
-                if plot:
-                    object_list = object_list.filter(plot=plot)
         return object_list
-
+            
     class Meta:
         queryset = Actor.objects.all()
         authorization = Authorization()
@@ -86,6 +89,20 @@ class ActionResource(ModelResource):
     """Api resource for tracktor.models.Action
     """
     actor = fields.ForeignKey(ActorResource, 'actor')
+        
+    def obj_create(self, *args, **kwargs):
+        """Add logged in user as author
+        """
+        if kwargs.has_key('request'):
+            kwargs['author'] = kwargs['request'].user
+            return super(ActionResource, self).obj_create(*args, **kwargs)
+
+    def obj_update(self, *args, **kwargs):
+        """Add logged in user as author
+        """
+        if kwargs.has_key('request'):
+            kwargs['author'] = kwargs['request'].user
+            return super(ActionResource, self).obj_update(*args, **kwargs)
     
     def get_object_list(self, request):
         """Restrict to Plots owned by user

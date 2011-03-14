@@ -1,21 +1,5 @@
 $(function(){
 
-var oldSync = Backbone.sync;
- 
-    Backbone.sync = function(method, model, success, error){
-        var newSuccess = function(resp, status, xhr){
-            if(xhr.statusText === "CREATED"){
-                var location = xhr.getResponseHeader('Location');
-                return $.ajax({
-                    url: location,
-                    success: success
-                });
-            }
-            return success(resp);
-        };
-        return oldSync(method, model, newSuccess, error);
-    };
-
     window.Action = Backbone.Model.extend({
         url: function() {
             return this.get('resource_uri') || this.collection.url;
@@ -142,6 +126,26 @@ var oldSync = Backbone.sync;
         }
     });
 
+    window.ActorsView = Backbone.View.extend({
+        el: $('#actors'),
+        initialize: function() {
+            _.bindAll(this, 'addOne', 'addAll');            
+            window.actors = new Actors();
+            actors.url += '?plot=' + window.currentPlot.id;
+            actors.bind('add', this.addOne);
+            actors.bind('refresh', this.addAll);
+            actors.fetch();
+        },
+        addAll: function() {
+            this.el.html('');
+            actors.each(this.addOne);
+        },
+        addOne: function(actor) {
+            var view = new ActorView({ model: actor });
+            this.el.append(view.render().el);
+        }
+    });
+    
     window.PlotView = Backbone.View.extend({
         tagName: 'li',
         className: 'plot',
@@ -150,33 +154,44 @@ var oldSync = Backbone.sync;
             'click': 'change'
         },
         initialize: function() {
+            _.bindAll(this, 'change');
         },
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
             return this;
         },
-        change: function() {
-            console.log('foo');
+        change: function() {            
+            window.plotsView.setPlot(this.model);
         }
     });
     
-    window.PlotContainerView = Backbone.View.extend({
+    window.PlotsView = Backbone.View.extend({
         el: $('#plots'),
         initialize: function() {
-            _.bindAll(this, 'addOne', 'addAll', 'toggle');
-            
+            _.bindAll(this, 'addOne', 'addAll', 'toggle', 'hide', 'setPlot');
             window.plots = new Plots()
             plots.bind('add', this.addOne);
             plots.bind('refresh', this.addAll);
             plots.fetch();
             
             $('h2').click(this.toggle);
+            $(document).click(this.hide);
         },
-        toggle: function() {
+        toggle: function(evt) {
+            evt.stopPropagation();
             this.el.toggle();
+        },
+        hide: function() {
+            this.el.hide();
+        },
+        setPlot: function(plot) {
+            window.currentPlot = plot;
+            $('h2').text(window.currentPlot.get('name'));
+            this.actorsView = new ActorsView();
         },
         addAll: function() {
             plots.each(this.addOne);
+            this.setPlot(plots.models[0]);
         },
         addOne: function(plot) {
             var view = new PlotView({ model: plot });
@@ -186,26 +201,11 @@ var oldSync = Backbone.sync;
     
     window.AppView = Backbone.View.extend({
         el: $('#app'),
-        initialize: function() {
-            _.bindAll(this, 'addOne', 'addAll');
-            
+        initialize: function() {            
             window.user = new User({
                 'username': USER_NAME
             }).fetch();
-            
-            this.plotContainerView = new PlotContainerView();
-            
-            window.actors = new Actors();
-            actors.bind('add', this.addOne);
-            actors.bind('refresh', this.addAll);
-            actors.fetch();
-        },
-        addAll: function() {
-            actors.each(this.addOne);
-        },
-        addOne: function(actor) {
-            var view = new ActorView({ model: actor });
-            this.$('#actors').append(view.render().el);
+            window.plotsView = new PlotsView();
         }
     });    
 
