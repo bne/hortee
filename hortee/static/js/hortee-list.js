@@ -118,18 +118,21 @@ $(function(){
             }
         },
         create: function() {
-            this.actions.create({
-                actor: this.model.attributes.resource_uri,
-                text: this.$('input').val()
-            });
-            this.$('input').val('');
+            var text = this.$('input').val();
+            if(text) {
+                this.actions.create({
+                    actor: this.model.attributes.resource_uri,
+                    text: this.$('input').val()
+                });
+                this.$('input').val('');
+            }
         }
     });
 
     window.ActorsView = Backbone.View.extend({
         el: $('#actors'),
         initialize: function() {
-            _.bindAll(this, 'addOne', 'addAll');            
+            _.bindAll(this, 'addOne', 'addAll'); 
             window.actors = new Actors();
             actors.url += '?plot=' + window.currentPlot.id;
             actors.bind('add', this.addOne);
@@ -186,6 +189,8 @@ $(function(){
         },
         setPlot: function(plot) {
             window.currentPlot = plot;
+            
+            
             $('h2').text(window.currentPlot.get('name'));
             this.actorsView = new ActorsView();
         },
