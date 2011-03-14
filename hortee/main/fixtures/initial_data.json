@@ -1,1 +1,178 @@
-[{"pk": 1, "model": "tracktor.plot", "fields": {"lat": null, "owners": [1, 2], "lng": null, "name": "Allotment"}}, {"pk": 2, "model": "tracktor.plot", "fields": {"lat": null, "owners": [1], "lng": null, "name": "Yard"}}, {"pk": 3, "model": "tracktor.plot", "fields": {"lat": null, "owners": [2], "lng": null, "name": "Test Plot"}}, {"pk": 1, "model": "tracktor.actor", "fields": {"plot": 2, "name": "Arran Red Potatoes"}}, {"pk": 2, "model": "tracktor.actor", "fields": {"plot": 2, "name": "Red peppers"}}, {"pk": 3, "model": "tracktor.actor", "fields": {"plot": 1, "name": "Apple tree"}}, {"pk": 4, "model": "tracktor.actor", "fields": {"plot": 2, "name": "Gardener's delight tomatoes"}}, {"pk": 5, "model": "tracktor.actor", "fields": {"plot": 3, "name": "Test Actor"}}, {"pk": 1, "model": "tracktor.action", "fields": {"date": "2011-02-06 11:55:46", "text": "Started chitting", "actor": 1}}, {"pk": 3, "model": "tracktor.action", "fields": {"date": "2011-02-20 11:56:33", "text": "Pruned", "actor": 3}}, {"pk": 5, "model": "tracktor.action", "fields": {"date": "2011-02-20 12:16:50", "text": "Test Event", "actor": 5}}, {"pk": 2, "model": "tracktor.action", "fields": {"date": "2011-06-02 11:56:16", "text": "Sowed in individual pots", "actor": 2}}, {"pk": 4, "model": "tracktor.action", "fields": {"date": "2011-06-02 11:57:03", "text": "Sowed in seed tray", "actor": 4}}, {"pk": 1, "model": "auth.user", "fields": {"username": "ben", "first_name": "", "last_name": "", "is_active": true, "is_superuser": true, "is_staff": true, "last_login": "2011-02-20 13:23:36", "groups": [], "user_permissions": [], "password": "sha1$5e9b1$4f61ecb9ee3795e1d25a61ae7975baa4595ced02", "email": "ben@hyl.co.uk", "date_joined": "2011-02-11 15:36:08"}}, {"pk": 2, "model": "auth.user", "fields": {"username": "test", "first_name": "Test", "last_name": "User", "is_active": true, "is_superuser": false, "is_staff": false, "last_login": "2011-02-20 12:15:19", "groups": [], "user_permissions": [], "password": "sha1$b0cee$ad3636470d5515251e02c2bbed0516d0a88f4605", "email": "", "date_joined": "2011-02-20 12:15:19"}}]
+[
+   {
+      "pk":1,
+      "model":"tracktor.plot",
+      "fields":{
+         "lat":null,
+         "owners":[
+            1,
+            2
+         ],
+         "lng":null,
+         "name":"Allotment"
+      }
+   },
+   {
+      "pk":2,
+      "model":"tracktor.plot",
+      "fields":{
+         "lat":null,
+         "owners":[
+            1
+         ],
+         "lng":null,
+         "name":"Yard"
+      }
+   },
+   {
+      "pk":3,
+      "model":"tracktor.plot",
+      "fields":{
+         "lat":null,
+         "owners":[
+            2
+         ],
+         "lng":null,
+         "name":"Test Plot"
+      }
+   },
+   {
+      "pk":1,
+      "model":"tracktor.actor",
+      "fields":{
+         "plot":2,
+         "name":"Arran Red Potatoes",
+         "author":1
+      }
+   },
+   {
+      "pk":2,
+      "model":"tracktor.actor",
+      "fields":{
+         "plot":2,
+         "name":"Red peppers",
+         "author":1
+      }
+   },
+   {
+      "pk":3,
+      "model":"tracktor.actor",
+      "fields":{
+         "plot":1,
+         "name":"Apple tree",
+         "author":1
+      }
+   },
+   {
+      "pk":4,
+      "model":"tracktor.actor",
+      "fields":{
+         "plot":2,
+         "name":"Gardener's delight tomatoes",
+         "author":1
+      }
+   },
+   {
+      "pk":5,
+      "model":"tracktor.actor",
+      "fields":{
+         "plot":3,
+         "name":"Test Actor",
+         "author":2
+      }
+   },
+   {
+      "pk":1,
+      "model":"tracktor.action",
+      "fields":{
+         "date":"2011-02-06 11:55:46",
+         "text":"Started chitting",
+         "actor":1,
+         "author":1
+      }
+   },
+   {
+      "pk":3,
+      "model":"tracktor.action",
+      "fields":{
+         "date":"2011-02-20 11:56:33",
+         "text":"Pruned",
+         "actor":3,
+         "author":1
+      }
+   },
+   {
+      "pk":5,
+      "model":"tracktor.action",
+      "fields":{
+         "date":"2011-02-20 12:16:50",
+         "text":"Test Event",
+         "actor":5,
+         "author":2
+      }
+   },
+   {
+      "pk":2,
+      "model":"tracktor.action",
+      "fields":{
+         "date":"2011-06-02 11:56:16",
+         "text":"Sowed in individual pots",
+         "actor":2,
+         "author":1
+      }
+   },
+   {
+      "pk":4,
+      "model":"tracktor.action",
+      "fields":{
+         "date":"2011-06-02 11:57:03",
+         "text":"Sowed in seed tray",
+         "actor":4,
+         "author":1
+      }
+   },
+   {
+      "pk":1,
+      "model":"auth.user",
+      "fields":{
+         "username":"ben",
+         "first_name":"",
+         "last_name":"",
+         "is_active":true,
+         "is_superuser":true,
+         "is_staff":true,
+         "last_login":"2011-02-20 13:23:36",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ],
+         "password":"sha1$5e9b1$4f61ecb9ee3795e1d25a61ae7975baa4595ced02",
+         "email":"ben@hyl.co.uk",
+         "date_joined":"2011-02-11 15:36:08"
+      }
+   },
+   {
+      "pk":2,
+      "model":"auth.user",
+      "fields":{
+         "username":"test",
+         "first_name":"Test",
+         "last_name":"User",
+         "is_active":true,
+         "is_superuser":false,
+         "is_staff":false,
+         "last_login":"2011-02-20 12:15:19",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ],
+         "password":"sha1$b0cee$ad3636470d5515251e02c2bbed0516d0a88f4605",
+         "email":"",
+         "date_joined":"2011-02-20 12:15:19"
+      }
+   }
+]

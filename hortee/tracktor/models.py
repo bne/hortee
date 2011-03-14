@@ -22,11 +22,13 @@ class Plot(models.Model):
 class Actor(models.Model):
     """A thing unto which things happen
     """
+    author = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100)
     plot = models.ForeignKey(Plot)
     
     def __unicode__(self):
-        return self.name    
+        return self.name
     
     @property
     def date_start(self):
@@ -39,6 +41,8 @@ class Actor(models.Model):
 class Action(models.Model):
     """An action on the actor's timeline
     """
+    author = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
     actor = models.ForeignKey(Actor)
     text = models.TextField(null=True, blank=True)
     date = models.DateTimeField(default=datetime.now)
