@@ -57,7 +57,7 @@ $(function(){
         className: 'action',
         template: _.template($('#action-template').html()),
         events: {
-            'click p': 'remove'
+            'click .delete': 'remove'
         },
         initialize: function() {
             _.bindAll(this, 'render', 'remove');

@@ -77,7 +77,6 @@ footer nav {
 #actors li.actor {
     border-top: 1px solid #FFF;
     position: relative;
-    cursor: pointer;
 }
 
 #actors li.actor h3 {
@@ -85,15 +84,15 @@ footer nav {
     padding: 0 5px;
     line-height: 40px;
     background: #DEE2B6;
+    cursor: pointer;
 }
 
-/* Events */
+/* Actions */
 
 ul.actions li.action {
     padding: 10px 10px 10px 36px;
     border-bottom: 1px solid #DEE2B6;
     color: #858B5F;
-    cursor: pointer;
 }
 
 ul.actions li.form {
@@ -137,6 +136,20 @@ ul.actions li.form span.btn.date {
 
 ul.actions li.form span.btn.add {
     background: #6C7823 url(../img/icons-36-white.png) 2px 0 no-repeat;
+}
+
+ul.actions li p.date {
+    font-size: 0.85em;
+}
+
+ul.actions ul.controls {
+    text-align: right;
+}
+
+ul.actions ul.controls li {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 /* Form */
