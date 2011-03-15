@@ -18,9 +18,9 @@ function Messages() {
 }
 
 Date.prototype.formatDate = function() {
-    function Z(n) { return ((n+'').length==1?'0':'') + n; }
-    return this.getFullYear() + '-' + Z(this.getMonth()) + '-' + 
-        Z(this.getDate()) + ' ' + Z(this.getHours()) + ':' + Z(this.getMinutes()); 
+    function Z(n) { return ('0'+n).substr(-2); }
+    return this.getFullYear() +'-'+ Z(this.getMonth()) +'-'+ Z(this.getDate()) 
+        +' '+ Z(this.getHours()) +':'+ Z(this.getMinutes()); 
 }
 
 $(function() {

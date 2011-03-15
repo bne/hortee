@@ -18,7 +18,7 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('hortee.tracktor.views',
-    url(r'^list/$', 'actors', name='tracktor-list'),
+    url(r'^plot/', 'list_', name='tracktor-list'),
 )
 
 urlpatterns += patterns('',

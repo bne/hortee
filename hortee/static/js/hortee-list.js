@@ -189,8 +189,6 @@ $(function(){
         },
         setPlot: function(plot) {
             window.currentPlot = plot;
-            
-            
             $('h2').text(window.currentPlot.get('name'));
             this.actorsView = new ActorsView();
         },

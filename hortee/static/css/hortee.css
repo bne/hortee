@@ -59,7 +59,7 @@ footer nav {
     border: 1px solid #AEB96C;
     border-top: 0;
     border-right: 0;
-    padding: 0 40px 0 40px;
+    padding: 0 10px 0 30px;
     z-index: 100;
     display: none;
 }
@@ -90,7 +90,7 @@ footer nav {
 /* Actions */
 
 ul.actions li.action {
-    padding: 10px 10px 10px 36px;
+    padding: 10px;
     border-bottom: 1px solid #DEE2B6;
     color: #858B5F;
 }
