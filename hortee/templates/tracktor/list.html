@@ -1,13 +1,12 @@
 {% extends base_template %}
 {% load verbatim %}
-{% block title %}{{ block.super }} :: List{% endblock %}
 
 {% block head %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/backbone.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/backbone-sync.js"></script>
     <script type="text/javascript">
-        API_DISCO = {{ api_disco|safe }};
-        USER_NAME = '{{ user }}';
+        var API_DISCO = {{ api_disco|safe }},
+            USER_NAME = '{{ user }}';
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/hortee-list.js"></script>  
 {% endblock %}
@@ -15,10 +14,10 @@
 {% block content %}
     <div id="app">
         <h2></h2>
-        <div id="plots">            
+        <ul id="actors"><li class="loading"></li></ul>        
+        <div id="plots">
             <ul></ul>    
         </div>
-        <ul id="actors"></ul>
     </div>
 {% endblock content %}
 
@@ -36,11 +35,12 @@
         <td><input type="text" class="input-action" /></td>
         </tr></table>
     </li>
+    <li class="loading"></li>
 </ul>
 </script> 
 <script type="text/template" id="action-template"> 
     <p>{{ text }}</p>
-    <p class="date">{{ new Date(date).formatDate() }}</p>
+    <p class="date">{{ formatDate(date) }}</p>
     <ul class="controls">
         <li class="delete">delete</li>
     </ul>

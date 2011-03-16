@@ -12,7 +12,7 @@ $(function(){
         parse: function(data){
             return data.objects;
         }        
-    });
+    });this.list
  
     window.Actor = Backbone.Model.extend({
         url: function() {
@@ -93,7 +93,8 @@ $(function(){
             this.list.hide();            
             return this;
         },        
-        toggle: function() {
+        toggle: function(evt) {
+            evt.stopPropagation();
             var show = (this.list.css('display')=='none');
             $('ul.actions').hide();
             if(show) {
@@ -104,8 +105,9 @@ $(function(){
                 }
             }
         },       
-        addAll: function(){
+        addAll: function(){            
             this.actions.each(this.addOne);
+            $('li.loading', this.list).remove();
         },
         addOne: function(action){
             var view = new ActionView({ model: action });
@@ -123,7 +125,10 @@ $(function(){
                 this.actions.create({
                     actor: this.model.attributes.resource_uri,
                     text: this.$('input').val()
+                }, { 
+                    success: function() { $('input').removeClass('loading'); }
                 });
+                this.$('input').addClass('loading');
                 this.$('input').val('');
             }
         }
@@ -140,7 +145,7 @@ $(function(){
             actors.fetch();
         },
         addAll: function() {
-            this.el.html('');
+            $('#actors').html('');
             actors.each(this.addOne);
         },
         addOne: function(actor) {
@@ -163,7 +168,11 @@ $(function(){
             $(this.el).html(this.template(this.model.toJSON()));
             return this;
         },
-        change: function() {            
+        change: function(evt) {
+            evt.stopPropagation();
+            window.plotsView.hide();
+            $('#actors').html('');
+            $('#actors').append('<li class="loading"></li>');
             window.plotsView.setPlot(this.model);
         }
     });

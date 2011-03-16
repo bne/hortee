@@ -10,6 +10,13 @@ from utils import DjangoAuthentication as Authentication
 
 from hortee.tracktor.models import *
 
+def date_to_timestamp(date):
+    """Rough and ready datetime to timestamp converter
+    Precision to the millisecond
+    """
+    import time
+    return int(time.mktime(date.timetuple()) * 1000)
+
 class UserResource(ModelResource):
     """Api resource for django.contrib.auth.models.User
     """      
@@ -109,6 +116,10 @@ class ActionResource(ModelResource):
         """
         object_list = self._meta.queryset
         return object_list.filter(actor__plot__owners=request.user)
+        
+    def dehydrate(self, bundle):
+        bundle.data['date'] = date_to_timestamp(bundle.data['date'])
+        return bundle        
 
     class Meta:
         queryset = Action.objects.all()

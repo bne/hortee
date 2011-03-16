@@ -17,10 +17,11 @@ function Messages() {
     return rtn;
 }
 
-Date.prototype.formatDate = function() {
+formatDate = function(d) {
     function Z(n) { return ('0'+n).substr(-2); }
-    return this.getFullYear() +'-'+ Z(this.getMonth()) +'-'+ Z(this.getDate()) 
-        +' '+ Z(this.getHours()) +':'+ Z(this.getMinutes()); 
+    d = new Date(d);
+    return d.getFullYear() +'-'+ Z(d.getMonth()) +'-'+ Z(d.getDate()) 
+        +' '+ Z(d.getHours()) +':'+ Z(d.getMinutes()); 
 }
 
 $(function() {
@@ -32,4 +33,5 @@ $(function() {
     
     window.messages = new Messages();
 });
+
 

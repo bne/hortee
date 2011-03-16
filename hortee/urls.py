@@ -26,6 +26,8 @@ urlpatterns += patterns('',
         'template': 'robots.txt', 'mimetype': 'text/plain' }),
     (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {
         'url': '/static/img/favicon.ico' }),
+    (r'^custom_icon\.png$', 'django.views.generic.simple.redirect_to', {
+        'url': '/static/img/custom_icon.png' }),
 )
 
 urlpatterns += patterns('',
